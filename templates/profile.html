@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1>{{ username }}'s Profile</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h5 class="left">My Account</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <p>Username &#58; <span>{{ username }}</span></p>
+                <a href="#" class="btn-large blue">Update Details</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="contributions-container">
+        <div class="row">
+            <div class="col s12">
+                <h2>My contributions</h2>
+            </div>
+        </div>
+        {% for term in terms %}
+            {% if term.created_by|lower == session.user|lower %}
+                <div class="row">
+                    <div class="col s12 l4">
+                        <span>{{ term.term_name }}</span>
+                    </div>
+                    <div class="col s12 l8">
+                        <span>{{ term.term_definition }}</span>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <p>Delete the account for {{ username }}</p>
+            <a class="btn-large red" href="#">Delete Account</a>
+        </div>
+    </div>
+
+{% endblock %}

@@ -6,6 +6,7 @@ from flask import (
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
+from string import ascii_uppercase
 if os.path.exists("env.py"):
     import env
 
@@ -93,10 +94,25 @@ def logout():
     return redirect(url_for("home_page"))
 
 
+@app.route("/profile/<username>")
+def profile(username):
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    terms = mongo.db.terms.find().sort("term_name", 1)
+    
+    if session["user"]:
+        return render_template("profile.html", username=username,terms=terms)
+    
+    return redirect(url_for("login"))
+
+
 @app.route("/view_dictionary")
 def view_dictionary():
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    letters = alphabet.split()
+    first_letter = [letter[0] for letter in letters]
     terms = mongo.db.terms.find().sort("term_name", 1)
-    return render_template("dictionary.html", terms=terms)
+    return render_template("dictionary.html", terms=terms, letters=letters)
 
 
 @app.route("/add_definition", methods=["GET", "POST"])

@@ -32,7 +32,7 @@
                     <li><a href="{{ url_for('home_page') }}">Home</a></li>
                     <li><a href="{{ url_for('view_dictionary') }}">View Dictionary</a></li>
                     {% if session.user %}
-                        <li><a href="#">My Profile</a></li>
+                        <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
                         <li><a href="{{ url_for('add_definition') }}">Add Definition</a></li>
                         {% if session.user|lower == "admin" %}
                             <li><a href="#">Manage Users</a></li>
@@ -52,7 +52,7 @@
             <li><a href="{{ url_for('home_page') }}">Home</a></li>
             <li><<a href="{{ url_for('view_dictionary') }}">View Dictionary</a></li>
             {% if session.user %}
-                <li><a href="#">My Profile</a></li>
+                <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
                 <li><a href="{{ url_for('add_definition') }}">Add Definition</a></li>
                 {% if session.user|lower == "admin" %}
                     <li><a href="#">Manage Users</a></li>
