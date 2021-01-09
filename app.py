@@ -32,6 +32,7 @@ def register():
     if request.method == "POST":
         existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
         existing_email = mongo.db.users.find_one({"email_address": request.form.get("email").lower()})
+        is_superuser = True if request.form.get("username").lower == "admin" else False
 
         # check whether user already exists
         if existing_user:
@@ -47,7 +48,7 @@ def register():
             "username": request.form.get("username").lower(),
             "password": generate_password_hash(request.form.get("password")),
             "email_address": request.form.get("email").lower(),
-            "is_superuser": False
+            "is_superuser": is_superuser
         }
         mongo.db.users.insert_one(create_account)
 
@@ -96,6 +97,24 @@ def logout():
 def view_dictionary():
     terms = mongo.db.terms.find().sort("term_name", 1)
     return render_template("dictionary.html", terms=terms)
+
+
+@app.route("/add_definition", methods=["GET", "POST"])
+def add_definition():
+    if request.method == "POST":
+        new_term = {
+            "term_name": request.form.get("term_name"),
+            "term_definition": request.form.get("term_definition"),
+            "created_by": session["user"],
+            "created_on": datetime.datetime.today()
+        }
+        mongo.db.terms.insert_one(new_term)
+        flash("Term successfully created. You will now be redirected to the dictionary page where you can see your contribution!")
+        return redirect(url_for("view_dictionary"))
+    
+    terms = mongo.db.terms.find()
+    users = mongo.db.users.find()
+    return render_template("add_definition.html")
 
 
 if __name__ == "__main__":
