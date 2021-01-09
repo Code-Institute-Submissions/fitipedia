@@ -48,16 +48,15 @@ main {
 .jumbotron {
     background: url(/static/images/jumbotron_image.png) no-repeat center center fixed;
     background-size: cover;
-    min-height: 360px;
+    min-height: 480px;
 }
 
 .overlay {
     position: absolute;
-    top: 0;
-    left: 0;
+    /* top: 0; */
+    /* left: 0; */
     height: 100%;
     width: 100%;
-    z-index: 1;
 }
 
 .callout {

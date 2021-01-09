@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="center-align">Dictionary</h1>
+
+        {% if terms.length == 0 %}
+            <div class="row">
+                <div class="col-s12">
+                    <h2><strong>No terms have been added to the dictionary yet. Be the first to contribute to our community by adding a definition below.</strong></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-s12">
+                    <a href="#" class="btn-large green">Add term</a>
+                </div>
+            </div>
+        {% else %}
+            {% for term in terms %}
+                <div class="row">
+                    <div class="col-s12">
+                        <span>{{ term.term_name }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
+{% endblock %}
