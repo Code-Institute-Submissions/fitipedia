@@ -118,7 +118,7 @@ def view_dictionary():
     alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     letters = alphabet.split()
     first_letter = [letter[0] for letter in letters]
-    terms = mongo.db.terms.find().sort("term_name", 1)
+    terms = list(mongo.db.terms.find().sort("term_name", 1))
     return render_template("dictionary.html", terms=terms, letters=letters)
 
 

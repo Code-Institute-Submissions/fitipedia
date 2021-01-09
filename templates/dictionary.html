@@ -4,11 +4,24 @@
     <h1 class="center-align">Dictionary</h1>
 
     {% if terms|length == 0 %}
-        <div class="row">
-            <div class="col-s12">
-                <h2><strong>No terms have been added to the dictionary yet. Be the first to contribute to our community by adding a definition below.</strong></h2>
+        {% if session.user %}
+            <div class="row">
+                <div class="col-s12">
+                    <h2><strong>No terms have been added to the dictionary yet. Be the first to contribute to our community by adding a definition below.</strong></h2>
+                </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-s12">
+                    <a href="{{ url_for('add_definition') }}" class="btn-large green">Add term</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="row">
+                <div class="col-s12">
+                    <h2><strong>No terms have been added to the dictionary yet. Please <a href="{{ url_for('register') }}">register an account</a> to contribute to our community.</strong></h2>
+                </div>
+            </div>
+        {% endif %}
     {% else %}
         {% for letter in letters %}
             <div class="letters-container">
