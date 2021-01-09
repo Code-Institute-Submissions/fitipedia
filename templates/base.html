@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
         type="text/css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Langar&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Redressed&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline+Text:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@200&display=swap" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
@@ -31,18 +32,18 @@
                 <a href="{{ url_for('home_page') }}" class="brand-logo">Fitipedia</a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('home_page') }}">Home</a></li>
-                    <li><a href="{{ url_for('view_dictionary') }}">View Dictionary</a></li>
+                    <li><a class="nav-link" href="{{ url_for('home_page') }}">Home</a></li>
+                    <li><a class="nav-link" href="{{ url_for('view_dictionary') }}">View Dictionary</a></li>
                     {% if session.user %}
-                        <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
-                        <li><a href="{{ url_for('add_definition') }}">Add Definition</a></li>
+                        <li><a class="nav-link" href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
+                        <li><a class="nav-link" href="{{ url_for('add_definition') }}">Add Definition</a></li>
                         {% if session.user|lower == "admin" %}
-                            <li><a href="{{ url_for('manage_users') }}">Manage Users</a></li>
+                            <li><a class="nav-link" href="{{ url_for('manage_users') }}">Manage Users</a></li>
                         {% endif %}
-                        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                        <li><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
                     {% else %}
-                        <li><a href="{{ url_for('login') }}">Login</a></li>
-                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                        <li><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                        <li><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -51,18 +52,18 @@
         <!-- mobile side navbar -->
 
         <ul class="sidenav" id="mobile-demo">
-            <li><a href="{{ url_for('home_page') }}">Home</a></li>
-            <li><<a href="{{ url_for('view_dictionary') }}">View Dictionary</a></li>
+            <li><a class="nav-link" href="{{ url_for('home_page') }}">Home</a></li>
+            <li><<a class="nav-link" href="{{ url_for('view_dictionary') }}">View Dictionary</a></li>
             {% if session.user %}
-                <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
-                <li><a href="{{ url_for('add_definition') }}">Add Definition</a></li>
+                <li><a class="nav-link" href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
+                <li><a class="nav-link" href="{{ url_for('add_definition') }}">Add Definition</a></li>
                 {% if session.user|lower == "admin" %}
-                    <li><a href="{{ url_for('manage_users') }}">Manage Users</a></li>
+                    <li><a class="nav-link" href="{{ url_for('manage_users') }}">Manage Users</a></li>
                 {% endif %}
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                <li><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
             {% else %}
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-                <li><a href="{{ url_for('register') }}">Register</a></li>
+                <li><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                <li><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
             {% endif %}
             </ul>
         </ul>
@@ -88,7 +89,7 @@
     <footer class="page-footer">
         <div class="info-container">
             <div class="row">
-                <div class="col l6 s12">
+                <div class="col l4 m4 s12">
                     <h6>Fitipedia Ltd.</h6>
                     <address>
                         <i class="fas fa-location-arrow"></i> 93 Crown Street, London, SW5 7NL<br />
@@ -96,10 +97,12 @@
                         <i class="fas fa-at"></i> <a href="mailto:#">info&#64;fitipedia.com</a>
                     </address>
                 </div>
-                <div class="col l2 s12">
-                    <a href="{{ url_for('home_page') }}" class="brand-logo">Fitipedia</a>
+                <div class="col l4 m4 s12">
+                    <a href="{{ url_for('home_page') }}" class="brand-logo">
+                        <img src="{{ url_for('static', filename='images/brand_logo_footer.png') }}" />
+                    </a>
                 </div>
-                <div class="col l4 offset-l2 s12">
+                <div class="col l4 m4 s12">
                     <h6 class="social-media-header">Follow us on social media&#33;</h6>
                     <ul class="social-media-links">
                         <li class="footer-list-item">
