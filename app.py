@@ -174,8 +174,7 @@ def update_profile(username):
 
 @app.route("/manage_users")
 def manage_users():
-    is_superuser = mongo.db.users.find_one({"is_superuser": True})
-    if session["user"] == is_superuser:
+    if session["user"] == "admin":
         users = mongo.db.users.find().sort("username", 1)
         return render_template("manage_users.html", users=users)
 
@@ -195,6 +194,16 @@ def delete_account(username):
     mongo.db.users.remove({"username": username})
     flash("Your account was deleted. You will now be redirected to the home page.")
     return redirect(url_for("home_page", username=username, users=users))
+
+
+@app.route("/delete_user/<user_id>")
+def delete_user(user_id):
+    if session["user"] == "admin":
+        users = mongo.db.users.find()
+        user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+        mongo.db.users.remove({"_id": ObjectId(user_id)})
+        flash("The user was successfully deleted from the database.")
+        return redirect(url_for("manage_users"))
 
 
 if __name__ == "__main__":
