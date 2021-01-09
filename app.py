@@ -176,6 +176,38 @@ def manage_users():
     if session["user"] == "admin":
         users = mongo.db.users.find().sort("username", 1)
         return render_template("manage_users.html", users=users)
+
+
+@app.route("/add_new_user", methods=["GET", "POST"])
+def add_new_user():
+    if session["user"] == "admin":
+        if request.method == "POST":
+            existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
+            existing_email = mongo.db.users.find_one({"email_address": request.form.get("email").lower()})
+            is_superuser = True if request.form.get("username").lower == "admin" else False
+
+            # check whether user already exists
+            if existing_user:
+                flash("User already exists")
+                return redirect(url_for("register"))
+            
+            # check whether e-mail address was already used to sign up
+            if existing_email:
+                flash("An account already exists for this e-mail address!")
+                return redirect(url_for("register"))
+            
+            new_user = {
+                "username": request.form.get("username").lower(),
+                "password": generate_password_hash(request.form.get("password")),
+                "email_address": request.form.get("email").lower(),
+                "is_superuser": is_superuser
+            }
+            mongo.db.users.insert_one(new_user)
+            flash("The user was successfully added to the database.")
+            return redirect(url_for("manage_users"))
+
+        users = mongo.db.users.find()
+        return render_template("add_new_user.html")
     
 
 @app.route("/update_user_details/<user_id>", methods=["GET", "POST"])
