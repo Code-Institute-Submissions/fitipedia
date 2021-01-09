@@ -28,6 +28,13 @@ def home_page():
     return render_template("index.html", terms=terms, users=users)
 
 
+@app.route("/search")
+def search():
+    query = request.form.get("query")
+    terms = list(mongo.db.terms.find({"$text": {"$search": query}}))
+    return render_template("dictionary.html", terms=terms)
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":

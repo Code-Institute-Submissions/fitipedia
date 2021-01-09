@@ -19,7 +19,8 @@ nav .brand-logo {
 }
 
 .brand-logo {
-    font-family: 'Langar', cursive;
+    font-family: 'Bodoni Moda', serif;
+    text-transform: uppercase;
     margin-left: 1rem;
     text-shadow: 2px 2px #b8860b;
 }
