@@ -133,6 +133,24 @@ def add_definition():
     return render_template("add_definition.html")
 
 
+@app.route("/edit_term/<term_id>", methods=["GET", "POST"])
+def edit_term(term_id):
+    if request.method == "POST":
+        updated_term = {
+            "term_name": request.form.get("term_name"),
+            "term_definition": request.form.get("term_definition"),
+            "created_by": session["user"],
+            "created_on": datetime.datetime.today()
+        }
+        mongo.db.terms.update({"_id": ObjectId(term_id)}, updated_term)
+        flash("Dictionary information successfully updated")
+        return redirect(url_for("view_dictionary"))
+    
+    term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
+    terms = mongo.db.terms.find().sort("term_name", 1)
+    return render_template("edit_term.html", terms=terms, term=term)
+
+
 @app.route("/update_profile/<username>", methods=["GET", "POST"])
 def update_profile(username):
     if request.method == "POST":
