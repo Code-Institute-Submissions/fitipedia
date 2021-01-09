@@ -149,6 +149,15 @@ def delete_term(term_id):
     return redirect(url_for("view_dictionary", terms=terms))
 
 
+@app.route("/delete_account/<username>")
+def delete_account(username):
+    users = mongo.db.users.find()
+    session.pop("user")
+    mongo.db.users.remove({"username": username})
+    flash("Your account was deleted. You will now be redirected to the home page.")
+    return redirect(url_for("home_page", username=username, users=users))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"), 
     port=int(os.environ.get("PORT")), 
