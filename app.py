@@ -133,6 +133,27 @@ def add_definition():
     return render_template("add_definition.html")
 
 
+@app.route("/update_profile/<username>", methods=["GET", "POST"])
+def update_profile(username):
+    if request.method == "POST":
+        is_superuser = True if mongo.db.users.find_one(
+            {"username": username,
+            "is_superuser": True}) else False
+        updated_account = {
+            "username": request.form.get("username").lower(),
+            "password": generate_password_hash(request.form.get("password")),
+            "email_address": request.form.get("email").lower(),
+            "is_superuser": is_superuser
+        }
+        mongo.db.users.update({"username": username}, updated_account)
+
+        session["user"] = request.form.get("username").lower()
+        flash("Your profile was successfully updated")
+        return redirect(url_for("profile", username=username))
+
+    return render_template("update_profile.html", username=username)
+
+
 @app.route("/manage_users")
 def manage_users():
     is_superuser = mongo.db.users.find_one({"is_superuser": True})

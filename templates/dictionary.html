@@ -3,49 +3,50 @@
 {% block content %}
     <h1 class="center-align">Dictionary</h1>
 
-        {% if terms.length == 0 %}
-            <div class="row">
-                <div class="col-s12">
-                    <h2><strong>No terms have been added to the dictionary yet. Be the first to contribute to our community by adding a definition below.</strong></h2>
-                </div>
+    {% if terms.length == 0 %}
+        <div class="row">
+            <div class="col-s12">
+                <h2><strong>No terms have been added to the dictionary yet. Be the first to contribute to our community by adding a definition below.</strong></h2>
             </div>
-            <div class="row">
-                <div class="col-s12">
-                    <a href="#" class="btn-large green">Add term</a>
-                </div>
-            </div>
-        {% else %}
-            {% for letter in letters %}
-                <div class="letters-container">
-                    <div class="row">
-                        <div class="col-s12">
-                            <h1>{{ letter }}</h1>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-            {% for term in terms %}
+        </div>
+    {% else %}
+        {% for letter in letters %}
+            <div class="letters-container">
                 <div class="row">
-                    <div class="col s12 l3">
-                        <span>{{ term.term_name }}</span>
-                    </div>
-                    <div class="col s12 l7">
-                        <span>{{ term.term_definition }}</span>
-                    </div>
-                    <div class="col s12 l2">
-                        <span>Created by&#58; {{ term.created_by }}</span>
+                    <div class="col-s12">
+                        <h1>{{ letter }}</h1>
                     </div>
                 </div>
-                {% if session.user|lower == "admin" or session.user|lower == term.created_by|lower %}
-                    <div class="row">
-                        <div class="col s12">
-                            <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn-large red">Delete term</a>
-                            <a href="#" class="btn-large blue">Edit term details</a>
-                        </div>
+            </div>
+        {% endfor %}
+        {% for term in terms %}
+            <div class="row">
+                <div class="col s12 l3">
+                    <span>{{ term.term_name }}</span>
+                </div>
+                <div class="col s12 l7">
+                    <span>{{ term.term_definition }}</span>
+                </div>
+                <div class="col s12 l2">
+                    <span>Created by&#58; {{ term.created_by }}</span>
+                </div>
+            </div>
+            {% if session.user|lower == "admin" or session.user|lower == term.created_by|lower %}
+                <div class="row">
+                    <div class="col s12">
+                        <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn-large red">Delete term</a>
+                        <a href="#" class="btn-large blue">Edit term details</a>
                     </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% if session.user %}
+        <div class="row">
+            <div class="col-s12">
+                <a href="{{ url_for('add_definition') }}" class="btn-large green">Add term</a>
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock %}
