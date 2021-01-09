@@ -28,7 +28,7 @@ def home_page():
     return render_template("index.html", terms=terms, users=users)
 
 
-@app.route("/search")
+@app.route("/search", methods=["GET", "POST"])
 def search():
     query = request.form.get("query")
     terms = list(mongo.db.terms.find({"$text": {"$search": query}}))
@@ -126,8 +126,8 @@ def view_dictionary():
 def add_definition():
     if request.method == "POST":
         new_term = {
-            "term_name": request.form.get("term_name"),
-            "term_definition": request.form.get("term_definition"),
+            "term_name": request.form.get("term_name").capitalize(),
+            "term_definition": request.form.get("term_definition").capitalize(),
             "created_by": session["user"],
             "created_on": datetime.datetime.today()
         }
