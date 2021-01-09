@@ -35,7 +35,7 @@
                         <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
                         <li><a href="{{ url_for('add_definition') }}">Add Definition</a></li>
                         {% if session.user|lower == "admin" %}
-                            <li><a href="#">Manage Users</a></li>
+                            <li><a href="{{ url_for('manage_users') }}">Manage Users</a></li>
                         {% endif %}
                         <li><a href="{{ url_for('logout') }}">Logout</a></li>
                     {% else %}
@@ -55,7 +55,7 @@
                 <li><a href="{{ url_for('profile', username=session['user']) }}">My Profile</a></li>
                 <li><a href="{{ url_for('add_definition') }}">Add Definition</a></li>
                 {% if session.user|lower == "admin" %}
-                    <li><a href="#">Manage Users</a></li>
+                    <li><a href="{{ url_for('manage_users') }}">Manage Users</a></li>
                 {% endif %}
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% else %}

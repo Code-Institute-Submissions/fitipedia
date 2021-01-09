@@ -133,6 +133,14 @@ def add_definition():
     return render_template("add_definition.html")
 
 
+@app.route("/manage_users")
+def manage_users():
+    is_superuser = mongo.db.users.find_one({"is_superuser": True})
+    if session["user"] == is_superuser:
+        users = mongo.db.users.find().sort("username", 1)
+        return render_template("manage_users.html", users=users)
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"), 
     port=int(os.environ.get("PORT")), 
