@@ -141,6 +141,14 @@ def manage_users():
         return render_template("manage_users.html", users=users)
 
 
+@app.route("/delete_term/<term_id>")
+def delete_term(term_id):
+    terms = mongo.db.terms.find()
+    mongo.db.terms.remove({"_id": ObjectId(term_id)})
+    flash("Term deleted from dictionary")
+    return redirect(url_for("view_dictionary", terms=terms))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"), 
     port=int(os.environ.get("PORT")), 
