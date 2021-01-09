@@ -155,8 +155,7 @@ def edit_term(term_id):
 def update_profile(username):
     if request.method == "POST":
         is_superuser = True if mongo.db.users.find_one(
-            {"username": username,
-            "is_superuser": True}) else False
+            {"username": username, "is_superuser": True}) else False
         updated_account = {
             "username": request.form.get("username").lower(),
             "password": generate_password_hash(request.form.get("password")),
@@ -177,6 +176,27 @@ def manage_users():
     if session["user"] == "admin":
         users = mongo.db.users.find().sort("username", 1)
         return render_template("manage_users.html", users=users)
+    
+
+@app.route("/update_user_details/<user_id>", methods=["GET", "POST"])
+def update_user_details(user_id):
+    if session["user"] == "admin":
+        if request.method == "POST":
+            is_superuser = True if mongo.db.users.find_one(
+                {"username": user_id, "is_superuser": True}) else False
+            updated_user = {
+                "username": request.form.get("username").lower(),
+                "password": generate_password_hash(request.form.get("password")),
+                "email_address": request.form.get("email").lower(),
+                "is_superuser": is_superuser
+            }
+            mongo.db.users.update({"_id": ObjectId(user_id)}, updated_user)
+            flash("The user's details were successfully updated")
+            return redirect(url_for("manage_users"))
+
+        users = mongo.db.users.find()
+        user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+        return render_template("update_user_details.html", users=users, user=user)
 
 
 @app.route("/delete_term/<term_id>")

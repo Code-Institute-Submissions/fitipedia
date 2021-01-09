@@ -15,7 +15,7 @@
             </div>
             <div class="col s12 l4">
                 <a href="{{ url_for('delete_user', user_id=user._id) }}" class="btn red">Delete user</a>
-                <a href="#" class="btn teal">Edit user details</a>
+                <a href="{{ url_for('update_user_details', user_id=user._id) }}" class="btn teal">Edit user details</a>
             </div>
         </div>
     {% endfor %}
