@@ -17,7 +17,7 @@
             </div>
             <div class="row btn-wrapper">
                 <div class="col s12">
-                    <a href="{{ url_for('search') }}" class="btn-large search-btn">Search dictionary</a>
+                    <a href="#search" class="btn-large search-btn">Search dictionary</a>
                 </div>
             </div>
             <div class="row login-notice-wrapper">
@@ -34,6 +34,7 @@
     <div class="container search-container center-align">
         <div class="row">
             <div class="col s12">
+                <a name="search"></a>
                 <form method="POST" action="{{ url_for('search') }}">
                     <div class="row">
                         <div class="input-field col s12 m7 l8">
@@ -53,20 +54,25 @@
         </div>
     </div>
     {% if session.user %}
-        <div class="contributions-container">
+        <div class="container contributions-container">
             <div class="row">
                 <div class="col s12">
-                    <h2>My contributions</h2>
+                    <h2 class="center-align">My contributions</h2>
                 </div>
             </div>
             {% for term in terms %}
                 {% if term.created_by|lower == session.user|lower %}
                     <div class="row">
-                        <div class="col s12 l4">
-                            <span>{{ term.term_name }}</span>
+                        <div class="col s12 l3">
+                            <span class="term-name"><strong>{{ term.term_name }}</strong></span>
                         </div>
                         <div class="col s12 l8">
                             <span>{{ term.term_definition }}</span>
+                        </div>
+                        <div class="col s12 l1">
+                            <a href="{{ url_for('edit_term', term_id=term._id) }}" class="teal">
+                                <i class="fas fa-edit"></i>
+                            </a>
                         </div>
                     </div>
                 {% endif %}

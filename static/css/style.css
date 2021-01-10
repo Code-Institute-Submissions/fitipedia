@@ -1,8 +1,16 @@
 /*-- base content --*/
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    background-color: #f0efbd;
+    background-color: #fafafa;
     font-family: 'Commissioner', sans-serif;
+}
+
+a {
+    color: inherit;
 }
 
 .preloader-wrapper {
@@ -13,6 +21,24 @@ body {
     height: 200px;
     z-index: 9999;
     background-color: white;
+}
+
+#returnToTop {
+    display: none;
+    position: fixed;
+    bottom: 5rem;
+    right: 1.2rem;
+    font-size: 3rem;
+    text-align: center;
+    color: rgba(175, 125, 0, 0.8);
+    cursor: pointer;
+    background: no-repeat;
+    z-index: 99;
+    padding-bottom: 20px;
+}
+
+#returnToTop:hover {
+    opacity: 1;
 }
 
 /*-- navbar --*/
@@ -143,17 +169,14 @@ main {
     margin-top: 40px;
 }
 
+.term-name {
+    font-weight: 800;
+}
+
 .welcome-heading {
     font-family: 'Roboto', sans-serif;
     font-size: 4rem;
     font-weight: 500;
-}
-
-.expenses-container {
-    background-color: #fff8dc;
-    box-shadow: 5px 5px 5px 5px #979797;
-    padding: 30px 20px;
-    margin: 1.5rem auto;
 }
 
 /*-- login page --*/
