@@ -20,6 +20,7 @@ $(document).ready(function(){
 
     $('.sidenav').sidenav();
     $('.collapsible').collapsible();
+    $('#flashed_messages').fadeOut(2000);
     $('.tooltipped').tooltip();
     $('select').formSelect();
     $('.datepicker').datepicker({

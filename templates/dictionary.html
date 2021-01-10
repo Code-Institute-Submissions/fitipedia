@@ -1,65 +1,88 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 class="center-align">Dictionary</h1>
 
-    {% if terms|length == 0 %}
-        {% if session.user %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h1 class="dictionary-heading center-align">Dictionary</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <p class="introductory-para">Welcome to the online fitness dictionary. This dictionary helps the fitness community by defining a number of concepts around training and explaining their meaning in clear terms. As a member of the community, feel free to add your own contributions and update existing definitions to ensure our content is as reliable and accurate as can be.</p>
+                {% if not session.user %}
+                    <p>In order to contribute to our dictionary, you will need to <a class="register-link" href="{{ url_for ('register') }}">create an account</a>.</p>
+                    <p>Existing user&#63; <a class="login-link" href="{{ url_for ('login') }}">Log in</a>.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if terms|length == 0 %}
+            {% if session.user %}
+                <div class="row">
+                    <div class="col-s12">
+                        <h2><strong>No terms have been added to the dictionary yet. Be the first to contribute to our community by adding a definition below.</strong></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-s12">
+                        <a href="{{ url_for('add_definition') }}" class="btn-large green">Add term</a>
+                    </div>
+                </div>
+                {% else %}
+                <div class="row">
+                    <div class="col-s12">
+                        <h2><strong>No terms have been added to the dictionary yet. Please <a href="{{ url_for('register') }}">register an account</a> to contribute to our community.</strong></h2>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            {% for letter in letters %}
+                <div class="letters-container">
+                    <div class="row">
+                        <div class="col-s12">
+                            <h1>{{ letter }}</h1>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
             <div class="row">
-                <div class="col-s12">
-                    <h2><strong>No terms have been added to the dictionary yet. Be the first to contribute to our community by adding a definition below.</strong></h2>
+                <div class="col s12">
+                    <h3 class="key-terms">Key Terms</h2>
                 </div>
             </div>
+            <div class="terms-wrapper">
+                {% for term in terms %}
+                    <div class="row entry-block">
+                        <div class="col s12 m3 l3 dictionary-field">
+                            <span class="term-name">{{ term.term_name }}</span>
+                        </div>
+                        <div class="col s12 m7 l7 dictionary-field">
+                            <span>{{ term.term_definition }}</span>
+                        </div>
+                        <div class="col s12 m2 l2">
+                            <span><em>Created by&#58; {{ term.created_by }}</em></span>
+                        </div>
+                    </div>
+                    {% if session.user|lower == "admin" or session.user|lower == term.created_by|lower %}
+                        <div class="row">
+                            <div class="col s12">
+                                <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn-large red">Delete term</a>
+                                <a href="{{ url_for('edit_term', term_id=term._id) }}" class="btn-large blue">Edit term details</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if session.user %}
             <div class="row">
                 <div class="col-s12">
                     <a href="{{ url_for('add_definition') }}" class="btn-large green">Add term</a>
                 </div>
             </div>
-            {% else %}
-            <div class="row">
-                <div class="col-s12">
-                    <h2><strong>No terms have been added to the dictionary yet. Please <a href="{{ url_for('register') }}">register an account</a> to contribute to our community.</strong></h2>
-                </div>
-            </div>
         {% endif %}
-    {% else %}
-        {% for letter in letters %}
-            <div class="letters-container">
-                <div class="row">
-                    <div class="col-s12">
-                        <h1>{{ letter }}</h1>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-        {% for term in terms %}
-            <div class="row">
-                <div class="col s12 l3">
-                    <span>{{ term.term_name }}</span>
-                </div>
-                <div class="col s12 l7">
-                    <span>{{ term.term_definition }}</span>
-                </div>
-                <div class="col s12 l2">
-                    <span>Created by&#58; {{ term.created_by }}</span>
-                </div>
-            </div>
-            {% if session.user|lower == "admin" or session.user|lower == term.created_by|lower %}
-                <div class="row">
-                    <div class="col s12">
-                        <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn-large red">Delete term</a>
-                        <a href="{{ url_for('edit_term', term_id=term._id) }}" class="btn-large blue">Edit term details</a>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-    {% if session.user %}
-        <div class="row">
-            <div class="col-s12">
-                <a href="{{ url_for('add_definition') }}" class="btn-large green">Add term</a>
-            </div>
-        </div>
-    {% endif %}
+    </div>
 
 {% endblock %}

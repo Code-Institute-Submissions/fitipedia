@@ -69,12 +69,12 @@
         </ul>
     </header>
 
-    <section class="center-align">
+    <section id="flashed_messages" class="center-align">
         <!-- display flash messages -->
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
-                    <h5 class="flash-message">{{ message }}</h5>
+                    <h5 class="flash-message center-align">{{ message }}</h5>
                 {% endfor %}
             {% endif %}
         {% endwith %}

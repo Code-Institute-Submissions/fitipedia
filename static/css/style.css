@@ -13,7 +13,11 @@ a {
     color: inherit;
 }
 
-.preloader-wrapper {
+main {
+    padding-bottom: 2.5rem;
+}
+
+/* .preloader-wrapper {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -21,7 +25,7 @@ a {
     height: 200px;
     z-index: 9999;
     background-color: white;
-}
+} */
 
 #returnToTop {
     display: none;
@@ -69,12 +73,19 @@ nav .brand-logo {
     color: #ffffff;
 }
 
-.flash-message {
-    color: red;
+/*-- flashed messages --*/
+
+#flashed_messages {
+    position: fixed;
+    top: 20%;
+    background-color: rgba(255, 0, 0, 0.7);
+    margin: 0 25vw;
+    width: 50%;
 }
 
-main {
-    padding-bottom: 2.5rem;
+.flash-message {
+    color: white;
+    padding: 5px 20px;
 }
 
 /*-- homepage --*/
@@ -219,21 +230,39 @@ main {
     text-decoration: underline;
 }
 
-/*-- my expenses page --*/
+/*-- dictionary page --*/
 
-.expense-record {
-    padding: 10px 5px;
-    border-bottom: 2px solid #333222;
+.dictionary-heading {
+    font-size: 3rem;
 }
 
-.expense-record i,
-.expense-totals i {
-    font-size: 1.4rem;
+.introductory-para {
+    font-size: 1.1rem;
 }
 
-.total {
-    font-size: 1.6rem;
-    font-weight: 500;
+.key-terms {
+    font-size: 2.6rem;
+}
+
+.terms-wrapper {
+    border: 1px solid #000000;
+}
+
+.entry-block {
+    padding: 10px 0;
+    border-bottom: 1px solid #000000;
+    margin-bottom: 5px;
+}
+
+.dictionary-field {
+    border-bottom: 1px dotted #212121;
+    margin-bottom: 5px;
+}
+
+.term-name {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
 }
 
 /*-- footer --*/
@@ -437,6 +466,14 @@ main {
         font-size: 1.1rem;
     }
 
+    .dictionary-heading {
+        font-size: 4rem;
+    }
+
+    .key-terms {
+        font-size: 3rem;
+    }
+
     .info-container h6 {
         font-size: 1.15rem;
     }
@@ -453,6 +490,12 @@ main {
 
     .sign-in {
         margin: 30px;
+    }
+
+    .dictionary-field {
+        border-right: 1px solid #000000;
+        border-bottom: none;
+        margin-bottom: none;
     }
     
     .brand-logo img {
@@ -494,6 +537,10 @@ main {
 
     .search-buttons button {
         margin: 0 10px;
+    }
+
+    .dictionary-heading {
+        font-size: 4.5rem;
     }
 
     .info-container h6 {
