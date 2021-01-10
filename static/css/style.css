@@ -265,6 +265,21 @@ nav .brand-logo {
     letter-spacing: 0.05rem;
 }
 
+.delete,
+.edit,
+.add {
+    border-radius: 10px;
+}
+
+.entry-block .delete span,
+.entry-block .edit span {
+    display: none;
+}
+
+.add-entry {
+    margin-top: 30px;
+}
+
 /*-- footer --*/
 
 .page-footer {
@@ -390,6 +405,16 @@ nav .brand-logo {
         line-height: 54px;
         font-size: 15px;
         padding: 0 28px;
+    }
+    
+    .entry-block .delete span,
+    .entry-block .edit span {
+        display: inline;
+    }
+
+    .entry-block .delete i,
+    .entry-block .edit i {
+        display: none;
     }
 
     .info-container h6 {
