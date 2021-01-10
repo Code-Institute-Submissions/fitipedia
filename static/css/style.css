@@ -200,7 +200,7 @@ nav .brand-logo {
 .sign-in,
 .registration,
 .add-definition
-.edit-user {
+.edit-data {
     margin: 30px 5px;
 }
 
@@ -316,11 +316,12 @@ nav .brand-logo {
 
 /*-- user info container --*/
 
-.user-info-heading {
+.user-info-heading,
+.term-info-heading {
     font-size: 3rem;
 }
 
-.edit-user button {
+.edit-data button {
     font-size: 11px;
 }
 
@@ -421,7 +422,7 @@ nav .brand-logo {
         line-height: 40px;
     }
 
-    .edit-user button {
+    .edit-data button {
         font-size: 14px;
     }
 }
@@ -465,7 +466,7 @@ nav .brand-logo {
         display: none;
     }
 
-    .edit-user button {
+    .edit-data button {
         font-size: 15px;
     }
 
@@ -575,7 +576,8 @@ nav .brand-logo {
         margin-bottom: none;
     }
 
-    .user-info-heading {
+    .user-info-heading,
+    .term-info-heading {
         font-size: 3.6rem;
     }
     
@@ -624,7 +626,8 @@ nav .brand-logo {
         font-size: 4.5rem;
     }
 
-    .user-info-heading {
+    .user-info-heading,
+    .term-info-heading {
         font-size: 4.2rem;
     }
 
@@ -649,7 +652,7 @@ nav .brand-logo {
     .sign-in,
     .registration,
     .add-definition,
-    .edit-user {
+    .edit-data {
         margin: 30px 40px;
     }
 
@@ -676,7 +679,7 @@ nav .brand-logo {
     .sign-in,
     .registration,
     .add-definition,
-    .edit-user {
+    .edit-data {
         margin: 30px 100px;
     }
 
