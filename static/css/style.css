@@ -271,13 +271,20 @@ nav .brand-logo {
     border-radius: 10px;
 }
 
-.entry-block .delete span,
-.entry-block .edit span {
+.delete span,
+.edit span {
     display: none;
 }
 
 .add-entry {
     margin-top: 30px;
+}
+
+/*-- profile page --*/
+
+.warning {
+    font-size: 1.6rem;
+    text-transform: uppercase;
 }
 
 /*-- footer --*/
@@ -407,13 +414,13 @@ nav .brand-logo {
         padding: 0 28px;
     }
     
-    .entry-block .delete span,
-    .entry-block .edit span {
+   .delete span,
+   .edit span {
         display: inline;
     }
 
-    .entry-block .delete i,
-    .entry-block .edit i {
+    .delete i,
+    .edit i {
         display: none;
     }
 
