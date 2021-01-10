@@ -198,7 +198,9 @@ nav .brand-logo {
 }
 
 .sign-in,
-.registration {
+.registration,
+.add-definition
+.edit-user {
     margin: 30px 5px;
 }
 
@@ -282,9 +284,44 @@ nav .brand-logo {
 
 /*-- profile page --*/
 
+.contributions-container {
+    padding-bottom: 35px;
+}
+
 .warning {
     font-size: 1.6rem;
     text-transform: uppercase;
+}
+
+.warning i {
+    color: #ffc400;
+    font-size: 2rem;
+}
+
+/*-- manage users --*/
+
+.user-info-container {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.user-field {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.admin-notice-container {
+    padding-top: 35px;
+}
+
+/*-- user info container --*/
+
+.user-info-heading {
+    font-size: 3rem;
+}
+
+.edit-user button {
+    font-size: 11px;
 }
 
 /*-- footer --*/
@@ -383,6 +420,10 @@ nav .brand-logo {
         height: 40px;
         line-height: 40px;
     }
+
+    .edit-user button {
+        font-size: 14px;
+    }
 }
 
 @media screen and (min-width: 360px) {
@@ -422,6 +463,10 @@ nav .brand-logo {
     .delete i,
     .edit i {
         display: none;
+    }
+
+    .edit-user button {
+        font-size: 15px;
     }
 
     .info-container h6 {
@@ -529,6 +574,10 @@ nav .brand-logo {
         border-bottom: none;
         margin-bottom: none;
     }
+
+    .user-info-heading {
+        font-size: 3.6rem;
+    }
     
     .brand-logo img {
         width: 90%;
@@ -575,6 +624,10 @@ nav .brand-logo {
         font-size: 4.5rem;
     }
 
+    .user-info-heading {
+        font-size: 4.2rem;
+    }
+
     .info-container h6 {
         padding-top: 0.7rem;
     }
@@ -594,7 +647,9 @@ nav .brand-logo {
     }
     
     .sign-in,
-    .registration {
+    .registration,
+    .add-definition,
+    .edit-user {
         margin: 30px 40px;
     }
 
@@ -619,7 +674,9 @@ nav .brand-logo {
     }
 
     .sign-in,
-    .registration {
+    .registration,
+    .add-definition,
+    .edit-user {
         margin: 30px 100px;
     }
 

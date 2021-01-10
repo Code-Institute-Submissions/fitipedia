@@ -10,10 +10,10 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <h5 class="left">My Account</h5>
+                <h5 class="center-align">My Account</h5>
             </div>
         </div>
-        <div class="row">
+        <div class="row center-align">
             <div class="col s12">
                 <p>Username &#58; <span>{{ username }}</span></p>
                 <a href="{{ url_for('update_profile', username=username) }}" class="btn-large edit blue">Update Details</a>
@@ -23,7 +23,7 @@
         <div class="contributions-container">
             <div class="row">
                 <div class="col s12">
-                    <h2>My contributions</h2>
+                    <h2 class="center-align">My contributions</h2>
                 </div>
             </div>
             {% for term in terms %}
@@ -69,7 +69,7 @@
         </div>
         <div class="row center-align">
             <div class="col s12">
-                <p class="warning"><i class="fas fa-exclamation-triangle yellow-text"></i> Warning&#33; This action cannot be undone&#33; You should only take this action if you are certain you want to delete your account.</p>
+                <p class="warning"><i class="fas fa-exclamation-triangle"></i> Warning&#33; This action cannot be undone&#33; You should only take this action if you are certain you want to delete your account.</p>
                 <a class="btn-large delete red" href="{{ url_for('delete_account', username=username)}}">Delete Account</a>
             </div>
         </div>

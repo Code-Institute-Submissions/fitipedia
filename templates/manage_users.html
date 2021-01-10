@@ -2,51 +2,62 @@
 
 {% block content %}
 
-<h1 class="center-align">Manage Users</h1>
-
-<div class="user-info-container">
-    {% for user in users %}
+    <div class="row">
+        <div class="col s12">
+            <h1 class="center-align">Manage Users</h1>
+        </div>
+    </div>
+    <div class="user-info-container">
         <div class="row">
-            <div class="col s12 l4">
-                <span>{{ user.username }}</span>
-            </div>
-            <div class="col s12 l4">
-                <span>{{ user.email_address }}</span>
-            </div>
-            <div class="col s12 l4">
-                <a href="{{ url_for('delete_user', user_id=user._id) }}" class="btn red">Delete user</a>
-                <a href="{{ url_for('update_user_details', user_id=user._id) }}" class="btn teal">Edit user details</a>
+            <div class="col s12">
+                <h2 class="center-align">Current registered users</h2>
             </div>
         </div>
-    {% endfor %}
-    <div class="row">
-        <div class="col s12">
-            <a href="{{ url_for('add_new_user') }}" class="btn-large green">Add New User</a>
+        {% for user in users %}
+            <div class="row">
+                <div class="col s6 m2 l4 user-field">
+                    <span class="tooltipped" data-tooltip="{{ user.username }}">{{ user.username }}</span>
+                </div>
+                <div class="col s6 m3 l3 user-field">
+                    <span class="tooltipped" data-tooltip="{{ user.email_address }}">{{ user.email_address }}</span>
+                </div>
+                <div class="col s12 m7 l5">
+                    <a href="{{ url_for('delete_user', user_id=user._id) }}" class="btn-small delete red">
+                        <span>Delete User</span><i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE USER"></i></a>
+                    <a href="{{ url_for('update_user_details', user_id=user._id) }}" class="btn-small edit teal">
+                        <span>Edit user details</span><i class="fas fa-pen-square tooltipped" data-tooltip="EDIT USER DETAILS"></i>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="row center-align">
+            <div class="col s12">
+                <a href="{{ url_for('add_new_user') }}" class="btn-large add green">Add New User</a>
+            </div>
         </div>
     </div>
-</div>
+    <div class="admin-notice-container container center-align">
+        <div class="row">
+            <div class="col s12">
+                <h3 class="center-align">Admin Privileges Notice</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <p>An admin may delete another user from the database and therefore remove their access to the dictionary&#8217;s full functionality if their use of the dictionary is found to be inappropriate and not of the benefit to the site&#8217;s wider community. In exceptional circumstances, an admin may also delete a user&#8217;s account at the request of the user.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <p>An admin may add a user to the database in exceptional circumstances if the user is having issues signing up that are unable to be resolved and the user&#8217;s desired username and e-mail address are not already in use. In such circumstances, the admin will generate a random password for the user which the user must change immediately after logging in for the first time.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <p>Those found to be abusing their admin privileges will have their admin rights removed with immediate effect.</p>
+            </div>
+        </div>
+    </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col s12">
-            <h3>Admin Privileges Notice</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            <p>An admin may delete another user from the database and therefore remove their access to the dictionary&#8217;s full functionality if their use of the dictionary is found to be inappropriate and not of the benefit to the site&#8217;s wider community. In exceptional circumstances, an admin may also delete a user&#8217;s account at the request of the user.</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            <p>An admin may add a user to the database in exceptional circumstances if the user is having issues signing up that are unable to be resolved and the user&#8217;s desired username and e-mail address are not already in use. In such circumstances, the admin will generate a random password for the user which the user must change immediately after logging in for the first time.</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            <p>Those found to be abusing their admin privileges will have their admin rights removed with immediate effect.</p>
-        </div>
-    </div>
-</div>
 
 {% endblock %}
