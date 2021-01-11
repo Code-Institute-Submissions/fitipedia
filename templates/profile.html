@@ -50,9 +50,27 @@
                     </div>
                 {% endif %}
             {% endfor %}
+            <div class="row center-align">
+                <div class="col s12">
+                    {% set total = [] %}
+                    {% for term in terms if session.user|lower == term.created_by|lower %}
+                        {% set i = term.contribution_value|int %}
+                        {% if total.append(i) %}
+                            {{ totals }}
+                        {% endif %}
+                    {% endfor %}
+                    <p> You have made {{ total|sum }} contributions so far.</p>
+                </div>
+            </div>            
             <div class="row center-align add-entry">
                 <div class="col-s12">
-                    <a href="{{ url_for('add_definition') }}" class="btn-large add green">Add another&#33;</a>
+                    <a href="{{ url_for('add_definition') }}" class="btn-large add green">
+                        {% if total|sum > 0 %}
+                            Add another&#33;
+                        {% else %}
+                            Add term
+                        {% endif %}
+                    </a>
                 </div>
             </div>
         </div>

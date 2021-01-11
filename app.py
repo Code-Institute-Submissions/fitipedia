@@ -23,7 +23,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/home_page")
 def home_page():
-    terms = mongo.db.terms.find()
+    terms = list(mongo.db.terms.find().sort("created_on", -1))
     users = mongo.db.users.find()
     return render_template("index.html", terms=terms, users=users)
 
@@ -108,10 +108,10 @@ def logout():
 def profile(username):
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    terms = mongo.db.terms.find().sort("term_name", 1)
+    terms = list(mongo.db.terms.find().sort("term_name", 1))
     
     if session["user"]:
-        return render_template("profile.html", username=username,terms=terms)
+        return render_template("profile.html", username=username, terms=terms)
     
     return redirect(url_for("login"))
 
@@ -132,7 +132,8 @@ def add_definition():
             "term_name": request.form.get("term_name").capitalize(),
             "term_definition": request.form.get("term_definition").capitalize(),
             "created_by": session["user"],
-            "created_on": datetime.datetime.today()
+            "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
+            "contribution_value": 1
         }
         mongo.db.terms.insert_one(new_term)
         flash("Term successfully created. You will now be redirected to the dictionary page where you can see your contribution!")
@@ -150,7 +151,8 @@ def edit_term(term_id):
             "term_name": request.form.get("term_name"),
             "term_definition": request.form.get("term_definition"),
             "created_by": session["user"],
-            "created_on": datetime.datetime.today()
+            "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
+            "contribution_value": 1
         }
         mongo.db.terms.update({"_id": ObjectId(term_id)}, updated_term)
         flash("Dictionary information successfully updated")
