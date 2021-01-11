@@ -180,15 +180,19 @@ nav .brand-logo {
     margin-top: 40px;
 }
 
+.welcome-heading {
+    font-size: 2.9rem;
+}
+
+.contributions-heading {
+    font-size: 2.7rem;
+    text-transform: capitalize;
+}
+
 .term-name {
     font-weight: 800;
 }
 
-.welcome-heading {
-    font-family: 'Roboto', sans-serif;
-    font-size: 4rem;
-    font-weight: 500;
-}
 
 /*-- login and registration pages --*/
 
@@ -566,6 +570,10 @@ nav .brand-logo {
         margin-top: 1.2rem;
     }
 
+    .contributions-heading {
+        font-size: 2.9rem;
+    }
+
     .sign-in {
         margin: 30px;
     }
@@ -576,6 +584,7 @@ nav .brand-logo {
         margin-bottom: none;
     }
 
+    .welcome-heading,
     .user-info-heading,
     .term-info-heading {
         font-size: 3.6rem;
@@ -622,10 +631,15 @@ nav .brand-logo {
         margin: 0 10px;
     }
 
+    .contributions-heading {
+        font-size: 3.2rem;
+    }
+
     .dictionary-heading {
         font-size: 4.5rem;
     }
 
+    .welcome-heading,
     .user-info-heading,
     .term-info-heading {
         font-size: 4.2rem;
@@ -676,6 +690,14 @@ nav .brand-logo {
         margin: 15px 20px 15px 0px;
     }
 
+    .contributions-heading {
+        font-size: 3.5rem;
+    }
+
+    .contributions-container i {
+        font-size: 0.9rem;
+    }
+
     .sign-in,
     .registration,
     .add-definition,
@@ -685,5 +707,11 @@ nav .brand-logo {
 
     .page-footer {
         text-align: left;
+    }
+}
+
+@media screen and (min-width: 1066px) {
+    .contributions-container i {
+        font-size: 1.2rem;
     }
 }
