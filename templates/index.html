@@ -93,7 +93,7 @@
                     {% endfor %}
                     <p>
                         {% if total|sum > 0 %}
-                            You have made {{ total|sum }} contributions so far.
+                            You have made {{ total|sum }} contribution{% if total|sum != 1 %}s{% endif %} so far.
                         {% else %}
                             You haven&#8217;t made any contributions yet. Click below to add your first&#33;
                         {% endif %}
