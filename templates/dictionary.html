@@ -65,6 +65,22 @@
                             <span><em>Created by&#58; {{ term.created_by }}</em></span>
                         </div>
                     </div>
+                    {% if session.user %}
+                        <div class="row entry-block">
+                            <div class="col s12">
+                                <button class="btn upvote green" onclick="confirmUpvote()">
+                                    <i class="fas fa-thumbs-up tooltipped" data-tooltip="UPVOTE"></i>
+                                </button>
+                                <div class="upvote-container center-align"></div>
+                            </div>
+                            <div class="col s12">
+                                <button class="btn downvote red" onclick="confirmDownvote()">
+                                    <i class="fas fa-thumbs-down tooltipped" data-tooltip="DOWNVOTE"></i>
+                                </button>
+                                <div class="downvote-container center-align"></div>
+                            </div>
+                        </div>
+                    {% endif %}
                     {% if session.user|lower == "admin" or session.user|lower == term.created_by|lower %}
                         <div class="row entry-block">
                             <div class="col s6">

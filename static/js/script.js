@@ -35,3 +35,21 @@ $(document).ready(function(){
     $('.preloader-wrapper').fadeOut('slow');
     $('.modal').modal()
 });
+
+function confirmUpvote() {
+    var upvoteAlert = document.querySelector('.upvote-container');
+
+    upvoteAlert.innerHTML += `
+        <div class="upvote-alert">Upvoted!</div>
+    `;
+    $('.upvote-alert').fadeOut(2500);
+}
+
+function confirmDownvote() {
+    var downvoteAlert = document.querySelector('.downvote-container');
+
+    downvoteAlert.innerHTML += `
+        <div class="downvote-alert">Downvoted!</div>
+    `;
+    $('.downvote-alert').fadeOut(2500);
+}

@@ -282,6 +282,47 @@ nav .brand-logo {
     display: none;
 }
 
+.upvote-container {
+    position: fixed;
+    bottom: 50%;
+    left: 25%;
+    width: 50%;
+    font-size: 1.2rem;
+    color: #fafafa;
+    opacity: .7;
+    padding: 10px 20px;
+    z-index: 99;
+}
+
+.upvote-alert {
+    background-color: #3da040;
+    padding: 10px 20px;
+    letter-spacing: 0.05rem;
+}
+
+.upvote,
+.downvote {
+    border-radius: 10px;
+}
+
+.downvote-container {
+    position: fixed;
+    bottom: 50%;
+    left: 25%;
+    width: 50%;
+    font-size: 1.2rem;
+    color: #fafafa;
+    opacity: .7;
+    padding: 10px 20px;
+    z-index: 99;
+}
+
+.downvote-alert {
+    background-color: #df2626;
+    padding: 10px 20px;
+    letter-spacing: 0.05rem;
+}
+
 .add-entry {
     margin-top: 30px;
 }

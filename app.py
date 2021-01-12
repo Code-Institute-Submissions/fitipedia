@@ -163,6 +163,11 @@ def edit_term(term_id):
     return render_template("edit_term.html", terms=terms, term=term)
 
 
+@app.route("/upvote/<term_id>")
+def upvote(term_id):
+    terms = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
+
+
 @app.route("/update_profile/<username>", methods=["GET", "POST"])
 def update_profile(username):
     if request.method == "POST":
