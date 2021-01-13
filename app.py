@@ -133,7 +133,8 @@ def add_definition():
             "term_definition": request.form.get("term_definition").capitalize(),
             "created_by": session["user"],
             "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
-            "contribution_value": 1
+            "contribution_value": 1,
+            "score": 0
         }
         mongo.db.terms.insert_one(new_term)
         flash("Term successfully created. You will now be redirected to the dictionary page where you can see your contribution!")
@@ -152,7 +153,8 @@ def edit_term(term_id):
             "term_definition": request.form.get("term_definition"),
             "created_by": session["user"],
             "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
-            "contribution_value": 1
+            "contribution_value": 1,
+            "score": 0
         }
         mongo.db.terms.update({"_id": ObjectId(term_id)}, updated_term)
         flash("Dictionary information successfully updated")
@@ -165,7 +167,20 @@ def edit_term(term_id):
 
 @app.route("/upvote/<term_id>")
 def upvote(term_id):
-    terms = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
+    terms = list(mongo.db.terms.find().sort("term_name", 1))
+    term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
+    mongo.db.terms.update_one({"_id": ObjectId(term_id)}, {"$inc": {"score": 1}})
+
+    return render_template("dictionary.html", terms=terms, term=term)
+
+
+@app.route("/downvote/<term_id>")
+def downvote(term_id):
+    terms = list(mongo.db.terms.find().sort("term_name", 1))
+    term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
+    mongo.db.terms.update_one({"_id": ObjectId(term_id)}, {"$inc": {"score": -1}})
+    
+    return render_template("dictionary.html", terms=terms, term=term)
 
 
 @app.route("/update_profile/<username>", methods=["GET", "POST"])

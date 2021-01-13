@@ -54,47 +54,52 @@
             </div>
             <div class="terms-wrapper">
                 {% for term in terms %}
-                    <div class="row entry-block">
-                        <div class="col s12 m3 l3 dictionary-field">
-                            <span class="term-name">{{ term.term_name }}</span>
+                    <div class="term-wrapper">               
+                        <div class="row">
+                            <div class="col s12 m3 l3">
+                                <span class="term-name">{{ term.term_name }}</span>
+                            </div>
+                            <div class="col s12 m7 l7">
+                                <span>{{ term.term_definition }}</span>
+                            </div>
+                            <div class="col s12 m2 l2">
+                                <span><em>Created by&#58; {{ term.created_by }}</em></span>
+                            </div>
                         </div>
-                        <div class="col s12 m7 l7 dictionary-field">
-                            <span>{{ term.term_definition }}</span>
+                        <div class="row">
+                            <div class="col s4 m8 xl10">
+                                <span>Score&#58; {% if term.score >= 20 %}<span class="superscore">{{ term.score }}</span>{% elif term.score < 0 %}<span class="minus-score">{{ term.score }}</span>{% else%}<span class="score">{{ term.score }}</span>{% endif %}</span>
+                            </div>
+                            {% if session.user %}
+                                <div class="col s4 m2 xl1">
+                                    <a href="{{ url_for('upvote', term_id=term._id) }}" class="btn upvote green" onclick="confirmUpvote()">
+                                        <i class="fas fa-thumbs-up tooltipped" data-tooltip="UPVOTE"></i>
+                                    </a>
+                                    <div class="upvote-container center-align"></div>
+                                </div>
+                                <div class="col s4 m2 xl1">
+                                    <a href="{{ url_for('downvote', term_id=term._id) }}" class="btn downvote red" onclick="confirmDownvote()">
+                                        <i class="fas fa-thumbs-down tooltipped" data-tooltip="DOWNVOTE"></i>
+                                    </a>
+                                    <div class="downvote-container center-align"></div>
+                                </div>
+                            {% endif %}
                         </div>
-                        <div class="col s12 m2 l2">
-                            <span><em>Created by&#58; {{ term.created_by }}</em></span>
-                        </div>
+                        {% if session.user|lower == "admin" or session.user|lower == term.created_by|lower %}
+                            <div class="row">
+                                <div class="col s6">
+                                    <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn-small delete right red">
+                                        <span>Delete term</span><i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE TERM"></i>
+                                    </a>
+                                </div>
+                                <div class="col s6">
+                                    <a href="{{ url_for('edit_term', term_id=term._id) }}" class="btn-small edit blue">
+                                        <span>Edit details</span><i class="fas fa-pen-square tooltipped" data-tooltip="EDIT DETAILS"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
-                    {% if session.user %}
-                        <div class="row entry-block">
-                            <div class="col s12">
-                                <button class="btn upvote green" onclick="confirmUpvote()">
-                                    <i class="fas fa-thumbs-up tooltipped" data-tooltip="UPVOTE"></i>
-                                </button>
-                                <div class="upvote-container center-align"></div>
-                            </div>
-                            <div class="col s12">
-                                <button class="btn downvote red" onclick="confirmDownvote()">
-                                    <i class="fas fa-thumbs-down tooltipped" data-tooltip="DOWNVOTE"></i>
-                                </button>
-                                <div class="downvote-container center-align"></div>
-                            </div>
-                        </div>
-                    {% endif %}
-                    {% if session.user|lower == "admin" or session.user|lower == term.created_by|lower %}
-                        <div class="row entry-block">
-                            <div class="col s6">
-                                <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn-small delete right red">
-                                    <span>Delete term</span><i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE TERM"></i>
-                                </a>
-                            </div>
-                            <div class="col s6">
-                                <a href="{{ url_for('edit_term', term_id=term._id) }}" class="btn-small edit blue">
-                                    <span>Edit details</span><i class="fas fa-pen-square tooltipped" data-tooltip="EDIT DETAILS"></i>
-                                </a>
-                            </div>
-                        </div>
-                    {% endif %}
                 {% endfor %}
             </div>
         {% endif %}

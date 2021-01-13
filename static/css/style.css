@@ -254,15 +254,9 @@ nav .brand-logo {
     border: 1px solid #000000;
 }
 
-.entry-block {
-    padding: 10px 0;
-    border-bottom: 1px solid #000000;
-    margin-bottom: 5px;
-}
-
-.dictionary-field {
-    border-bottom: 1px dotted #212121;
-    margin-bottom: 5px;
+.term-wrapper {
+    border-bottom: 2px solid #000000;
+    padding-top: 5px;
 }
 
 .term-name {
@@ -280,6 +274,20 @@ nav .brand-logo {
 .delete span,
 .edit span {
     display: none;
+}
+
+.superscore {
+    color: rgba(0, 255, 0, 1);
+    font-size: 1.8rem;
+}
+
+.minus-score {
+    color: rgba(255, 0, 0, 1);
+    font-size: 1.8rem;
+}
+
+.score {
+    font-size: 1.8rem;
 }
 
 .upvote-container {
@@ -465,6 +473,10 @@ nav .brand-logo {
     .search-btn {
         height: 40px;
         line-height: 40px;
+    }
+
+    .upvote {
+        float: right;
     }
 
     .edit-data button {

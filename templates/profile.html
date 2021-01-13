@@ -72,7 +72,9 @@
                     <p>
                         You have made {{ total|sum }} {% if user_contributions != 1 %} contributions {% else %} contribution {% endif %}  so far. 
                         {% if user_contributions < legend_target %} 
-                            Make another {{ remaining_required }} {% if remaining_required > 1 %} contributions {% else %} contribution {% endif %} to reach legend status&#33; {% else %} Congratulations&#33; You have reached legend status&#33;
+                            Make another {{ remaining_required }} {% if remaining_required > 1 %} contributions {% else %} contribution {% endif %} to reach legend status&#33; 
+                        {% else %} 
+                            Congratulations&#33; You have reached legend status&#33;
                         {% endif %}
                     </p>
                 </div>
