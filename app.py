@@ -118,11 +118,9 @@ def profile(username):
 
 @app.route("/view_dictionary")
 def view_dictionary():
-    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    letters = alphabet.split()
-    first_letter = [letter[0] for letter in letters]
     terms = list(mongo.db.terms.find().sort("term_name", 1))
-    return render_template("dictionary.html", terms=terms, letters=letters)
+    popular_terms = list(mongo.db.terms.find({"score": {"$gt": 4}}).sort("score", -1))
+    return render_template("dictionary.html", terms=terms, popular_terms=popular_terms)
 
 
 @app.route("/add_definition", methods=["GET", "POST"])
