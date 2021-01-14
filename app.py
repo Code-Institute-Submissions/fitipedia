@@ -167,8 +167,13 @@ def add_definition():
 
 @app.route("/edit_term/<term_id>", methods=["GET", "POST"])
 def edit_term(term_id):
-    if "user" in session:
+    if "user" in session:        
         if request.method == "POST":
+            username = mongo.db.users.find_one({"username": session["user"]})["username"]
+            creator = mongo.db.terms.find({"created_by": username})["created_by"]
+            if username != creator:
+                flash("You can't edit terms created by other users.")
+                return redirect(url_for("view_dictionary"))         
             updated_term = {
                 "term_name": request.form.get("term_name").capitalize(),
                 "term_definition": request.form.get("term_definition").capitalize(),
@@ -303,22 +308,35 @@ def delete_term(term_id):
 
 @app.route("/delete_account/<username>")
 def delete_account(username):
-    users = mongo.db.users.find()
-    session.pop("user")
-    mongo.db.users.remove({"username": username})
-    flash("Your account was deleted. You will now be redirected to the home page.")
-    return redirect(url_for("home_page", username=username, users=users))
+    if "user" in session:
+        deleted_user = mongo.db.users.find_one({"username": session["user"]})["username"]
+        if username == deleted_user:
+            users = mongo.db.users.find()
+            session.pop("user")
+            mongo.db.users.remove({"username": username})
+            flash("Your account was deleted. You will now be redirected to the home page.")
+            return redirect(url_for("home_page", username=username, users=users))
+        else:
+            flash("You are not authorised to perform this action.")
+            return redirect(url_for("home_page"))
+    else:
+        flash("You are not authorised to perform this action.")
+        return redirect(url_for("home_page"))
 
 
 @app.route("/delete_user/<user_id>")
 def delete_user(user_id):
-    if session["user"] == "admin":
-        users = mongo.db.users.find()
-        user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-        mongo.db.users.remove({"_id": ObjectId(user_id)})
-        flash("The user was successfully deleted from the database.")
-        return redirect(url_for("manage_users"))
-    else:
+    if "user" in session:
+        if session["user"] == "admin":
+            users = mongo.db.users.find()
+            user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+            mongo.db.users.remove({"_id": ObjectId(user_id)})
+            flash("The user was successfully deleted from the database.")
+            return redirect(url_for("manage_users"))
+        else:
+            flash("You are not authorised to view this page or perform this action.")
+            return redirect(url_for("home_page"))
+    else: 
         flash("You are not authorised to view this page or perform this action.")
         return redirect(url_for("home_page"))
 
