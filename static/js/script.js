@@ -22,18 +22,13 @@ $(document).ready(function(){
     $('.collapsible').collapsible();
     $('#flashed_messages').fadeOut(2000);
     $('.tooltipped').tooltip();
-    $('select').formSelect();
-    $('.datepicker').datepicker({
-        format: "mmm-dd, yyyy",
-        yearRange: 3,
-        maxDate: +0,
-        showClearBtn: true,
-        i18n: {
-            done: "Select"
-        }
-    });
-    $('.preloader-wrapper').fadeOut('slow');
     $('.modal').modal();
+    $("#term_definition").on("keydown", function (e) {
+        var inputValue = $("#term_definition").val();
+        if (inputValue.length == 0 || inputValue.slice(-1) == " ") {
+            return e.which !== 32;
+        }
+    })
 
     validateMaterializeSelect();
     function validateMaterializeSelect() {

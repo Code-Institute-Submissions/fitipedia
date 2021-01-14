@@ -41,61 +41,69 @@ def search():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method == "POST":
-        existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
-        existing_email = mongo.db.users.find_one({"email_address": request.form.get("email").lower()})
-        is_superuser = True if request.form.get("username").lower == "admin" else False
+    if "user" in session:
+        flash("You are already logged in!")
+        return redirect("home_page")
+    else: 
+        if request.method == "POST":
+            existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
+            existing_email = mongo.db.users.find_one({"email_address": request.form.get("email").lower()})
+            is_superuser = True if request.form.get("username").lower == "admin" else False
 
-        # check whether user already exists
-        if existing_user:
-            flash("User already exists")
-            return redirect(url_for("register"))
-        
-        # check whether e-mail address was already used to sign up
-        if existing_email:
-            flash("An account already exists for this e-mail address!")
-            return redirect(url_for("register"))
-        
-        create_account = {
-            "username": request.form.get("username").lower(),
-            "password": generate_password_hash(request.form.get("password")),
-            "email_address": request.form.get("email").lower(),
-            "is_superuser": is_superuser
-        }
-        mongo.db.users.insert_one(create_account)
+            # check whether user already exists
+            if existing_user:
+                flash("User already exists")
+                return redirect(url_for("register"))
+            
+            # check whether e-mail address was already used to sign up
+            if existing_email:
+                flash("An account already exists for this e-mail address!")
+                return redirect(url_for("register"))
+            
+            create_account = {
+                "username": request.form.get("username").lower(),
+                "password": generate_password_hash(request.form.get("password")),
+                "email_address": request.form.get("email").lower(),
+                "is_superuser": is_superuser
+            }
+            mongo.db.users.insert_one(create_account)
 
-        session["user"] = request.form.get("username").lower()
-        flash("Registration successful!")
-        return redirect(url_for("home_page", username=session["user"]))
+            session["user"] = request.form.get("username").lower()
+            flash("Registration successful!")
+            return redirect(url_for("home_page", username=session["user"]))
 
-    return render_template("register.html")
+        return render_template("register.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        # check if username exists in db
-        existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})    
-        if existing_user:
-            # ensure hashed password matches user input
-            if check_password_hash(
-                existing_user["password"], request.form.get("password")):
-                    session["user"] = request.form.get("username").lower()
-                    return redirect(url_for(
-                        "home_page", username=session["user"]))
+    if "user" in session:
+        flash("You are already logged in!")
+        return redirect("home_page")
+    else: 
+        if request.method == "POST":
+            # check if username exists in db
+            existing_user = mongo.db.users.find_one(
+                {"username": request.form.get("username").lower()})    
+            if existing_user:
+                # ensure hashed password matches user input
+                if check_password_hash(
+                    existing_user["password"], request.form.get("password")):
+                        session["user"] = request.form.get("username").lower()
+                        return redirect(url_for(
+                            "home_page", username=session["user"]))
 
-            else:
-                # invalid password match
+                else:
+                    # invalid password match
+                    flash("Invalid login credentials!")
+                    return redirect(url_for("login"))
+
+            else: 
+                # username doesn't exist
                 flash("Invalid login credentials!")
                 return redirect(url_for("login"))
 
-        else: 
-            # username doesn't exist
-            flash("Invalid login credentials!")
-            return redirect(url_for("login"))
-
-    return render_template("login.html")  
+        return render_template("login.html")  
 
 
 @app.route("/logout")
@@ -208,29 +216,38 @@ def downvote(term_id):
 
 @app.route("/update_profile/<username>", methods=["GET", "POST"])
 def update_profile(username):
-    if request.method == "POST":
-        is_superuser = True if mongo.db.users.find_one(
-            {"username": username, "is_superuser": True}) else False
-        updated_account = {
-            "username": request.form.get("username").lower(),
-            "password": generate_password_hash(request.form.get("password")),
-            "email_address": request.form.get("email").lower(),
-            "is_superuser": is_superuser
-        }
-        mongo.db.users.update({"username": username}, updated_account)
+    if "user" in session:
+        if request.method == "POST":
+            is_superuser = True if mongo.db.users.find_one(
+                {"username": username, "is_superuser": True}) else False
+            updated_account = {
+                "username": request.form.get("username").lower(),
+                "password": generate_password_hash(request.form.get("password")),
+                "email_address": request.form.get("email").lower(),
+                "is_superuser": is_superuser
+            }
+            mongo.db.users.update({"username": username}, updated_account)
 
-        session["user"] = request.form.get("username").lower()
-        flash("Your profile was successfully updated")
-        return redirect(url_for("profile", username=username))
+            session["user"] = request.form.get("username").lower()
+            flash("Your profile was successfully updated")
+            return redirect(url_for("profile", username=username))
 
-    return render_template("update_profile.html", username=username)
+        return render_template("update_profile.html", username=username)
+    else:
+        flash("Please log in to update your profile")
+        return redirect(url_for("login"))
 
 
 @app.route("/manage_users")
 def manage_users():
-    if session["user"] == "admin":
-        users = mongo.db.users.find().sort("username", 1)
-        return render_template("manage_users.html", users=users)
+    if "user" in session:
+        is_superuser = mongo.db.users.find_one({"username": "admin"})
+        if is_superuser:
+            users = mongo.db.users.find().sort("username", 1)
+            return render_template("manage_users.html", users=users)
+        else: 
+            flash("You are not authorised to view this page")
+            return redirect(url_for("home_page"))
     else:
         flash("You are not authorised to view this page")
         return redirect(url_for("home_page"))      
@@ -275,10 +292,9 @@ def add_new_user():
 @app.route("/delete_term/<term_id>")
 def delete_term(term_id):
     if "user" in session:
-        terms = mongo.db.terms.find()
         mongo.db.terms.remove({"_id": ObjectId(term_id)})
         flash("Term deleted from dictionary")
-        return redirect(url_for("view_dictionary", terms=terms))
+        return redirect(url_for("view_dictionary"))
     else:
         flash("You must log in to perform this action")
         return redirect(url_for("login"))
@@ -302,7 +318,7 @@ def delete_user(user_id):
         flash("The user was successfully deleted from the database.")
         return redirect(url_for("manage_users"))
     else:
-        flash("You are not authorised to view this page")
+        flash("You are not authorised to view this page or perform this action.")
         return redirect(url_for("home_page"))
 
 
