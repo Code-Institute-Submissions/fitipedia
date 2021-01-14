@@ -241,8 +241,9 @@ def update_profile(username):
 @app.route("/manage_users")
 def manage_users():
     if "user" in session:
-        is_superuser = mongo.db.users.find_one({"username": "admin"})
-        if is_superuser:
+        is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
+        username = mongo.db.users.find_one({"username": session["user"]})["username"]
+        if username == is_superuser:
             users = mongo.db.users.find().sort("username", 1)
             return render_template("manage_users.html", users=users)
         else: 
