@@ -167,31 +167,32 @@ def add_definition():
 
 @app.route("/edit_term/<term_id>", methods=["GET", "POST"])
 def edit_term(term_id):
-    if "user" in session:        
-        if request.method == "POST":
-            username = mongo.db.users.find_one({"username": session["user"]})["username"]
-            creator = mongo.db.terms.find({"created_by": username})["created_by"]
-            if username != creator:
-                flash("You can't edit terms created by other users.")
-                return redirect(url_for("view_dictionary"))         
-            updated_term = {
-                "term_name": request.form.get("term_name").capitalize(),
-                "term_definition": request.form.get("term_definition").capitalize(),
-                "created_by": session["user"],
-                "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
-                "contribution_value": 1,
-                "score": 0
-            }
-            mongo.db.terms.update({"_id": ObjectId(term_id)}, updated_term)
-            flash("Dictionary information successfully updated")
-            return redirect(url_for("view_dictionary"))
+    if "user" in session:
+        term_creator = mongo.db.terms.find_one({"_id": ObjectId(term_id)})["created_by"]
+        is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
+        if session["user"] == term_creator or session["user"] == is_superuser:
+            if request.method == "POST":      
+                updated_term = {
+                    "term_name": request.form.get("term_name").capitalize(),
+                    "term_definition": request.form.get("term_definition").capitalize(),
+                    "created_by": session["user"],
+                    "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
+                    "contribution_value": 1,
+                    "score": 0
+                }
+                mongo.db.terms.update({"_id": ObjectId(term_id)}, updated_term)
+                flash("Dictionary information successfully updated")
+                return redirect(url_for("view_dictionary"))
+        else:
+            flash("You cannot edit terms created by other users")
+            return redirect(url_for("view_dictionary"))            
         
         term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
         terms = mongo.db.terms.find().sort("term_name", 1)
         return render_template("edit_term.html", terms=terms, term=term)
     
     else:
-        flash("Please log in to view this page")
+        flash("You must log in to perform this action.")
         return redirect(url_for("login"))
 
 
@@ -298,11 +299,17 @@ def add_new_user():
 @app.route("/delete_term/<term_id>")
 def delete_term(term_id):
     if "user" in session:
-        mongo.db.terms.remove({"_id": ObjectId(term_id)})
-        flash("Term deleted from dictionary")
-        return redirect(url_for("view_dictionary"))
+        term_creator = mongo.db.terms.find_one({"_id": ObjectId(term_id)})["created_by"]
+        is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
+        if session["user"] == term_creator or session["user"] == is_superuser:
+            mongo.db.terms.remove({"_id": ObjectId(term_id)})
+            flash("Term deleted from dictionary")
+            return redirect(url_for("view_dictionary"))
+        else:
+            flash("You cannot delete terms created by other users.")
+            return redirect(url_for("view_dictionary"))
     else:
-        flash("You must log in to perform this action")
+        flash("You must log in to perform this action.")
         return redirect(url_for("login"))
 
 
