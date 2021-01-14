@@ -107,14 +107,19 @@ def logout():
 
 @app.route("/profile/<username>")
 def profile(username):
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
-    terms = list(mongo.db.terms.find().sort("term_name", 1))
-    
-    if session["user"]:
+    if "user" in session:
+        username = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
+
+        if username != session["user"]:
+            flash("You do not have permission to view other users' profiles")
+            return redirect(url_for("home_page"), username=username)
+        
+        terms = list(mongo.db.terms.find().sort("term_name", 1))
         return render_template("profile.html", username=username, terms=terms)
-    
-    return redirect(url_for("login"))
+    else:
+        flash("Please log in to view your profile")
+        return redirect(url_for("login"))
 
 
 @app.route("/view_dictionary")
@@ -125,58 +130,80 @@ def view_dictionary():
 
 @app.route("/add_definition", methods=["GET", "POST"])
 def add_definition():
-    if request.method == "POST":
-        new_term = {
-            "term_name": request.form.get("term_name").capitalize(),
-            "term_definition": request.form.get("term_definition").capitalize(),
-            "created_by": session["user"],
-            "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
-            "contribution_value": 1,
-            "score": 0
-        }
-        mongo.db.terms.insert_one(new_term)
-        flash("Term successfully created. You will now be redirected to the dictionary page where you can see your contribution!")
-        return redirect(url_for("view_dictionary"))
-    
-    terms = mongo.db.terms.find()
-    users = mongo.db.users.find()
-    return render_template("add_definition.html")
+    if "user" in session:
+        if request.method == "POST":
+            existing_term = mongo.db.terms.find_one({"term_name": request.form.get("term_name").capitalize()})
+            if existing_term:
+                flash("This term already exists in the dictionary. Please add another term.")
+                return redirect(url_for("add_definition"))
+
+            new_term = {
+                "term_name": request.form.get("term_name").capitalize(),
+                "term_definition": request.form.get("term_definition").capitalize(),
+                "created_by": session["user"],
+                "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
+                "contribution_value": 1,
+                "score": 0
+            }
+            mongo.db.terms.insert_one(new_term)
+            flash("Term successfully created. You will now be redirected to the dictionary page where you can see your contribution!")
+            return redirect(url_for("view_dictionary"))
+        
+        terms = mongo.db.terms.find()
+        users = mongo.db.users.find()
+        return render_template("add_definition.html", terms=terms, users=users)
+    else:
+        flash("Please log in to view this page.")
+        return redirect(url_for("login"))
 
 
 @app.route("/edit_term/<term_id>", methods=["GET", "POST"])
 def edit_term(term_id):
-    if request.method == "POST":
-        updated_term = {
-            "term_name": request.form.get("term_name"),
-            "term_definition": request.form.get("term_definition"),
-            "created_by": session["user"],
-            "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
-            "contribution_value": 1,
-            "score": 0
-        }
-        mongo.db.terms.update({"_id": ObjectId(term_id)}, updated_term)
-        flash("Dictionary information successfully updated")
-        return redirect(url_for("view_dictionary"))
+    if "user" in session:
+        if request.method == "POST":
+            updated_term = {
+                "term_name": request.form.get("term_name").capitalize(),
+                "term_definition": request.form.get("term_definition").capitalize(),
+                "created_by": session["user"],
+                "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
+                "contribution_value": 1,
+                "score": 0
+            }
+            mongo.db.terms.update({"_id": ObjectId(term_id)}, updated_term)
+            flash("Dictionary information successfully updated")
+            return redirect(url_for("view_dictionary"))
+        
+        term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
+        terms = mongo.db.terms.find().sort("term_name", 1)
+        return render_template("edit_term.html", terms=terms, term=term)
     
-    term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
-    terms = mongo.db.terms.find().sort("term_name", 1)
-    return render_template("edit_term.html", terms=terms, term=term)
+    else:
+        flash("Please log in to view this page")
+        return redirect(url_for("login"))
 
 
 @app.route("/upvote/<term_id>")
 def upvote(term_id):
-    terms = list(mongo.db.terms.find().sort("term_name", 1))
-    term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": 1}})
+    if "user" in session:
+        terms = list(mongo.db.terms.find().sort("term_name", 1))
+        term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": 1}})
 
-    return render_template("dictionary.html", term=term, terms=terms)
+        return render_template("dictionary.html", term=term, terms=terms)
+    else:
+        flash("Please log in to perform this action")
+        return redirect(url_for("login"))
 
 
 @app.route("/downvote/<term_id>")
 def downvote(term_id):
-    terms = list(mongo.db.terms.find().sort("term_name", 1))
-    term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": -1}})
-    
-    return render_template("dictionary.html", term=term, terms=terms)
+    if "user" in session:
+        terms = list(mongo.db.terms.find().sort("term_name", 1))
+        term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": -1}})
+        
+        return render_template("dictionary.html", term=term, terms=terms)
+    else:
+        flash("Please log in to perform this action")
+        return redirect(url_for("login"))
 
 
 @app.route("/update_profile/<username>", methods=["GET", "POST"])
@@ -204,6 +231,9 @@ def manage_users():
     if session["user"] == "admin":
         users = mongo.db.users.find().sort("username", 1)
         return render_template("manage_users.html", users=users)
+    else:
+        flash("You are not authorised to view this page")
+        return redirect(url_for("home_page"))      
 
 
 @app.route("/add_new_user", methods=["GET", "POST"])
@@ -236,14 +266,22 @@ def add_new_user():
 
         users = mongo.db.users.find()
         return render_template("add_new_user.html")
+    
+    else:
+        flash("You are not authorised to view this page")
+        return redirect(url_for("home_page"))
 
 
 @app.route("/delete_term/<term_id>")
 def delete_term(term_id):
-    terms = mongo.db.terms.find()
-    mongo.db.terms.remove({"_id": ObjectId(term_id)})
-    flash("Term deleted from dictionary")
-    return redirect(url_for("view_dictionary", terms=terms))
+    if "user" in session:
+        terms = mongo.db.terms.find()
+        mongo.db.terms.remove({"_id": ObjectId(term_id)})
+        flash("Term deleted from dictionary")
+        return redirect(url_for("view_dictionary", terms=terms))
+    else:
+        flash("You must log in to perform this action")
+        return redirect(url_for("login"))
 
 
 @app.route("/delete_account/<username>")
@@ -263,6 +301,9 @@ def delete_user(user_id):
         mongo.db.users.remove({"_id": ObjectId(user_id)})
         flash("The user was successfully deleted from the database.")
         return redirect(url_for("manage_users"))
+    else:
+        flash("You are not authorised to view this page")
+        return redirect(url_for("home_page"))
 
 
 if __name__ == "__main__":

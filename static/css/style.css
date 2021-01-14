@@ -81,6 +81,7 @@ nav .brand-logo {
     background-color: rgba(255, 0, 0, 0.7);
     margin: 0 25vw;
     width: 50%;
+    z-index: 9999;
 }
 
 .flash-message {
