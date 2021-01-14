@@ -24,8 +24,9 @@ mongo = PyMongo(app)
 @app.route("/home_page")
 def home_page():
     terms = list(mongo.db.terms.find().sort("created_on", -1))
+    popular_terms = list(mongo.db.terms.find({"score": {"$gt": 4}}).sort("score", -1))
     users = mongo.db.users.find()
-    return render_template("index.html", terms=terms, users=users)
+    return render_template("index.html", terms=terms, popular_terms=popular_terms, users=users)
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -119,8 +120,7 @@ def profile(username):
 @app.route("/view_dictionary")
 def view_dictionary():
     terms = list(mongo.db.terms.find().sort("term_name", 1))
-    popular_terms = list(mongo.db.terms.find({"score": {"$gt": 4}}).sort("score", -1))
-    return render_template("dictionary.html", terms=terms, popular_terms=popular_terms)
+    return render_template("dictionary.html", terms=terms)
 
 
 @app.route("/add_definition", methods=["GET", "POST"])
@@ -166,19 +166,17 @@ def edit_term(term_id):
 @app.route("/upvote/<term_id>")
 def upvote(term_id):
     terms = list(mongo.db.terms.find().sort("term_name", 1))
-    term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
-    mongo.db.terms.update_one({"_id": ObjectId(term_id)}, {"$inc": {"score": 1}})
+    term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": 1}})
 
-    return render_template("dictionary.html", terms=terms, term=term)
+    return render_template("dictionary.html", term=term, terms=terms)
 
 
 @app.route("/downvote/<term_id>")
 def downvote(term_id):
     terms = list(mongo.db.terms.find().sort("term_name", 1))
-    term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
-    mongo.db.terms.update_one({"_id": ObjectId(term_id)}, {"$inc": {"score": -1}})
+    term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": -1}})
     
-    return render_template("dictionary.html", terms=terms, term=term)
+    return render_template("dictionary.html", term=term, terms=terms)
 
 
 @app.route("/update_profile/<username>", methods=["GET", "POST"])

@@ -96,16 +96,17 @@ nav .brand-logo {
     min-height: 480px;
 }
 
-.overlay {
-    position: absolute;
-    /* top: 0; */
-    /* left: 0; */
-    height: 100%;
-    width: 100%;
-}
-
 .callout {
     padding-top: 100px;
+}
+
+.card {
+    width: 40%;
+    margin: -50px 30% 0;
+}
+
+.card-reveal {
+    height: 200px;
 }
 
 .jumbotron-header {
