@@ -236,27 +236,6 @@ def add_new_user():
 
         users = mongo.db.users.find()
         return render_template("add_new_user.html")
-    
-
-@app.route("/update_user_details/<user_id>", methods=["GET", "POST"])
-def update_user_details(user_id):
-    if session["user"] == "admin":
-        if request.method == "POST":
-            is_superuser = True if mongo.db.users.find_one(
-                {"username": user_id, "is_superuser": True}) else False
-            updated_user = {
-                "username": request.form.get("username").lower(),
-                "password": generate_password_hash(request.form.get("password")),
-                "email_address": request.form.get("email").lower(),
-                "is_superuser": is_superuser
-            }
-            mongo.db.users.update({"_id": ObjectId(user_id)}, updated_user)
-            flash("The user's details were successfully updated")
-            return redirect(url_for("manage_users"))
-
-        users = mongo.db.users.find()
-        user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-        return render_template("update_user_details.html", users=users, user=user)
 
 
 @app.route("/delete_term/<term_id>")
