@@ -30,7 +30,7 @@
                 </div>
                 <div class="row btn-wrapper">
                     <div class="col s12">
-                        <a href="#search" class="btn-large search-btn">Search dictionary</a>
+                        <a href="#search_bar" class="btn-large search-btn">Search dictionary</a>
                     </div>
                 </div>
             {% endif %}
@@ -42,7 +42,6 @@
     <div class="container search-container center-align">
         <div class="row">
             <div class="col s12">
-                <a name="search"></a>
                 <form id="search_bar" method="POST" action="{{ url_for('search') }}">
                     <div class="row">
                         <div class="input-field col s12 m7 l8">
@@ -113,9 +112,18 @@
                             <a href="{{ url_for('edit_term', term_id=term._id) }}" class="btn-small blue">
                                 <i class="fas fa-edit tooltipped" data-tooltip="EDIT TERM"></i>
                             </a>
-                            <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn-small red">
+                            <a href="#modal_home" class="btn-small red modal-trigger">
                                 <i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE TERM"></i>
                             </a>
+                            <div id="modal_home" class="modal">
+                                <div class="modal-content">
+                                    <p>Are you sure you want to delete this term&#63;</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{{ url_for('home_page') }}" class="btn grey">Cancel</a>
+                                    <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn red ">Delete</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 {% endif %}

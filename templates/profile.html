@@ -45,9 +45,18 @@
                     </div>
                     <div class="row">
                         <div class="col s6">
-                            <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn-small delete right red">
+                            <a href="#modal_profile" class="btn-small delete right red modal-trigger">
                                 <span>Delete term</span><i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE TERM"></i>
                             </a>
+                            <div id="modal_profile" class="modal">
+                                <div class="modal-content">
+                                    <p>Are you sure you want to delete this term&#63;</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{{ url_for('profile', username=session['user']) }}" class="btn grey">Cancel</a>
+                                    <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn red ">Delete</a>
+                                </div>
+                            </div>
                         </div>
                         <div class="col s6">
                             <a href="{{ url_for('edit_term', term_id=term._id) }}" class="btn-small edit blue">
@@ -105,7 +114,15 @@
         <div class="row center-align">
             <div class="col s12">
                 <p class="warning"><i class="fas fa-exclamation-triangle"></i> Warning&#33; This action cannot be undone&#33; You should only take this action if you are certain you want to delete your account.</p>
-                <a class="btn-large delete red" href="{{ url_for('delete_account', username=username)}}">Delete Account</a>
+                <a class="btn-large delete red modal-trigger" href="#modal_account">Delete Account</a>
+                <div id="modal_account" class="modal">
+                    <div class="modal-content">
+                        <p>Are you sure you want to delete your account&#63;</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{ url_for('profile', username=session['user']) }}" class="btn grey">Cancel</a><a href="{{ url_for('delete_account', username=username) }}" class="btn red">Delete Account</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
