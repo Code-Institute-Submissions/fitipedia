@@ -246,6 +246,59 @@ def update_profile(username):
         if request.method == "POST":
             is_superuser = True if mongo.db.users.find_one(
                 {"username": username, "is_superuser": True}) else False
+            existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
+            existing_email = mongo.db.users.find_one({"email_address": request.form.get("email").lower()})
+            email_address = mongo.db.users.find_one({"username": username})["email_address"]
+
+            if existing_user:
+                if username == request.form.get("username").lower():
+                    if existing_email:
+                        if email_address == request.form.get("email").lower():
+                            updated_account = {
+                            "username": request.form.get("username").lower(),
+                            "password": generate_password_hash(request.form.get("password")),
+                            "email_address": request.form.get("email").lower(),
+                            "is_superuser": is_superuser
+                            }
+                            mongo.db.users.update({"username": username}, updated_account)
+
+                            session["user"] = request.form.get("username").lower()
+                            flash("Your profile was successfully updated")
+                            return redirect(url_for("profile", username=username))
+                        flash("An account already exists for this e-mail address!")
+                        return render_template("update_profile.html", username=username)
+
+                    updated_account = {
+                        "username": request.form.get("username").lower(),
+                        "password": generate_password_hash(request.form.get("password")),
+                        "email_address": request.form.get("email").lower(),
+                        "is_superuser": is_superuser
+                    }
+                    mongo.db.users.update({"username": username}, updated_account)
+
+                    session["user"] = request.form.get("username").lower()
+                    flash("Your profile was successfully updated")
+                    return redirect(url_for("profile", username=username))
+                else:
+                    flash("Username already exists!")
+                    return render_template("update_profile.html", username=username)
+
+            if existing_email:
+                if not existing_user:
+                    updated_account = {
+                        "username": request.form.get("username").lower(),
+                        "password": generate_password_hash(request.form.get("password")),
+                        "email_address": request.form.get("email").lower(),
+                        "is_superuser": is_superuser
+                    }
+                    mongo.db.users.update({"username": username}, updated_account)
+
+                    session["user"] = request.form.get("username").lower()
+                    flash("Your profile was successfully updated")
+                    return redirect(url_for("profile", username=session["user"]))
+                flash("An account already exists for this e-mail address!")
+                return render_template("update_profile.html", username=username)
+
             updated_account = {
                 "username": request.form.get("username").lower(),
                 "password": generate_password_hash(request.form.get("password")),
