@@ -115,16 +115,18 @@ def logout():
 
 @app.route("/profile/<username>")
 def profile(username):
-    if "user" in session:
-        username = mongo.db.users.find_one(
-            {"username": session["user"]})["username"]
+    if mongo.db.users.find_one({"username": username}) is None:
+        return render_template("404.html"), 404
 
-        if username != session["user"]:
+    if "user" in session:
+        if username == mongo.db.users.find_one(
+            {"username": session["user"]})["username"]:
+                terms = list(mongo.db.terms.find().sort("term_name", 1))
+                return render_template("profile.html", username=username, terms=terms)
+        else:
             flash("You do not have permission to view other users' profiles")
-            return redirect(url_for("home_page"), username=username)
+            return redirect(url_for("home_page"))
         
-        terms = list(mongo.db.terms.find().sort("term_name", 1))
-        return render_template("profile.html", username=username, terms=terms)
     else:
         flash("Please log in to view your profile")
         return redirect(url_for("login"))
