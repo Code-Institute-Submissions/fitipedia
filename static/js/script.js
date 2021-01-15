@@ -28,7 +28,7 @@ $(document).ready(function(){
         if (inputValue.length == 0 || inputValue.slice(-1) == " ") {
             return e.which !== 32;
         }
-    })
+    });
 
     validateMaterializeSelect();
     function validateMaterializeSelect() {
@@ -58,6 +58,10 @@ $(document).ready(function(){
         });
     }
 });
+
+function resetSearch() {
+    document.getElementById("search_bar").reset();
+}
 
 function confirmUpvote() {
     var upvoteAlert = document.querySelector('.upvote-container');
