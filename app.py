@@ -168,24 +168,30 @@ def add_definition():
 @app.route("/edit_term/<term_id>", methods=["GET", "POST"])
 def edit_term(term_id):
     if "user" in session:
-        term_creator = mongo.db.terms.find_one({"_id": ObjectId(term_id)})["created_by"]
-        is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
-        if session["user"] == term_creator or session["user"] == is_superuser:
-            if request.method == "POST":      
-                updated_term = {
-                    "term_name": request.form.get("term_name").capitalize(),
-                    "term_definition": request.form.get("term_definition").capitalize(),
-                    "created_by": session["user"],
-                    "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
-                    "contribution_value": 1,
-                    "score": 0
-                }
-                mongo.db.terms.update({"_id": ObjectId(term_id)}, updated_term)
-                flash("Dictionary information successfully updated")
-                return redirect(url_for("view_dictionary"))
+        if ObjectId.is_valid(term_id):
+            if mongo.db.terms.find_one({"_id": ObjectId(term_id)}) is None:
+                return render_template("404.html"), 404
+            else:
+                term_creator = mongo.db.terms.find_one({"_id": ObjectId(term_id)})["created_by"]
+                is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
+                if session["user"] == term_creator or session["user"] == is_superuser:
+                    if request.method == "POST":      
+                        updated_term = {
+                            "term_name": request.form.get("term_name").capitalize(),
+                            "term_definition": request.form.get("term_definition").capitalize(),
+                            "created_by": session["user"],
+                            "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
+                            "contribution_value": 1,
+                            "score": 0
+                        }
+                        mongo.db.terms.update({"_id": ObjectId(term_id)}, updated_term)
+                        flash("Dictionary information successfully updated")
+                        return redirect(url_for("view_dictionary"))
+                else:
+                    flash("You cannot edit terms created by other users")
+                    return redirect(url_for("view_dictionary"))            
         else:
-            flash("You cannot edit terms created by other users")
-            return redirect(url_for("view_dictionary"))            
+            return render_template("404.html"), 404
         
         term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
         terms = mongo.db.terms.find().sort("term_name", 1)
@@ -199,24 +205,30 @@ def edit_term(term_id):
 @app.route("/upvote/<term_id>")
 def upvote(term_id):
     if "user" in session:
-        terms = list(mongo.db.terms.find().sort("term_name", 1))
-        term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": 1}})
+        if ObjectId.is_valid(term_id):
+            terms = list(mongo.db.terms.find().sort("term_name", 1))
+            term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": 1}})
 
-        return render_template("dictionary.html", term=term, terms=terms)
+            return render_template("dictionary.html", term=term, terms=terms)
+        else:
+            return render_template("404.html"), 404
     else:
-        flash("Please log in to perform this action")
+        flash("You must log in to perform this action.")
         return redirect(url_for("login"))
 
 
 @app.route("/downvote/<term_id>")
 def downvote(term_id):
     if "user" in session:
-        terms = list(mongo.db.terms.find().sort("term_name", 1))
-        term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": -1}})
-        
-        return render_template("dictionary.html", term=term, terms=terms)
+        if ObjectId.is_valid(term_id):
+            terms = list(mongo.db.terms.find().sort("term_name", 1))
+            term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": -1}})
+            
+            return render_template("dictionary.html", term=term, terms=terms)
+        else:
+            return render_template("404.html"), 404
     else:
-        flash("Please log in to perform this action")
+        flash("You must log in to perform this action.")
         return redirect(url_for("login"))
 
 
@@ -262,52 +274,62 @@ def manage_users():
 
 @app.route("/add_new_user", methods=["GET", "POST"])
 def add_new_user():
-    if session["user"] == "admin":
-        if request.method == "POST":
-            existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
-            existing_email = mongo.db.users.find_one({"email_address": request.form.get("email").lower()})
-            is_superuser = True if request.form.get("username").lower == "admin" else False
+    if "user" in session:
+        is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
+        username = mongo.db.users.find_one({"username": session["user"]})["username"]
+        if username == is_superuser:
+            if request.method == "POST":
+                existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
+                existing_email = mongo.db.users.find_one({"email_address": request.form.get("email").lower()})
+                is_superuser = True if request.form.get("username").lower == "admin" else False
 
-            # check whether user already exists
-            if existing_user:
-                flash("User already exists")
-                return redirect(url_for("register"))
-            
-            # check whether e-mail address was already used to sign up
-            if existing_email:
-                flash("An account already exists for this e-mail address!")
-                return redirect(url_for("register"))
-            
-            new_user = {
-                "username": request.form.get("username").lower(),
-                "password": generate_password_hash(request.form.get("password")),
-                "email_address": request.form.get("email").lower(),
-                "is_superuser": is_superuser
-            }
-            mongo.db.users.insert_one(new_user)
-            flash("The user was successfully added to the database.")
-            return redirect(url_for("manage_users"))
+                # check whether user already exists
+                if existing_user:
+                    flash("User already exists")
+                    return redirect(url_for("add_new_user"))
+                
+                # check whether e-mail address was already used to sign up
+                if existing_email:
+                    flash("An account already exists for this e-mail address!")
+                    return redirect(url_for("add_new_user"))
+                
+                new_user = {
+                    "username": request.form.get("username").lower(),
+                    "password": generate_password_hash(request.form.get("password")),
+                    "email_address": request.form.get("email").lower(),
+                    "is_superuser": is_superuser
+                }
+                mongo.db.users.insert_one(new_user)
+                flash("The user was successfully added to the database.")
+                return redirect(url_for("manage_users"))
 
-        users = mongo.db.users.find()
-        return render_template("add_new_user.html")
+            users = mongo.db.users.find()
+            return render_template("add_new_user.html")
+
+        else:
+            flash("You are not authorised to view this page.")
+            return redirect(url_for("home_page"))
     
     else:
-        flash("You are not authorised to view this page")
+        flash("You are not authorised to view this page.")
         return redirect(url_for("home_page"))
 
 
 @app.route("/delete_term/<term_id>")
 def delete_term(term_id):
     if "user" in session:
-        term_creator = mongo.db.terms.find_one({"_id": ObjectId(term_id)})["created_by"]
-        is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
-        if session["user"] == term_creator or session["user"] == is_superuser:
-            mongo.db.terms.remove({"_id": ObjectId(term_id)})
-            flash("Term deleted from dictionary")
-            return redirect(url_for("view_dictionary"))
+        if ObjectId.is_valid(term_id):
+            term_creator = mongo.db.terms.find_one({"_id": ObjectId(term_id)})["created_by"]
+            is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
+            if session["user"] == term_creator or session["user"] == is_superuser:
+                mongo.db.terms.remove({"_id": ObjectId(term_id)})
+                flash("Term deleted from dictionary")
+                return redirect(url_for("view_dictionary"))
+            else:
+                flash("You cannot delete terms created by other users.")
+                return redirect(url_for("view_dictionary"))
         else:
-            flash("You cannot delete terms created by other users.")
-            return redirect(url_for("view_dictionary"))
+            return render_template("404.html"), 404
     else:
         flash("You must log in to perform this action.")
         return redirect(url_for("login"))
@@ -346,6 +368,11 @@ def delete_user(user_id):
     else: 
         flash("You are not authorised to view this page or perform this action.")
         return redirect(url_for("home_page"))
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
 
 
 if __name__ == "__main__":
