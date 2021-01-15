@@ -206,10 +206,13 @@ def edit_term(term_id):
 def upvote(term_id):
     if "user" in session:
         if ObjectId.is_valid(term_id):
-            terms = list(mongo.db.terms.find().sort("term_name", 1))
-            term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": 1}})
+            if mongo.db.terms.find_one({"_id": ObjectId(term_id)}) is None:
+                return render_template("404.html"), 404
+            else:
+                terms = list(mongo.db.terms.find().sort("term_name", 1))
+                term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": 1}})
 
-            return render_template("dictionary.html", term=term, terms=terms)
+                return render_template("dictionary.html", term=term, terms=terms)
         else:
             return render_template("404.html"), 404
     else:
@@ -221,10 +224,13 @@ def upvote(term_id):
 def downvote(term_id):
     if "user" in session:
         if ObjectId.is_valid(term_id):
-            terms = list(mongo.db.terms.find().sort("term_name", 1))
-            term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": -1}})
-            
-            return render_template("dictionary.html", term=term, terms=terms)
+            if mongo.db.terms.find_one({"_id": ObjectId(term_id)}) is None:
+                return render_template("404.html"), 404
+            else:
+                terms = list(mongo.db.terms.find().sort("term_name", 1))
+                term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": -1}})
+                
+                return render_template("dictionary.html", term=term, terms=terms)
         else:
             return render_template("404.html"), 404
     else:
@@ -319,15 +325,18 @@ def add_new_user():
 def delete_term(term_id):
     if "user" in session:
         if ObjectId.is_valid(term_id):
-            term_creator = mongo.db.terms.find_one({"_id": ObjectId(term_id)})["created_by"]
-            is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
-            if session["user"] == term_creator or session["user"] == is_superuser:
-                mongo.db.terms.remove({"_id": ObjectId(term_id)})
-                flash("Term deleted from dictionary")
-                return redirect(url_for("view_dictionary"))
+            if mongo.db.terms.find_one({"_id": ObjectId(term_id)}) is None:
+                return render_template("404.html"), 404
             else:
-                flash("You cannot delete terms created by other users.")
-                return redirect(url_for("view_dictionary"))
+                term_creator = mongo.db.terms.find_one({"_id": ObjectId(term_id)})["created_by"]
+                is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
+                if session["user"] == term_creator or session["user"] == is_superuser:
+                    mongo.db.terms.remove({"_id": ObjectId(term_id)})
+                    flash("Term deleted from dictionary")
+                    return redirect(url_for("view_dictionary"))
+                else:
+                    flash("You cannot delete terms created by other users.")
+                    return redirect(url_for("view_dictionary"))
         else:
             return render_template("404.html"), 404
     else:
