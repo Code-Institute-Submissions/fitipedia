@@ -63,13 +63,13 @@
                             </div>
                             {% if session.user %}
                                 <div class="col s4 m2 xl1">
-                                    <a href="{{ url_for('upvote', term_id=term._id) }}" class="btn upvote green" onclick="confirmUpvote()">
+                                    <a href="{{ url_for('upvote', term_id=term._id) }}" class="btn upvote green" onclick="confirmUpvote()" data-position="top">
                                         <i class="fas fa-thumbs-up tooltipped" data-tooltip="UPVOTE"></i>
                                     </a>
                                     <div class="upvote-container center-align"></div>
                                 </div>
                                 <div class="col s4 m2 xl1">
-                                    <a href="{{ url_for('downvote', term_id=term._id) }}" class="btn downvote red" onclick="confirmDownvote()">
+                                    <a href="{{ url_for('downvote', term_id=term._id) }}" class="btn downvote red" onclick="confirmDownvote()" data-position="top">
                                         <i class="fas fa-thumbs-down tooltipped" data-tooltip="DOWNVOTE"></i>
                                     </a>
                                     <div class="downvote-container center-align"></div>

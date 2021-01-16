@@ -204,39 +204,35 @@ def edit_term(term_id):
         return redirect(url_for("login"))
 
 
-@app.route("/upvote/<term_id>")
+@app.route("/upvote/<term_id>", methods=["GET", "POST"])
 def upvote(term_id):
     if "user" in session:
         if ObjectId.is_valid(term_id):
             if mongo.db.terms.find_one({"_id": ObjectId(term_id)}) is None:
                 return render_template("404.html"), 404
-            else:
-                terms = list(mongo.db.terms.find().sort("term_name", 1))
-                term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": 1}})
 
-                return render_template("dictionary.html", term=term, terms=terms)
+            term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": 1}})
+            return redirect(url_for("view_dictionary", term=term))
         else:
             return render_template("404.html"), 404
     else:
-        flash("You must log in to perform this action.")
+        flash("You must log in to perform this action")
         return redirect(url_for("login"))
 
 
-@app.route("/downvote/<term_id>")
+@app.route("/downvote/<term_id>", methods=["GET", "POST"])
 def downvote(term_id):
     if "user" in session:
         if ObjectId.is_valid(term_id):
             if mongo.db.terms.find_one({"_id": ObjectId(term_id)}) is None:
                 return render_template("404.html"), 404
-            else:
-                terms = list(mongo.db.terms.find().sort("term_name", 1))
-                term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": -1}})
-                
-                return render_template("dictionary.html", term=term, terms=terms)
+
+            term = mongo.db.terms.find_one_and_update({"_id": ObjectId(term_id)}, {"$inc": {"score": -1}})
+            return redirect(url_for("view_dictionary", term=term))
         else:
             return render_template("404.html"), 404
     else:
-        flash("You must log in to perform this action.")
+        flash("You must log in to perform this action")
         return redirect(url_for("login"))
 
 
