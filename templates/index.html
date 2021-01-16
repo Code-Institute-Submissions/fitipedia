@@ -96,8 +96,8 @@
                     <h2 class="contributions-heading center-align">My Recent Contributions</h2>
                 </div>
             </div>
-            {% for term in terms %}
-                {% if term.created_by|lower == session.user|lower %}
+            {% for term in terms if term.created_by|lower == session.user|lower %}
+                {% if loop.index <= 5 %}
                     <div class="row">
                         <div class="col s12 l3">
                             <span class="term-name"><strong>{{ term.term_name }}</strong></span>

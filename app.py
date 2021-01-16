@@ -21,7 +21,7 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
-@app.route("/home_page")
+@app.route("/home_page/")
 def home_page():
     terms = list(mongo.db.terms.find().sort("created_on", -1))
     popular_terms = list(mongo.db.terms.find({"score": {"$gt": 4}}).sort("score", -1))
