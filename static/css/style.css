@@ -17,16 +17,6 @@ main {
     padding-bottom: 2.5rem;
 }
 
-/* .preloader-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 200px;
-    height: 200px;
-    z-index: 9999;
-    background-color: white;
-} */
-
 #returnToTop {
     display: none;
     position: fixed;
@@ -101,13 +91,37 @@ nav .brand-logo {
     padding-top: 100px;
 }
 
-.card {
-    width: 40%;
-    margin: -50px 30% 0;
+.site-info {
+    width: 30%;
+    margin: auto;
+    background-color: transparent;
+    color: #ffffff;
+    font-family: 'Yusei Magic', sans-serif;
+    text-shadow: 2px 2px #212121;
+    margin-top: -10px;
+    margin-bottom: 20px;
 }
 
-.card-reveal {
-    height: 200px;
+.site-info p {
+    color: #000000;
+    font-family: 'Commissioner', sans-serif;
+    text-shadow: none;
+    padding-top: 5px;
+}
+
+.site-info p a {
+    padding-right: 15px;
+    margin-top: -10px;
+}
+
+.modal {
+    background-color: #dadada;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.modal .modal-footer {
+    background-color: #dadada;
 }
 
 .jumbotron-header {
@@ -186,6 +200,10 @@ nav .brand-logo {
     font-size: 2.9rem;
 }
 
+.view-full-dict {
+    margin-top: 40px;
+}
+
 .contributions-heading {
     font-size: 2.7rem;
     text-transform: capitalize;
@@ -206,7 +224,8 @@ nav .brand-logo {
 .sign-in,
 .registration,
 .add-definition
-.edit-data {
+.edit-data,
+.admin-add-user {
     margin: 30px 5px;
 }
 
@@ -248,17 +267,15 @@ nav .brand-logo {
     font-size: 1.1rem;
 }
 
-.key-terms {
+.full-dictionary {
     font-size: 2.6rem;
 }
 
-.terms-wrapper {
-    border: 1px solid #000000;
-}
-
 .term-wrapper {
-    border-bottom: 2px solid #000000;
-    padding-top: 5px;
+    background-color: #edeee7;
+    width: 100%;
+    padding: 10px 5px;
+    margin: 0 0 15px;
 }
 
 .term-name {
@@ -607,7 +624,7 @@ nav .brand-logo {
         font-size: 4rem;
     }
 
-    .key-terms {
+    .full-dictionary {
         font-size: 3rem;
     }
 
@@ -721,7 +738,8 @@ nav .brand-logo {
     .sign-in,
     .registration,
     .add-definition,
-    .edit-data {
+    .edit-data,
+    .admin-add-user {
         margin: 30px 40px;
     }
 
@@ -756,7 +774,8 @@ nav .brand-logo {
     .sign-in,
     .registration,
     .add-definition,
-    .edit-data {
+    .edit-data,
+    .admin-add-user {
         margin: 30px 100px;
     }
 

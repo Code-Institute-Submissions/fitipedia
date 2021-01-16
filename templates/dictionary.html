@@ -10,9 +10,14 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <p class="introductory-para">Welcome to the online fitness dictionary. This dictionary helps the fitness community by defining a number of concepts around training and explaining their meaning in clear terms. As a member of the community, feel free to add your own contributions and update existing definitions to ensure our content is as reliable and accurate as can be.</p>
+                <p class="introductory-para">
+                    Welcome to the online fitness dictionary. This dictionary helps the fitness community by defining a number of concepts around training and explaining their meaning in clear terms. As a member of the community, feel free to add your own contributions and update existing definitions to ensure our content is as reliable and accurate as can be.
+                </p>
+                <p class="introductory-para">
+                    Each term in the dictionary has a score based on the number of upvotes and downvotes it has received. The total score is calculated by subtracting the number of downvotes from the number of upvotes. A term must have a score of 5 and over to qualify as a popular term. To maintain the highest possible standards, an entry is hidden from the dictionary and is subject to review by an admin if its score drops below -5.
+                </p>
                 {% if not session.user %}
-                    <p>In order to contribute to our dictionary, you will need to <a class="register-link" href="{{ url_for ('register') }}">create an account</a>.</p>
+                    <p>In order to contribute to our dictionary and vote on users' entries, you will need to <a class="register-link" href="{{ url_for ('register') }}">create an account</a>.</p>
                     <p>Existing user&#63; <a class="login-link" href="{{ url_for ('login') }}">Log in</a>.</p>
                 {% endif %}
             </div>
@@ -40,12 +45,20 @@
         {% else %}
             <div class="row">
                 <div class="col s12">
-                    <h3 class="key-terms">Key Terms</h2>
+                    <h3 class="full-dictionary">Full Dictionary</h2>
                 </div>
             </div>
-            <div class="terms-wrapper">
-                {% for term in terms %}
-                    <div class="term-wrapper">               
+            {% if session.user %}
+                <div class="row center-align add-entry">
+                    <div class="col-s12">
+                        <a href="{{ url_for('add_definition') }}" class="btn-large add green">Add term</a>
+                    </div>
+                </div>
+            {% endif %}
+            {% for term in terms %}
+                {% if term.score < -5 and session.user|lower != "admin"|lower %}
+                {% else %}
+                    <div class="term-wrapper card-panel">
                         <div class="row">
                             <div class="col s12 m3 l3">
                                 <span class="term-name">{{ term.term_name }}</span>
@@ -61,7 +74,7 @@
                             <div class="col s4 m8 xl10">
                                 <span>Score&#58; {% if term.score >= 20 %}<span class="superscore">{{ term.score }}</span>{% elif term.score < 0 %}<span class="minus-score">{{ term.score }}</span>{% else%}<span class="score">{{ term.score }}</span>{% endif %}</span>
                             </div>
-                            {% if session.user %}
+                            {% if session.user and session.user|lower != term.created_by|lower or session.user|lower == "admin"|lower %}
                                 <div class="col s4 m2 xl1">
                                     <a href="{{ url_for('upvote', term_id=term._id) }}" class="btn upvote green" onclick="confirmUpvote()" data-position="top">
                                         <i class="fas fa-thumbs-up tooltipped" data-tooltip="UPVOTE"></i>
@@ -100,8 +113,8 @@
                             </div>
                         {% endif %}
                     </div>
-                {% endfor %}
-            </div>
+                {% endif %}
+            {% endfor %}
         {% endif %}
         {% if session.user %}
             <div class="row center-align add-entry">

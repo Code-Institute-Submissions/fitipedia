@@ -20,7 +20,7 @@ $(document).ready(function(){
 
     $('.sidenav').sidenav();
     $('.collapsible').collapsible();
-    $('#flashed_messages').fadeOut(2000);
+    $('#flashed_messages').fadeOut(4000);
     $('.tooltipped').tooltip();
     $('.modal').modal();
     $("#term_definition").on("keydown", function (e) {
