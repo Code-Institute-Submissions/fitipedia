@@ -181,7 +181,7 @@ def edit_term(term_id):
                         updated_term = {
                             "term_name": request.form.get("term_name").capitalize(),
                             "term_definition": request.form.get("term_definition").capitalize(),
-                            "created_by": session["user"],
+                            "created_by": term_creator,
                             "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
                             "contribution_value": 1,
                             "score": 0
@@ -372,10 +372,10 @@ def delete_term(term_id):
                     flash("Term deleted from dictionary")
                     return redirect(url_for("view_dictionary"))
                 else:
-                    flash("You cannot delete terms created by other users.")
-                    return redirect(url_for("view_dictionary"))
+                    flash("You cannot delete terms created by other users")
+                    return redirect(url_for("view_dictionary"))            
         else:
-            return render_template("404.html"), 404
+            return render_template("404.html"), 404        
     else:
         flash("You must log in to perform this action.")
         return redirect(url_for("login"))

@@ -45,12 +45,12 @@
                     </div>
                     <div class="row">
                         <div class="col s6">
-                            <a href="#modal_profile" class="btn-small delete right red modal-trigger">
+                            <a href="#{{ term._id }}" class="btn-small delete right red modal-trigger">
                                 <span>Delete term</span><i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE TERM"></i>
                             </a>
-                            <div id="modal_profile" class="modal">
+                            <div id="{{ term._id }}" class="modal">
                                 <div class="modal-content">
-                                    <p>Are you sure you want to delete this term&#63;</p>
+                                    <p>Are you sure you want to delete the term {{ term.term_name }}&#63;</p>
                                 </div>
                                 <div class="modal-footer">
                                     <a href="{{ url_for('profile', username=session['user']) }}" class="btn grey">Cancel</a>

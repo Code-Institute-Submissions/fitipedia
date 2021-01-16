@@ -22,12 +22,12 @@
                     <span class="tooltipped" data-tooltip="{{ user.email_address }}">{{ user.email_address }}</span>
                 </div>
                 <div class="col s12 m7 l5">
-                    <a href="#modal_admin" class="btn-small delete red modal-trigger">
+                    <a href="#{{ user._id }}" class="btn-small delete red modal-trigger">
                         <span>Delete User</span><i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE USER"></i>
                     </a>
-                    <div id="modal_admin" class="modal">
+                    <div id="{{ user._id }}" class="modal">
                         <div class="modal-content">
-                            <p>Are you sure you want to delete this user&#63;</p>
+                            <p>Are you sure you want to delete the user {{ user.username }}&#63;</p>
                         </div>
                         <div class="modal-footer">
                             <a href="{{ url_for('manage_users') }}" class="btn grey">Cancel</a>
