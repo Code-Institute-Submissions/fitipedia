@@ -187,7 +187,7 @@ nav .brand-logo {
     margin-top: 40px;
 }
 
-.view-full-dict a {
+.locate {
     font-size: 14px;
     border-radius: 10px;
 }
@@ -301,7 +301,8 @@ nav .brand-logo {
 
 .delete,
 .edit,
-.add {
+.add,
+.locate {
     border-radius: 10px;
 }
 
@@ -436,6 +437,12 @@ nav .brand-logo {
 /*-- add new user --*/
 
 .add-user-heading {
+    font-size: 3rem;
+}
+
+/*-- 404 not found --*/
+
+.not-found-heading {
     font-size: 3rem;
 }
 
@@ -623,7 +630,8 @@ nav .brand-logo {
     }
 
     .manage-users-heading,
-    .add-user-heading {
+    .add-user-heading,
+    .not-found-heading {
         font-size: 3.2rem;
     }
 
@@ -709,7 +717,8 @@ nav .brand-logo {
     }
 
     .manage-users-heading
-    .add-user-heading {
+    .add-user-heading,
+    .not-found-heading {
         font-size: 3.6rem;
     }
 
@@ -841,7 +850,8 @@ nav .brand-logo {
     }
 
     .manage-users-heading,
-    .add-user-heading {
+    .add-user-heading,
+    .not-found-heading {
         font-size: 4rem;
     }
 
@@ -924,7 +934,8 @@ nav .brand-logo {
     }
 
     .manage-users-heading,
-    .add-user-heading {
+    .add-user-heading,
+    .not-found-heading {
         font-size: 4.2rem;
     }
 
