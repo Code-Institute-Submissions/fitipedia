@@ -9,3 +9,5 @@ first term in list showing up in confirmation box rather than target term. Fixed
 
 {% if session.user and session.user|lower != term.created_by|lower or session.user|lower == "admin"|lower %}
 prevents users voting on their own content unless they are an admin.
+
+CRUD colour code: C - green, R - teal, U - blue, D - red

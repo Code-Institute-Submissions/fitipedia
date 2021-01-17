@@ -43,11 +43,11 @@
                 </div>
             {% endif %}
         {% else %}
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col s12">
                     <h3 class="full-dictionary">Full Dictionary</h2>
                 </div>
-            </div>
+            </div> -->
             {% if session.user %}
                 <div class="row center-align add-entry">
                     <div class="col-s12">
@@ -71,17 +71,17 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s4 m8 xl10">
+                            <div class="col s6 m8 xl10">
                                 <span>Score&#58; {% if term.score >= 20 %}<span class="superscore">{{ term.score }}</span>{% elif term.score < 0 %}<span class="minus-score">{{ term.score }}</span>{% else%}<span class="score">{{ term.score }}</span>{% endif %}</span>
                             </div>
                             {% if session.user and session.user|lower != term.created_by|lower or session.user|lower == "admin"|lower %}
-                                <div class="col s4 m2 xl1">
+                                <div class="col s3 m2 xl1">
                                     <a href="{{ url_for('upvote', term_id=term._id) }}" class="btn upvote green" onclick="confirmUpvote()" data-position="top">
                                         <i class="fas fa-thumbs-up tooltipped" data-tooltip="UPVOTE"></i>
                                     </a>
                                     <div class="upvote-container center-align"></div>
                                 </div>
-                                <div class="col s4 m2 xl1">
+                                <div class="col s3 m2 xl1">
                                     <a href="{{ url_for('downvote', term_id=term._id) }}" class="btn downvote red" onclick="confirmDownvote()" data-position="top">
                                         <i class="fas fa-thumbs-down tooltipped" data-tooltip="DOWNVOTE"></i>
                                     </a>

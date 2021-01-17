@@ -113,9 +113,12 @@ nav .brand-logo {
     padding-top: 5px;
 }
 
-.site-info p a {
-    padding-right: 15px;
-    margin-top: -10px;
+.close {
+    position: absolute;
+    top: 2%;
+    right: 5%;
+    color: #000000;
+    text-shadow: none;
 }
 
 .modal {
@@ -126,6 +129,10 @@ nav .brand-logo {
 
 .modal .modal-footer {
     background-color: #dadada;
+}
+
+.ok {
+    box-shadow: 0px 0px 2px 2px #323232;
 }
 
 .jumbotron-header {
@@ -182,6 +189,7 @@ nav .brand-logo {
 
 .view-full-dict a {
     font-size: 14px;
+    border-radius: 10px;
 }
 
 .maps-header {
@@ -334,9 +342,21 @@ nav .brand-logo {
     letter-spacing: 0.05rem;
 }
 
+.upvote {
+    float: right;
+}
+
 .upvote,
 .downvote {
     border-radius: 10px;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 10px;
+}
+
+.upvote i,
+.downvote i {
+    font-size: 1rem;
 }
 
 .downvote-container {
@@ -379,6 +399,14 @@ nav .brand-logo {
 
 /*-- manage users --*/
 
+.manage-users-heading {
+    font-size: 3rem;
+}
+
+.registered-users {
+    font-size: 2rem;
+}
+
 .user-field {
     white-space: nowrap;
     overflow: hidden;
@@ -403,6 +431,12 @@ nav .brand-logo {
 
 .edit-data button {
     font-size: 11px;
+}
+
+/*-- add new user --*/
+
+.add-user-heading {
+    font-size: 3rem;
 }
 
 /*-- footer --*/
@@ -506,9 +540,6 @@ nav .brand-logo {
         font-size: 15px;
     }
 
-    .upvote {
-        float: right;
-    }
 
     .edit-data button {
         font-size: 14px;
@@ -591,6 +622,15 @@ nav .brand-logo {
         font-size: 2.4rem;
     }
 
+    .manage-users-heading,
+    .add-user-heading {
+        font-size: 3.2rem;
+    }
+
+    .registered-users {
+        font-size: 2.2rem;
+    }
+
     .brand-logo img {
         width: 80%;
     }
@@ -656,6 +696,27 @@ nav .brand-logo {
         font-size: 3rem;
     }
 
+    .upvote,
+    .downvote {
+        height: 30px;
+        line-height: 30px;
+        padding: 0 12px;
+    }
+
+    .upvote i,
+    .downvote i {
+        font-size: 1.2rem;
+    }
+
+    .manage-users-heading
+    .add-user-heading {
+        font-size: 3.6rem;
+    }
+
+    .registered-users {
+        font-size: 2.6rem;
+    }
+
     .info-container h6 {
         font-size: 1.15rem;
     }
@@ -666,6 +727,11 @@ nav .brand-logo {
 }
 
 @media screen and (min-width: 601px) {
+    .close {
+        top: 3%;
+        right: 3%;
+    }
+    
     .search-buttons {
         margin-top: 1.2rem;
     }
@@ -688,6 +754,26 @@ nav .brand-logo {
     .user-info-heading,
     .term-info-heading {
         font-size: 3.6rem;
+    }
+
+    .upvote,
+    .downvote {
+        height: 36px;
+        line-height: 36px;
+        padding: 0 16px;
+    }
+
+    .upvote i,
+    .downvote i {
+        font-size: 1.3rem;
+    }
+
+    .cancel {
+        float: right;
+    }
+
+    .delete-account {
+        float: left;
     }
 
     .delete-user {
@@ -752,6 +838,15 @@ nav .brand-logo {
     .user-info-heading,
     .term-info-heading {
         font-size: 4.2rem;
+    }
+
+    .manage-users-heading,
+    .add-user-heading {
+        font-size: 4rem;
+    }
+
+    .registered-users {
+        font-size: 2.8rem;
     }
 
     .info-container h6 {
@@ -826,6 +921,15 @@ nav .brand-logo {
     .edit-data,
     .admin-add-user {
         margin: 30px 100px;
+    }
+
+    .manage-users-heading,
+    .add-user-heading {
+        font-size: 4.2rem;
+    }
+
+    .registered-users {
+        font-size: 3rem;
     }
 
     .page-footer {

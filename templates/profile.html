@@ -30,7 +30,7 @@
         <div class="contributions-container">
             <div class="row">
                 <div class="col s12">
-                    <h2 class="center-align">My contributions</h2>
+                    <h2 class="contributions-heading center-align">My contributions</h2>
                 </div>
             </div>
             <div class="row center-align">
@@ -120,9 +120,17 @@
                 <div id="modal_account" class="modal">
                     <div class="modal-content">
                         <p>Are you sure you want to delete your account&#63;</p>
+                        <p>This CANNOT be undone.</p>
                     </div>
                     <div class="modal-footer">
-                        <a href="{{ url_for('profile', username=session['user']) }}" class="btn grey">Cancel</a><a href="{{ url_for('delete_account', username=username) }}" class="btn red">Delete Account</a>
+                        <div class="row center-align">
+                            <div class="col s12 m6">
+                                <a href="{{ url_for('profile', username=session['user']) }}" class="btn grey cancel">Cancel</a>
+                            </div>
+                            <div class="col s12 m6">
+                                <a href="{{ url_for('delete_account', username=username) }}" class="btn red delete-account">Delete Account</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

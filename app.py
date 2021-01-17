@@ -34,7 +34,6 @@ def search():
     query = request.form.get("query")
     terms = list(mongo.db.terms.find({"$text": {"$search": query}}))
     if len(terms) == 0:
-        flash("No results found")
         return render_template("not_found.html")
     return render_template("dictionary.html", terms=terms)
 
