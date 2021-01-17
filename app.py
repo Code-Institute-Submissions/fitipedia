@@ -148,8 +148,8 @@ def add_definition():
                 return redirect(url_for("add_definition"))
 
             new_term = {
-                "term_name": request.form.get("term_name").capitalize(),
-                "term_definition": request.form.get("term_definition").capitalize(),
+                "term_name": request.form.get("term_name").capitalize().strip(),
+                "term_definition": request.form.get("term_definition").capitalize().strip(),
                 "created_by": session["user"],
                 "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
                 "contribution_value": 1,
@@ -173,32 +173,46 @@ def edit_term(term_id):
         if ObjectId.is_valid(term_id):
             if mongo.db.terms.find_one({"_id": ObjectId(term_id)}) is None:
                 return render_template("404.html"), 404
-            else:
-                term_creator = mongo.db.terms.find_one({"_id": ObjectId(term_id)})["created_by"]
-                is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
-                if session["user"] == term_creator or session["user"] == is_superuser:
-                    if request.method == "POST":      
-                        updated_term = {
-                            "term_name": request.form.get("term_name").capitalize(),
-                            "term_definition": request.form.get("term_definition").capitalize(),
-                            "created_by": term_creator,
-                            "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
-                            "contribution_value": 1,
-                            "score": 0
-                        }
+
+            term_creator = mongo.db.terms.find_one({"_id": ObjectId(term_id)})["created_by"]
+            is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
+            existing_term = mongo.db.terms.find_one({"term_name": request.form.get("term_name")})
+            if request.method == "POST":
+                updated_term = {
+                    "term_name": request.form.get("term_name").capitalize().strip(),
+                    "term_definition": request.form.get("term_definition").capitalize().strip(),
+                    "created_by": term_creator,
+                    "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
+                    "contribution_value": 1,
+                    "score": 0
+                }
+
+                if existing_term:
+                    current_term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})["term_name"]
+                    if request.form.get("term_name").capitalize().strip() == current_term:
                         mongo.db.terms.update({"_id": ObjectId(term_id)}, updated_term)
                         flash("Dictionary information successfully updated")
                         return redirect(url_for("view_dictionary"))
+                    term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
+                    flash("This term already exists in the dictionary. Please add another term.")
+                    return render_template("edit_term.html", term=term)
+
+                if session["user"] == term_creator or session["user"] == is_superuser:
+                    mongo.db.terms.update({"_id": ObjectId(term_id)}, updated_term)
+                    flash("Dictionary information successfully updated")
+                    return redirect(url_for("view_dictionary"))
                 else:
-                    flash("You cannot edit terms created by other users")
-                    return redirect(url_for("view_dictionary"))            
+                    flash("You cannot edit terms created by other users.")
+                    return redirect(url_for("view_dictionary"))
+                
+                flash("dictionary information successfully updated")
+                return redirect(url_for("view_dictionary"))
         else:
             return render_template("404.html"), 404
         
         term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
         terms = mongo.db.terms.find().sort("term_name", 1)
-        return render_template("edit_term.html", terms=terms, term=term)
-    
+        return render_template("edit_term.html", term=term, terms=terms)
     else:
         flash("You must log in to perform this action.")
         return redirect(url_for("login"))
