@@ -7,37 +7,39 @@
             <h1 class="center-align">Manage Users</h1>
         </div>
     </div>
-    <div class="user-info-container">
+    <div class="container">
         <div class="row">
             <div class="col s12">
-                <h2 class="center-align">Current registered users</h2>
+                <h2 class="center-align">Currently registered users</h2>
             </div>
         </div>
         {% for user in users %}
-            <div class="row">
-                <div class="col s6 m2 l4 user-field">
-                    <span class="tooltipped" data-tooltip="{{ user.username }}">{{ user.username }}</span>
-                </div>
-                <div class="col s6 m3 l3 user-field">
-                    <span class="tooltipped" data-tooltip="{{ user.email_address }}">{{ user.email_address }}</span>
-                </div>
-                <div class="col s12 m7 l5">
-                    <a href="#{{ user._id }}" class="btn-small delete red modal-trigger">
-                        <span>Delete User</span><i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE USER"></i>
-                    </a>
-                    <div id="{{ user._id }}" class="modal">
-                        <div class="modal-content">
-                            <p>Are you sure you want to delete the user {{ user.username }}&#63;</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="{{ url_for('manage_users') }}" class="btn grey">Cancel</a>
-                            <a href="{{ url_for('delete_user', user_id=user._id) }}" class="btn red ">Delete</a>
+            <div class="term-wrapper card-panel">
+                <div class="row">
+                    <div class="col s6 m3 l4 user-field">
+                        <span class="tooltipped" data-tooltip="{{ user.username }}">{{ user.username }}</span>
+                    </div>
+                    <div class="col s6 m5 l4 user-field">
+                        <span class="tooltipped" data-tooltip="{{ user.email_address }}">{{ user.email_address }}</span>
+                    </div>
+                    <div class="col s12 m4 l4 delete-user">
+                        <a href="#{{ user._id }}" class="btn-small delete red modal-trigger">
+                            <span>Delete User</span><i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE USER"></i>
+                        </a>
+                        <div id="{{ user._id }}" class="modal">
+                            <div class="modal-content">
+                                <p>Are you sure you want to delete the user {{ user.username }}&#63;</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="{{ url_for('manage_users') }}" class="btn grey">Cancel</a>
+                                <a href="{{ url_for('delete_user', user_id=user._id) }}" class="btn red ">Delete</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         {% endfor %}
-        <div class="row center-align">
+        <div class="row add-entry center-align">
             <div class="col s12">
                 <a href="{{ url_for('add_new_user') }}" class="btn-large add green">Add New User</a>
             </div>

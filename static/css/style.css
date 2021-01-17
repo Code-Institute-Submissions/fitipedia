@@ -84,15 +84,15 @@ nav .brand-logo {
 .jumbotron {
     background: url(/static/images/jumbotron_image.png) no-repeat center center fixed;
     background-size: cover;
-    min-height: 480px;
+    padding-bottom: 40px;
 }
 
 .callout {
-    padding-top: 100px;
+    padding-top: 45px;
 }
 
 .site-info {
-    width: 30%;
+    width: 80%;
     margin: auto;
     background-color: transparent;
     color: #ffffff;
@@ -100,6 +100,10 @@ nav .brand-logo {
     text-shadow: 2px 2px #212121;
     margin-top: -10px;
     margin-bottom: 20px;
+}
+
+.site-info-heading {
+    font-size: 1.8rem;
 }
 
 .site-info p {
@@ -172,6 +176,14 @@ nav .brand-logo {
     color: #000000;
 }
 
+.view-full-dict {
+    margin-top: 40px;
+}
+
+.view-full-dict a {
+    font-size: 14px;
+}
+
 .maps-header {
     font-size: 2rem;
 }
@@ -200,10 +212,6 @@ nav .brand-logo {
     font-size: 2.9rem;
 }
 
-.view-full-dict {
-    margin-top: 40px;
-}
-
 .contributions-heading {
     font-size: 2.7rem;
     text-transform: capitalize;
@@ -212,7 +220,6 @@ nav .brand-logo {
 .term-name {
     font-weight: 800;
 }
-
 
 /*-- login and registration pages --*/
 
@@ -372,14 +379,15 @@ nav .brand-logo {
 
 /*-- manage users --*/
 
-.user-info-container {
-    margin: 0 auto;
-    width: 90%;
-}
-
 .user-field {
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.delete-user {
+    margin-top: 10px;
+    margin-bottom: -10px;
 }
 
 .admin-notice-container {
@@ -494,6 +502,10 @@ nav .brand-logo {
         line-height: 40px;
     }
 
+    .view-full-dict a {
+        font-size: 15px;
+    }
+
     .upvote {
         float: right;
     }
@@ -515,6 +527,10 @@ nav .brand-logo {
     /* .callout {
         padding: 0;
     } */
+
+    .site-info-heading {
+        font-size: 2rem;
+    }
 
     .jumbotron-header {
         font-size: 2.4rem;
@@ -565,6 +581,10 @@ nav .brand-logo {
         font-size: 1.8rem;
     }
 
+    .site-info {
+        width: 70%;
+    }
+
     .maps-header,
     .login-heading,
     .registration-heading {
@@ -588,6 +608,14 @@ nav .brand-logo {
     .callout {
         padding: 5px 5px 0;
     } */
+
+    .site-info {
+        width: 60%;
+    }
+
+    .site-info-heading {
+        font-size: 2.5rem;
+    }
 
     .jumbotron-header {
         font-size: 3.6rem;
@@ -661,6 +689,11 @@ nav .brand-logo {
     .term-info-heading {
         font-size: 3.6rem;
     }
+
+    .delete-user {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
     
     .brand-logo img {
         width: 90%;
@@ -672,14 +705,18 @@ nav .brand-logo {
     main {
         padding-bottom: 7.5rem;
     }
-    
-    .callout-container {
-        padding: 30px 15px 60px;
-    }
 
     /* .callout {
         padding: 30px 10px 0;
     } */
+
+    .site-info {
+        width: 50%;
+    }
+
+    .site-info-heading {
+        font-size: 2.7rem;
+    }
 
     .jumbotron-header {
         font-size: 5rem;
@@ -749,12 +786,24 @@ nav .brand-logo {
         top: 0.5rem;
     }
 
+    .delete-user {
+        text-align: right;
+    }
+
     .brand-logo img {
         width: 100%;
     }
 }
 
 @media screen and (min-width: 992px) {
+    .site-info {
+        width: 40%;
+    }
+
+    .site-info-heading {
+        font-size: 2.8rem;
+    }
+    
     .body-address {
         margin-top: 100px;
     }
@@ -785,7 +834,21 @@ nav .brand-logo {
 }
 
 @media screen and (min-width: 1066px) {
+    .site-info {
+        width: 40%;
+    }
+
+    .site-info-heading {
+        font-size: 2.92rem;
+    }
+    
     .contributions-container i {
         font-size: 1.2rem;
+    }
+}
+
+@media screen and (min-width: 1139px) {
+    .site-info {
+        width: 30%;
     }
 }

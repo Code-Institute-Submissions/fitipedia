@@ -5,7 +5,7 @@
     <div class="jumbotron center-align">
         <section class="callout">
             <div class="site-info">
-                <h3>Before you start, <a href="#modal_home" class="modal-trigger">Click Here</a></h3>
+                <h3 class="site-info-heading">Before you start, <a href="#modal_home" class="modal-trigger">Click Here</a></h3>
                 <div id="modal_home" class="modal">
                     <div class="modal-header">
                         <p><a href="{{ url_for('home_page') }}" class="right"><i class="fas fa-times"></i></a>
@@ -25,18 +25,11 @@
                     <h1 class="jumbotron-header">The complete A&#8211;Z of fitness</h1>
                 </div>
             </div>
-            {% if not session.user %}
-                <div class="row btn-wrapper">
-                    <div class="col s12">
-                        <a href="{{ url_for('register') }}" class="btn-large signup">Sign up now</a>
-                    </div>
+            <div class="row btn-wrapper">
+                <div class="col s12">
+                    <a href="#search_bar" class="btn-large search-btn">Search dictionary</a>
                 </div>
-                <div class="row btn-wrapper">
-                    <div class="col s12">
-                        <a href="#search_bar" class="btn-large search-btn">Search dictionary</a>
-                    </div>
-                </div>
-            {% endif %}
+            </div>
         </section>
     </div>
     {% if session.user %}
