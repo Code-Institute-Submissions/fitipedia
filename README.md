@@ -15,3 +15,9 @@ first term in list showing up in confirmation box rather than target term. Fixed
 prevents users voting on their own content unless they are an admin.
 
 CRUD colour code: C - green, R - teal, U - blue, D - red
+
+Uncompliant lines were all if statements containing the or operator that meant the app would not run if the line was broken due to a syntax error.
+
+`if session["user"] == term_creator or session["user"] == is_superuser:`
+
+`if request.form.get("term_name").capitalize().strip() == current_term:`
