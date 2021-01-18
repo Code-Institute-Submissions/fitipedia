@@ -192,9 +192,45 @@ I used [Wireframe.cc](https://wireframe.cc) to design wireframes for desktop/lap
 
 [Back to top](#table-of-contents)
 
-### Technologies Used
+### Technologies Used
 
-p
+The application uses the following core programming languages:
+
+**Backend**
+* [Python](https://en.wikipedia.org/wiki/Python_(programming_language))
+
+**Frontend**
+* [HTML](https://en.wikipedia.org/wiki/HTML)
+* [CSS](https://en.wikipedia.org/wiki/CSS)
+* [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
+
+The following frameworks, libraries and packages were also used:
+
+* MongoDB
+* PyMongo
+* DNSPython
+* Werkzeug
+* Flask
+* Jinja templating
+* Datetime
+* jQuery
+* Materialize CSS
+* Google fonts
+* Fontawesome 
+* Favicon
+* Google Maps API
+* herokuapp
+* Chrome DevTools
+* GitHub
+* Gitpod 
+* Am I responsive
+
+Code validators:
+
+* Pep8
+* JShint
+* Jigsaw
+* W3C
 
 [Back to top](#table-of-contents)
 
