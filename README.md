@@ -43,19 +43,26 @@ The deployed website is available [here](https://fitipedia.herokuapp.com)
 
 ### UX
 
-#### Design
+#### Design
 
 A clear and professional design using muted colours that are not dull. Each database entry is in a card panel to make it stand out.
-Most of the layout comes from functionality provided by [Materialize CSS](https://materializecss.com). Each button is given a colour
+Most of the layout comes from functionality provided by [Materialize CSS](https://materializecss.com). The jumbotron image on the home
+page gives the site some character and makes it crystal clear to the user that this is a fitness-related website. The user is invited to
+click on the 'Click Here' text before browsing
+
+The user can intuitively perform
+all CRUD actions 
+Each button is given a colour
 depending on which part of the CRUD functionality it represents.
-* **Create (C)** all buttons that add data to the website are green
-* **Read (R)** all buttons that locate and read data on the website are teal
-* **Update (U)** all buttons that edit and update data on the website are blue
-* **Delete (D)** all buttons that remove data from the website are red
+
+* **Create (C)** all buttons that add data to the website are **<span style="color:green">green</span>**
+* **Read (R)** all buttons that locate and read data on the website are **<span style="color:teal">teal</span>**
+* **Update (U)** all buttons that edit and update data on the website are **<span style="color:aqua">blue</span>**
+* **Delete (D)** all buttons that remove data from the website are **<span style="color:red">red</span>**
+
+The exception is the 'Search Dictionary' button on the home page, which serves as the app's main call to action button.
 
 Colour coded by nature of data manipulation
-
-C: green R: teal U: blue D: red
 
 #### User Stories
 

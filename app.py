@@ -309,7 +309,8 @@ def edit_term(term_id):
                     # on the dictionary page
                     current_term = mongo.db.terms.find_one(
                         {"_id": ObjectId(term_id)})["term_name"]
-                    if request.form.get("term_name").capitalize().strip() == current_term:
+                    if (request.form.get("term_name").
+                       capitalize().strip() == current_term):
                         mongo.db.terms.update(
                             {"_id": ObjectId(term_id)}, updated_term)
                         flash(
@@ -323,7 +324,8 @@ def edit_term(term_id):
                 # grants the user editing permissions for an entry if they
                 # are its creator or if the user in session is a site
                 # administrator
-                if session["user"] == term_creator or session["user"] == is_superuser:
+                if (session["user"] == term_creator or
+                   session["user"] == is_superuser):
                     mongo.db.terms.update(
                         {"_id": ObjectId(term_id)}, updated_term)
                     flash("Dictionary information successfully updated")
@@ -374,7 +376,8 @@ def delete_term(term_id):
                     {"is_superuser": True})["username"]
                 # removes entry from the database provided the user is its
                 # creator or an admin
-                if session["user"] == term_creator or session["user"] == is_superuser:
+                if (session["user"] == term_creator or
+                   session["user"] == is_superuser):
                     mongo.db.terms.remove({"_id": ObjectId(term_id)})
                     flash("Term deleted from dictionary")
                     return redirect(url_for("view_dictionary"))
