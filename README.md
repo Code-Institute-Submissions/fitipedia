@@ -48,12 +48,10 @@ The deployed website is available [here](https://fitipedia.herokuapp.com)
 A clear and professional design using muted colours that are not dull. Each database entry is in a card panel to make it stand out.
 Most of the layout comes from functionality provided by [Materialize CSS](https://materializecss.com). The jumbotron image on the home
 page gives the site some character and makes it crystal clear to the user that this is a fitness-related website. The user is invited to
-click on the 'Click Here' text before browsing
+click on the 'Click Here' text before browsing where they can read about the site's purpose and how to use it effectively. 
 
-The user can intuitively perform
-all CRUD actions 
-Each button is given a colour
-depending on which part of the CRUD functionality it represents.
+Once registered, the user can intuitively perform all CRUD actions. Each button that performs an action is assigned a corresponding colour
+depending on which CRUD function it represents:
 
 * **Create (C)** all buttons that add data to the website are **<span style="color:green">green</span>**
 * **Read (R)** all buttons that locate and read data on the website are **<span style="color:teal">teal</span>**
@@ -62,7 +60,17 @@ depending on which part of the CRUD functionality it represents.
 
 The exception is the 'Search Dictionary' button on the home page, which serves as the app's main call to action button.
 
-Colour coded by nature of data manipulation
+The upvote and downvote buttons and the icons that they display also make their purpose clear to the user, as the colour green is
+associated with approval, while red is associated with disapproval. Each term's score is shown in larger text so that the user is left in 
+no doubt.
+
+All delete actions initiated by the user bring up a confirmation box asking the user if they're sure they want to delete something in the
+event they clicked the button mistakenly. The user can select cancel, which has the more neutral colour of grey, if they do not wish to
+delete a piece of data.
+
+The following fonts are used:
+
+* 
 
 #### User Stories
 
