@@ -43,13 +43,42 @@ The deployed website is available [here](https://fitipedia.herokuapp.com)
 
 ### UX
 
-o
+#### Design
+
+A clear and professional design using muted colours that are not dull. Each database entry is in a card panel to make it stand out.
+Most of the layout comes from functionality provided by [Materialize CSS](https://materializecss.com). Each button is given a colour
+depending on which part of the CRUD functionality it represents.
+* **Create (C)** all buttons that add data to the website are green
+* **Read (R)** all buttons that locate and read data on the website are teal
+* **Update (U)** all buttons that edit and update data on the website are blue
+* **Delete (D)** all buttons that remove data from the website are red
+
+Colour coded by nature of data manipulation
+
+C: green R: teal U: blue D: red
+
+#### User Stories
 
 [Back to top](#table-of-contents)
 
 ### Features
 
-a
+
+#### Features left to implement
+
+* Pagination
+* Limiting search results per page
+* Filtering by first letter (0-9 + A-Z), each letter shown as a clickable link that would then filter
+* Search suggestions based on user input (e.g. car --> cardio)
+* One upvote/downvote per user per term
+* Ability to view other user's profiles and their contribution history
+* Ability to private message other users
+* User points and tiered system based on engagement (number of entries made and upvotes received in their history)
+* Ability to reset password if user forgets
+* For security reasons, accounts created by admins for other users are forced to reset passwords when logging in for the first time
+* E-mail confirmation when creating accounts, including activation link
+* Automatic notifications and review requests for administrators if a term's score reaches -5
+* New users would have their first 5 posts reviewed and approved by an admin
 
 [Back to top](#table-of-contents)
 
@@ -92,7 +121,5 @@ Uncompliant lines were all if statements containing the or operator that meant t
 `if session["user"] == term_creator or session["user"] == is_superuser:`
 
 `if request.form.get("term_name").capitalize().strip() == current_term:`
-
-Future functionality: search suggestions based on user input, one upvote/downvote per user per term, ability to view user's profiles and their history, 'points' and tiered system given to users based on number of contributions made and upvotes received, ability to reset password, accounts created by administrators for other users are forced to reset passwords when first logging in, e-mail confirmation when creating accounts, including link to activate, filtering terms by first letter with each letter of the alphabet shown as a clickable link on the dict page that will filter terms with that first letter (first letter would act as categories, each one would have to be added to the database, just ran out of time to implement this), automatic review notification for admins if term score reaches -5
 
 Credit self in Gumroad
