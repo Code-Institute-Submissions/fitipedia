@@ -728,7 +728,8 @@ def contact():
 
 
 '''
-This function handles invalid URLs by rendering a custom 404 page.
+This function handles invalid URLs by rendering a custom 404 page. Credit
+to the Flask documentation for this solution.
 '''
 
 
