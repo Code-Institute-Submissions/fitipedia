@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-
     <div class="container">
         <div class="row">
             <div class="col s12">
@@ -22,7 +21,6 @@
                 {% endif %}
             </div>
         </div>
-
         {% if terms|length == 0 %}
             {% if session.user %}
                 <div class="row">
@@ -43,11 +41,6 @@
                 </div>
             {% endif %}
         {% else %}
-            <!-- <div class="row">
-                <div class="col s12">
-                    <h3 class="full-dictionary">Full Dictionary</h2>
-                </div>
-            </div> -->
             {% if session.user %}
                 <div class="row center-align add-entry">
                     <div class="col-s12">
@@ -124,5 +117,4 @@
             </div>
         {% endif %}
     </div>
-
 {% endblock %}

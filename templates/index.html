@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-
     <div class="jumbotron center-align">
         <section class="callout">
             <div class="site-info">
@@ -50,9 +49,7 @@
                         </div>
                         <div class="col s12 m5 l4 search-buttons">
                             <a onclick="resetSearch()" class="red btn">Reset</a>
-                            <button type="submit" class="btn teal">
-                                Search
-                            </button>
+                            <button type="submit" class="btn teal">Search</button>
                         </div>
                     </div>
                 </form>
@@ -106,7 +103,7 @@
                                 <span>{{ term.term_definition }}</span>
                                 <br>
                                 <br>
-                                <span><em>Last updated&#58; {{ term.created_on }}</em></span>
+                                <span>Last updated&#58; {{ term.created_on }}</span>
                             </div>
                             <div class="col s12 l2">
                                 <a href="{{ url_for('edit_term', term_id=term._id) }}" class="btn-small blue">
@@ -155,28 +152,6 @@
                             Add term
                         {% endif %}
                     </a>
-                </div>
-            </div>
-        </div>
-    {% else %}
-        <div class="container maps-container center-align">
-            <h1 class="maps-header">Where to Find Us</h1>
-            <div class="row">
-                <div class="col s12 l4 body-address">
-                    <p class="maps-para"><i class="fas fa-map-marker-alt"></i> 93 Crown Street 
-                        <br>
-                        London
-                        <br>
-                        SW5 7NL
-                    </p>
-                    <p class="maps-para"><i class="fas fa-phone-square"></i> &#40;078&#41; 11 033 461</p>
-                    <p class="maps-para"><i class="fas fa-at"></i> <a href="#">info&#64;fitipedia.com</a></p>
-                    <p class="maps-para"><i class="fas fa-door-open"></i> Open Mon-Sun 6am - midnight</p>
-                </div>
-                <div class="col s12 l8">
-                    <div id="map">
-
-                    </div>
                 </div>
             </div>
         </div>

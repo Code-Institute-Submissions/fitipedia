@@ -11,20 +11,25 @@ $(document).ready(function(){
         } else {
             bttt.style.display = "none";
         }
-    };
+    }
 
     function backToTop() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
-    };
+    }
 
     $('.sidenav').sidenav();
-    $('.collapsible').collapsible();
     $('#flashed_messages').fadeOut(4000);
     $('.tooltipped').tooltip();
     $('.modal').modal();
     $("#term_definition").on("keydown", function (e) {
         var inputValue = $("#term_definition").val();
+        if (inputValue.length == 0 || inputValue.slice(-1) == " ") {
+            return e.which !== 32;
+        }
+    });
+    $("input").on("keydown", function (e) {
+        var inputValue = $("input").val();
         if (inputValue.length == 0 || inputValue.slice(-1) == " ") {
             return e.which !== 32;
         }

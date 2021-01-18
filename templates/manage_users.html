@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    <div class="row">
-        <div class="col s12">
-            <h1 class="center-align manage-users-heading">Manage Users</h1>
-        </div>
-    </div>
     <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h1 class="center-align manage-users-heading">Manage Users</h1>
+            </div>
+        </div>
         <div class="row">
             <div class="col s12">
                 <h2 class="center-align registered-users">Currently registered users</h2>
@@ -44,29 +43,29 @@
                 <a href="{{ url_for('add_new_user') }}" class="btn-large add green">Add New User</a>
             </div>
         </div>
+        <div class="admin-notice-container center-align">
+            <div class="row">
+                <div class="col s12">
+                    <h3 class="center-align">Admin Privileges Notice</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <p>An admin may delete another user from the database and therefore remove their access to the dictionary&#8217;s full functionality if their use of the dictionary is found to be inappropriate and not of the benefit to the site&#8217;s wider community. In exceptional circumstances, an admin may also delete a user&#8217;s account at the request of the user.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <p>
+                        An admin may add a user to the database in exceptional circumstances if the user is having issues signing up that are unable to be resolved and the user&#8217;s desired username and e-mail address are not already in use. In such circumstances, the admin will generate a random password for the user which the user must change immediately after logging in for the first time.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <p>Those found to be abusing their admin privileges will have their admin rights removed with immediate effect.</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="admin-notice-container container center-align">
-        <div class="row">
-            <div class="col s12">
-                <h3 class="center-align">Admin Privileges Notice</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <p>An admin may delete another user from the database and therefore remove their access to the dictionary&#8217;s full functionality if their use of the dictionary is found to be inappropriate and not of the benefit to the site&#8217;s wider community. In exceptional circumstances, an admin may also delete a user&#8217;s account at the request of the user.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <p>An admin may add a user to the database in exceptional circumstances if the user is having issues signing up that are unable to be resolved and the user&#8217;s desired username and e-mail address are not already in use. In such circumstances, the admin will generate a random password for the user which the user must change immediately after logging in for the first time.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <p>Those found to be abusing their admin privileges will have their admin rights removed with immediate effect.</p>
-            </div>
-        </div>
-    </div>
-
-
 {% endblock %}

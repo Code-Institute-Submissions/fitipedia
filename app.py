@@ -24,15 +24,18 @@ mongo = PyMongo(app)
 @app.route("/home_page/")
 def home_page():
     terms = list(mongo.db.terms.find().sort("created_on", -1))
-    popular_terms = list(mongo.db.terms.find({"score": {"$gt": 4}}).sort("score", -1))
+    popular_terms = list(mongo.db.terms.find(
+        {"score": {"$gt": 4}}).sort("score", -1))
     users = mongo.db.users.find()
-    return render_template("index.html", terms=terms, popular_terms=popular_terms, users=users)
+    return render_template("index.html", terms=terms, 
+        popular_terms=popular_terms, users=users)
 
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
     query = request.form.get("query")
-    terms = list(mongo.db.terms.find({"$text": {"$search": query}}))
+    terms = list(mongo.db.terms.find(
+        {"$text": {"$search": query}}).sort("term_name", 1))
     if len(terms) == 0:
         return render_template("not_found.html")
     return render_template("dictionary.html", terms=terms)
@@ -43,7 +46,7 @@ def register():
     if "user" in session:
         flash("You are already logged in!")
         return redirect("home_page")
-    else: 
+    else:
         if request.method == "POST":
             existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
             existing_email = mongo.db.users.find_one({"email_address": request.form.get("email").lower()})
@@ -53,12 +56,12 @@ def register():
             if existing_user:
                 flash("User already exists")
                 return redirect(url_for("register"))
-            
+
             # check whether e-mail address was already used to sign up
             if existing_email:
                 flash("An account already exists for this e-mail address!")
                 return redirect(url_for("register"))
-            
+
             create_account = {
                 "username": request.form.get("username").lower(),
                 "password": generate_password_hash(request.form.get("password")),
@@ -120,8 +123,8 @@ def profile(username):
     if "user" in session:
         if username == mongo.db.users.find_one(
             {"username": session["user"]})["username"]:
-                terms = list(mongo.db.terms.find().sort("term_name", 1))
-                return render_template("profile.html", username=username, terms=terms)
+            terms = list(mongo.db.terms.find().sort("term_name", 1))
+            return render_template("profile.html", username=username, terms=terms)
         else:
             flash("You do not have permission to view other users' profiles")
             return redirect(url_for("home_page"))
@@ -152,7 +155,8 @@ def add_definition():
                 "created_by": session["user"],
                 "created_on": datetime.datetime.today().strftime("%m/%d/%y %H:%M:%S"),
                 "contribution_value": 1,
-                "score": 0
+                "score": 0,
+                "first_letter": str(request.form.get("term_name").capitalize().strip())[0]
             }
             mongo.db.terms.insert_one(new_term)
             flash("Term successfully created. You will now be redirected to the dictionary page where you can see your contribution!")
@@ -274,28 +278,35 @@ def update_profile(username):
                             flash("Your profile was successfully updated")
                             return redirect(url_for("profile", username=username))
 
-                        flash("An account already exists for this e-mail address!")
-                        return render_template("update_profile.html", username=username)
+                        flash(
+                            "An account already exists for this e-mail address!")
+                        return render_template(
+                            "update_profile.html", username=username)
 
-                    mongo.db.users.update({"username": username}, updated_account)
+                    mongo.db.users.update(
+                        {"username": username}, updated_account)
                     session["user"] = request.form.get("username").lower()
                     flash("Your profile was successfully updated")
                     return redirect(url_for("profile", username=username))
                 
                 else:
                     flash("Username already exists!")
-                    return render_template("update_profile.html", username=username)
+                    return render_template(
+                        "update_profile.html", username=username)
 
             else:
                 if existing_email:
                     if email_address == request.form.get("email").lower():
-                        mongo.db.users.update({"username": username}, updated_account)
+                        mongo.db.users.update(
+                            {"username": username}, updated_account)
                         session["user"] = request.form.get("username").lower()
                         flash("Your profile was successfully updated")
-                        return redirect(url_for("profile", username=session["user"]))
-                    
+                        return redirect(url_for(
+                            "profile", username=session["user"]))
+
                     flash("An account already exists for this e-mail address!")
-                    return render_template("update_profile.html", username=username)
+                    return render_template(
+                        "update_profile.html", username=username)
 
             mongo.db.users.update({"username": username}, updated_account)
             session["user"] = request.form.get("username").lower()
@@ -311,43 +322,51 @@ def update_profile(username):
 @app.route("/manage_users")
 def manage_users():
     if "user" in session:
-        is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
-        username = mongo.db.users.find_one({"username": session["user"]})["username"]
+        is_superuser = mongo.db.users.find_one(
+            {"is_superuser": True})["username"]
+        username = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
         if username == is_superuser:
             users = mongo.db.users.find().sort("username", 1)
             return render_template("manage_users.html", users=users)
-        else: 
+        else:
             flash("You are not authorised to view this page")
             return redirect(url_for("home_page"))
     else:
         flash("You are not authorised to view this page")
-        return redirect(url_for("home_page"))      
+        return redirect(url_for("home_page"))
 
 
 @app.route("/add_new_user", methods=["GET", "POST"])
 def add_new_user():
     if "user" in session:
-        is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
-        username = mongo.db.users.find_one({"username": session["user"]})["username"]
+        is_superuser = mongo.db.users.find_one(
+            {"is_superuser": True})["username"]
+        username = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
         if username == is_superuser:
             if request.method == "POST":
-                existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
-                existing_email = mongo.db.users.find_one({"email_address": request.form.get("email").lower()})
-                is_superuser = True if request.form.get("username").lower == "admin" else False
+                existing_user = mongo.db.users.find_one(
+                    {"username": request.form.get("username").lower()})
+                existing_email = mongo.db.users.find_one(
+                    {"email_address": request.form.get("email").lower()})
+                is_superuser = True if request.form.get(
+                    "username").lower == "admin" else False
 
                 # check whether user already exists
                 if existing_user:
                     flash("User already exists")
                     return redirect(url_for("add_new_user"))
-                
+
                 # check whether e-mail address was already used to sign up
                 if existing_email:
                     flash("An account already exists for this e-mail address!")
                     return redirect(url_for("add_new_user"))
-                
+
                 new_user = {
                     "username": request.form.get("username").lower(),
-                    "password": generate_password_hash(request.form.get("password")),
+                    "password": generate_password_hash(
+                        request.form.get("password")),
                     "email_address": request.form.get("email").lower(),
                     "is_superuser": is_superuser
                 }
@@ -361,7 +380,7 @@ def add_new_user():
         else:
             flash("You are not authorised to view this page.")
             return redirect(url_for("home_page"))
-    
+
     else:
         flash("You are not authorised to view this page.")
         return redirect(url_for("home_page"))
@@ -374,17 +393,19 @@ def delete_term(term_id):
             if mongo.db.terms.find_one({"_id": ObjectId(term_id)}) is None:
                 return render_template("404.html"), 404
             else:
-                term_creator = mongo.db.terms.find_one({"_id": ObjectId(term_id)})["created_by"]
-                is_superuser = mongo.db.users.find_one({"is_superuser": True})["username"]
+                term_creator = mongo.db.terms.find_one(
+                    {"_id": ObjectId(term_id)})["created_by"]
+                is_superuser = mongo.db.users.find_one(
+                    {"is_superuser": True})["username"]
                 if session["user"] == term_creator or session["user"] == is_superuser:
                     mongo.db.terms.remove({"_id": ObjectId(term_id)})
                     flash("Term deleted from dictionary")
                     return redirect(url_for("view_dictionary"))
                 else:
                     flash("You cannot delete terms created by other users")
-                    return redirect(url_for("view_dictionary"))            
+                    return redirect(url_for("view_dictionary"))
         else:
-            return render_template("404.html"), 404        
+            return render_template("404.html"), 404
     else:
         flash("You must log in to perform this action.")
         return redirect(url_for("login"))
@@ -393,13 +414,17 @@ def delete_term(term_id):
 @app.route("/delete_account/<username>")
 def delete_account(username):
     if "user" in session:
-        deleted_user = mongo.db.users.find_one({"username": session["user"]})["username"]
+        deleted_user = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
         if username == deleted_user:
             users = mongo.db.users.find()
             session.pop("user")
             mongo.db.users.remove({"username": username})
-            flash("Your account was deleted. You will now be redirected to the home page.")
-            return redirect(url_for("home_page", username=username, users=users))
+            flash(
+             "Your account was deleted. You will now be redirected to the home page."
+                )
+            return redirect(url_for(
+                            "home_page", username=username, users=users))
         else:
             flash("You are not authorised to perform this action.")
             return redirect(url_for("home_page"))
@@ -418,11 +443,19 @@ def delete_user(user_id):
             flash("The user was successfully deleted from the database.")
             return redirect(url_for("manage_users"))
         else:
-            flash("You are not authorised to view this page or perform this action.")
+            flash(
+             "You are not authorised to view this page or perform this action."
+                )
             return redirect(url_for("home_page"))
-    else: 
-        flash("You are not authorised to view this page or perform this action.")
+    else:
+        flash(
+            "You are not authorised to view this page or perform this action.")
         return redirect(url_for("home_page"))
+
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
 
 
 @app.errorhandler(404)
@@ -432,5 +465,4 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"), 
-    port=int(os.environ.get("PORT")), 
-    debug=True)
+            port=int(os.environ.get("PORT")), debug=True)

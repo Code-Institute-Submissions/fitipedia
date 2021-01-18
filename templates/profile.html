@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-
     <div class="container">
         <div class="row">
             <div class="col s12">
@@ -26,7 +25,6 @@
                 <a href="{{ url_for('update_profile', username=username) }}" class="btn-large edit blue">Update Details</a>
             </div>
         </div>
-
         <div class="contributions-container">
             <div class="row">
                 <div class="col s12">
@@ -46,7 +44,7 @@
                     {% set legend_target = 20 %}
                     {% set remaining_required = legend_target - user_contributions %}
                     <p>
-                        You have made {{ total|sum }} {% if user_contributions != 1 %} contributions {% else %} contribution {% endif %}  so far. 
+                        You have made {{ total|sum }} {% if user_contributions != 1 %} contributions {% else %} contribution {% endif %}  so far.<br>
                         {% if user_contributions < legend_target %} 
                             Make another {{ remaining_required }} {% if remaining_required > 1 %} contributions {% else %} contribution {% endif %} to reach legend status&#33; 
                         {% else %} 
@@ -102,7 +100,6 @@
                 {% endif %}
             {% endfor %}
         </div>
-
         <div class="row">
             <div class="col s12">
                 <h2 class="center-align">Delete Account</h2>
@@ -128,7 +125,9 @@
                                 <a href="{{ url_for('profile', username=session['user']) }}" class="btn grey cancel">Cancel</a>
                             </div>
                             <div class="col s12 m6">
-                                <a href="{{ url_for('delete_account', username=username) }}" class="btn red delete-account">Delete Account</a>
+                                <a href="{{ url_for('delete_account', username=username) }}" class="btn red delete-account">
+                                    Delete Account
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -136,5 +135,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
