@@ -168,7 +168,7 @@ to the database
 
 I used [Wireframe.cc](https://wireframe.cc) to design wireframes for desktop/laptop and mobile devices. They can be viewed [here](libraries/wireframes/).
 
-[Back to top](#table-of-contents)
+[Back to TOC](#table-of-contents)
 
 ### Features
 
@@ -190,7 +190,7 @@ I used [Wireframe.cc](https://wireframe.cc) to design wireframes for desktop/lap
 * Automatic notifications and review requests for administrators if a term's score reaches -5
 * New users would have their first 5 posts reviewed and approved by an admin
 
-[Back to top](#table-of-contents)
+[Back to TOC](#table-of-contents)
 
 ### Technologies Used
 
@@ -206,49 +206,58 @@ The application uses the following core programming languages:
 
 The following frameworks, libraries and packages were also used:
 
-* MongoDB
-* PyMongo
-* DNSPython
-* Werkzeug
-* Flask
-* Jinja templating
-* Datetime
-* jQuery
-* Materialize CSS
-* Google fonts
-* Fontawesome 
-* Favicon
-* Google Maps API
-* herokuapp
-* Chrome DevTools
-* GitHub
-* Gitpod 
-* Am I responsive
+**Databases**
+* [MongoDB Atlas](https://mongodb.com): the app's database, to store, retrieve and query data
 
-Code validators:
+**Python dependencies**
+* [PyMongo](https://pymongo.readthedocs.io/en/stable/): a Python distribution with tools for interaction with MongoDB
+* [dnspython](https://dnspython.org): a DNS toolkit for Python
+* [Werkzeug](https://werkzeug.palletsprojects.com/en/1.0.x/): a WSGI web application library that handles HTTP requests
+* [Flask](https://flask.palletsprojects.com/en/1.1.x/): a Python web app framework
+* [Jinja](https://jinja.palletsprojects.com/en/2.11.x/): a templating engine for Python
+* [Datetime](https://docs.python.org/3/library/datetime.html): to record the exact date and time of a record being created or updated
 
-* Pep8
-* JShint
-* Jigsaw
-* W3C
+**Frontend libraries and frameworks**
+* [jQuery](https://jquery.com): to simplify DOM manipulation and event-handling
+* [Materialize CSS](https://materializecss.com): for site responsiveness and clean, intuitive layout
+* [Google Fonts](https://fonts.google.com/): to import font families to be used for the application's front end
+* [Font Awesome](https://fontawesome.com/): for responsive icons that let users initiate actions 
+* [Favicon](https://favicon.io/): to include a favicon within the browser tab
+* [Google Maps API](https://developers.google.com/maps/documentation/javascript/overview): to render a Google Maps widget on the website
+* [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools): to test responsiveness, inspect the role of each element and 
+class and experiment in real time with new style rules and their effect on the site's layout and structure
 
-[Back to top](#table-of-contents)
+**Software hosting and cloud platforms**
+* [Heroku](https://www.heroku.com/): for the project's live deployment
+* [GitHub](https://github.com/lbacon17/fitipedia): to create a repository for the project and link it to Heroku to be deployed
+* [Gitpod](https://gitpod.io): to manage the project's necessary files and write the code for the project
+
+**Design tools**
+* [Am I responsive](https://ami.responsivedesign.is): for testing and screenshots of the website's responsive design
+
+**Validators**
+* [PEP8](http://pep8online.com/): Python
+* [JSHint](https://jshint.com/): JavaScript
+* [Jigsaw](https://jigsaw.w3.org/): CSS
+* [W3C](https://validator.w3.org/): HTML
+
+[Back to TOC](#table-of-contents)
 
 ### Data Structure
 
-[Back to top](#table-of-contents)
+[Back to TOC](#table-of-contents)
 
 ### Testing
 
-[Back to top](#table-of-contents)
+[Back to TOC](#table-of-contents)
 
 ### Deployment
 
-[Back to top](#table-of-contents)
+[Back to TOC](#table-of-contents)
 
 ### Credits
 
-[Back to top](#table-of-contents)
+[Back to TOC](#table-of-contents)
 
 
 404 error, change return argument from username=username to username=session["user"]
