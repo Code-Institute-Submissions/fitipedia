@@ -243,7 +243,25 @@ class and experiment in real time with new style rules and their effect on the s
 
 [Back to TOC](#table-of-contents)
 
-### Data Structure
+### Data Structure
+
+The project uses MongoDB Atlas as its database to store data. This project uses two collections:
+
+1. Terms: records of the words that appear in the dictionary. It consists of the following keys:
+    * _id (ObjectId)
+    * term_name
+    * term_definition
+    * created_by
+    * created_on
+    * contribution_value (this number is always 1 so that each term created by a user adds 1 to their total number of entries made)
+    * score (calculated by subtracting the number of downvotes from the number of upvotes. An upvote adds 1 to the score, a downvote takes
+    1 off the score)
+2. Users: records of the users that have registered on the website. It consists of the following keys:
+    * _id (ObjectId)
+    * username
+    * password (which is hashed into a random string of letters and numbers for added security)
+    * email_address
+    * is_superuser (a boolean field that can be used to grant administrators certain site privileges by being set to 'True')
 
 [Back to TOC](#table-of-contents)
 
@@ -251,11 +269,11 @@ class and experiment in real time with new style rules and their effect on the s
 
 [Back to TOC](#table-of-contents)
 
-### Deployment
+### Deployment
 
 [Back to TOC](#table-of-contents)
 
-### Credits
+### Credits
 
 [Back to TOC](#table-of-contents)
 
