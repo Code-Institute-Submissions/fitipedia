@@ -176,11 +176,44 @@ I used [Wireframe.cc](https://wireframe.cc) to design wireframes for desktop/lap
 
 ##### For all users 
 
-* 
+* A responsive fixed navbar displaying the brand logo and the ability to navigate to the main dictionary page, log into your account or register
+    * The navbar is accessible via a hamburger menu in the top left of the viewport on mobile and tablet devices
+* A button that users can click to generate a pop-up displaying the information about the app and how to use it effectively
+* A search bar in which users can input text and find results containing words matching one of the search terms instead of the whole
+dictionary
+    * A not found page that renders if no data matches the user's search query with a button to take the user directly back to the homepage
+* A call to action button on the home page that takes the user directly to the search bar
+* A reset button beside the search bar that enables users to clear any text they have entered in case of typing errors
+* A snapshot of the most popular dictionary entries at any time, sorted by their score, starting with the highest
+    * An entry must have a score of at least 5 to qualify as a popular term
+    * If there are fewer than 3 terms with a qualifying score, the list disappears entirely
+    * No more than 5 entries can appear in this section. If there are more than 5 entries that meet the qualifying score, those with the
+    lowest scores will disappear from the list
+* The full dictionary that lists each entry in alphabetical order by term name
+* A score associated with each entry based on the number of upvotes and downvotes it has received
+    * If a term's score reaches 20, the number is shown in green, indicating an especially strong score
+    * If a term's score falls below 0, the number is shown in red, indicating a weak score
+    * If a term's score falls below -5, the entry is hidden due to concerns the information is not reliable or accurate. Only administrators
+    can continue to see entries whose score are below -5
+* A responsive footer containing Fitipedia's logo, contact information and social media links
+* A contact page displaying Fitipedia's contact details and a Google Maps widget using the Google Maps API to show the user the company's physical location
+* A return to top button consisting of a Font Awesome icon of a finger point upwards that appears when the user scrolls down
+    * When the user clicks this button, a scroll behaviour style rule implemented using CSS makes the page scroll smoothly back to the top
+* A 404 page that is rendered if the user enters an invalid URL
+* An automatic redirect to the login page if the user attempts to access a URL that only logged in users can access, with a flash message indicating that they must log in first
 
 ##### For registered users
 
-* 
+* A section on the homepage that shows the last 5 entries of the user logged in, sorted by date from most recent
+    * The user can edit or delete entries in this section instead of having to navigate to the dictionary page
+    * Entries that are hidden due to having a low score still appear in this section, as they are unique to the user and cannot be seen by anybody else
+    * Each entry shows the date and time of its last update. If the entry hasn't been updated since its creation, the time of its creation will show. If the user updates an entry, this will count as the most recent entry and move to the top of the section
+    * If a user deletes an entry from their most recent 5 entries, it will disappear from the section and the previously 6th most recent entry appears at the bottom of the section in its place
+    * If a user has made fewer than 5 entries, the section is shortened to reflect the number of user entries
+    * If the user has not yet made any entries, text will appear informing the user that they haven't yet made any contributions, with a call to action button below inviting the user to add their first
+    * If the user hsa made entries, the text will state how many contributions the user has made. The number changes depending on the user adding further entries or deleting entries. The text on the button below also changes to 'Add Another'
+
+* An automatic redirect to the homepage if the user attempts to access a URL that is unique to another user, or that only an administrator can access, with a flash message indicating that the user is not authorised to perform such an action
 
 ##### For administrators (superusers)
 
