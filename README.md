@@ -346,32 +346,97 @@ To read about the testing process, please see the separate [TESTING.md](TESTING.
 
 ### Deployment
 
-To deploy the app to Heroku using Gitpod:
+#### To deploy the app to Heroku using Gitpod
 
-1. Install Flask via the Gitpod terminal with the command:
-pip3 install flask
-1. Import Flask in the app.py file:
-from flask import Flask
-1. Install the Heroku toolbelt via the terminal with the command:
-npm install -g heroku
-1. Once installed, log in with your heroku login details using the command:
-heroku login -i
-1. Redirect the list of dependencies used in the app to the requirements.txt file with the command:
-pip3 freeze --local > requirements.txt
-1. Create the Procfile with the command:
-echo web: python app.py > Procfile
-1. Log in to your Heroku account and select the app to be deployed. Click the 'Deploy' tab and select 'GitHub' as the deployment method.
+1. Install Flask via the Gitpod terminal with the command: ```pip3 install flask```
+
+1. Import Flask in the app.py file: ```from flask import Flask```
+
+1. Install the Heroku toolbelt via the terminal with the command: ```npm install -g heroku```
+
+1. Once installed, log in with your heroku login details using the command: ```heroku login -i```
+
+1. We then need to tell Heroku which libraries and frameworks (dependencies) are needed for the application to run. A list of these are stored in the requirements.txt file. Redirect the dependencies lists to the requirements file with the command: ```pip3 freeze --local > requirements.txt```
+
+1. Next, we need to create a Procfile that Heroku looks for to know that the app runs on Python. Create the Procfile with the command:
+```echo web: python app.py > Procfile```
+    * There may be a blank line at the end of the Procfile. Delete this line as it can cause Heroku problems in locating the file.
+
+1. Log into your Heroku account and select 'Create a new app' from the dashboard. Make sure the app's name is all in lowercase and has no spaces (use dashes ('-') to link words instead). Select 'United States' or 'Europe', depending on the region in which you are based.
+    * **You may have created the app in Heroku before starting the deployment, in which case you can skip this step and go straight to the step below.**
+
+1. From your Heroku dashboard, select the app to be deployed. Click the 'Deploy' tab and select 'GitHub' as the deployment method.
+
 1. Connect the GitHub account that has created this app's repository and search for the repository's name. Click 'Connect' once this is found.
-1. Go to the Settings tab, scroll down and click on the 'Reveal Config Vars' button. Add the environment key-value pairs from the env.py file, 
-ensuring to remove quotation marks when pasting them into Heroku.
-1. After all Config Vars have been added, go back to the Gitpod terminal and add the requirements.txt and Procfiles:
-git add requirements.txt Procfile
+    * Your GitHub username should already be displayed as you should be prompted to configure GitHub integration if you have not yet done so when opting to deploy using GitHub.
+
+1. Go to the Settings tab, scroll down and click on the 'Reveal Config Vars' button. Add the environment key-value pairs from the env.py file, ensuring to remove quotation marks when pasting them into Heroku.
+    * When using MongoDB, the environment variables should be as follows:
+        ```
+        IP: 0.0.0.0
+        PORT: 5000
+        SECRET_KEY: [secret_key]
+        MONGO_URI: mongodb+srv://<username>:<password>@<cluster_name>.ckdkb.mongodb.net/<database_name>?retryWrites=true&w=majority
+        MONGO_DBNAME: [database_name]
+        ```
+    * A secret key is a randomly generated string of letters and numbers. You can obtain one from [randomkeygen.com/](https://randomkeygen.com/)
+    * In the MONGO_URI variable, the data in angle brackets (<>), including the brackets themselves, will need to be replaced with your unique MongoDB username, password, cluster name and database name
+        * To find your Mongo URI, log into your MongoDB account, select 'Clusters' and click the 'Connect' button in the sandbox. From there, select the 'Connect your appliation' option, select 'Python' as the driver and '3.6 or later' as the version. Your MongoDB URI should be displaying in the box below.
+        * You should not use any non-alphanumeric characters in your MongoDB password as you will not then be able to connect the database using Python.
+
+1. After all Config Vars have been added, go back to the Gitpod terminal and add the requirements.txt and Procfiles: ```git add requirements.txt Procfile```
+
 1. Commit these files and push the changes to Github.
+
+1. If you haven't done so already, create a .gitignore file in Gitpod with ```touch .gitignore``` and add ```env.py``` and ```__pycache__/``` so that these are not included in future commits. **Do not push the `env.py` file to GitHub as your secret key and MongoDB login information will be publicly available.**
+
 1. The app is now ready to be deployed to Heroku. Go back to the Deploy tab, scroll down to the 'Automatic deploy' section and click 'Enable 
-automatic deploys'. This updates the app on the Heroku platform each time changes are pushed to Github.
+automatic deploys'. This updates the app on the Heroku platform whenever changes are pushed to Github and saves us from having to do it manually each time.
+
 1. In the 'Manual deploy' section below, select the branch of the repository to be deployed. Once selected, click 'Deploy branch'.
+
 1. The deployment may take a few minutes. Once complete, the message: "Your app was successfully deployed" will appear. Click on the 'View' 
 button below the message to view the deployed app in a new browser tab and ensure everything is working as it should.
+
+1. For the app to function properly, you will need to install certain dependencies via Gitpod. The exact dependencies can vary according to the nature of the app. To install them, use the command: ```pip3 install [name of dependency]```. For more information on dependencies, see the [Technologies Used](#technologies-used) section.
+
+#### To run the app locally
+
+1. At the top of the project's repository just below the menu, click on the 'Code' dropdown button.
+
+1. In the 'Clone' section, make sure that the 'HTTPS' heading is underlined and copy the URL inside the box.
+
+1. Open the Terminal on your device and type 'pwd to show your current working directory (this is where the project folder will be imported)
+
+1. Type 'git clone' and paste the URL copied from GitHub (note there must be a space between 'clone' and the URL) and press enter.
+
+1. Check the directory printed in step 3 to make sure the project folder exists there.
+
+1. To run the app locally, you will need to install all the dependencies included in the [requirements.txt](requirements.txt) file. Type the command `pip3 install -r requirements.txt` and press enter.
+    * You may need to add the filepath before the requirements.txt file if the repository was not cloned into your desktop. For example, if it were in your Documents folder, the command would be `pip3 install -r Users/MyName/Documents/requirements.txt`
+
+1. Create the `env.py` file with the command `touch (..filepath../)env.py` and add the following content:
+        ```
+            import os
+            os.environ.setdefault("IP", "0.0.0.0")
+            os.environ.setdefault("PORT", "5000")
+            os.environ.setdefault("SECRET_KEY", "[secret_key]")
+            os.environ.setdefault("MONGO_URI", "mongodb+srv://<username>:<password>@<cluster_name>.ckdkb.mongodb.net/<database_name>?retryWrites=true&w=majority")
+            os.environ.setdefault("MONGO_DBNAME", "[database_name]")
+        ```
+    You may also need to add:
+        ```
+        os.environ["MONGO_URI"] = "mongodb+srv://<username>:<password>@<cluster_name>.ckdkb.mongodb.net/<database_name>?retryWrites=true&w=majority"
+        ```
+
+1. To run locally, type the command `python3 (..filepath../)app.py` and press enter
+    * The Terminal may throw the following error: TypeError: int() argument must be a string, a bytes-like object or a number, not 'NoneType' in which case remove the int() method from the last code block of the `app.py` file so that it reads:
+        ```
+        if __name__ == "__main__":
+            app.run(host=os.environ.get("IP"),
+            port=os.environ.get("PORT"), debug=False)
+        ```
+    * The Terminal should read "running on http://127.0.0.1:5000". Paste this URL into the browser to acccess the app.
 
 [Back to TOC](#table-of-contents)
 
@@ -384,7 +449,7 @@ Python views are based on material learned in the Data Centric Development modul
 [Task Manager](https://github.com/Code-Institute-Solutions/TaskManagerAuth) mini-project delivered by
 [Tim Nelson](https://github.com/TravelTimN).
 
-Some ideas within views are based on recommendations by [Stack Overflow](https://stackoverflow.com/). I'd most like to highlight the solution
+Some ideas are based on recommendations by [Stack Overflow](https://stackoverflow.com/). I'd most like to highlight the solution
 [to check the validity of an ObjectId](https://stackoverflow.com/questions/28774526/how-to-check-that-mongo-objectid-is-valid-in-python),
 which helped with rendering a custom 404 page when an invalid ID was passed.
 
@@ -395,9 +460,7 @@ purchased and downloaded [here](https://gum.co/mzDyj).
 #### Special thanks
 
 I would like to give special thanks to my mentor [Precious Ijege](https://ng.linkedin.com/in/precious-ijege-908a00168) for highlighting
-flaws with the app, giving clear, actionable advice on how to rectify them and his tireless support to help improve the project and make it
-realise its full potential. Thanks also to the Code Institute's Tutors and [Slack](https://slack.com) channel who dealt with my queries at
-short notice and helped me fix some mistifying bugs in the code.
+flaws with the app in the testing phase, giving clear, actionable advice on how to rectify them and his tireless support to help improve the project and make it realise its full potential. Thanks also to the Code Institute's Tutors and [Slack](https://slack.com) channel who dealt with my queries at short notice and helped me fix some mistifying bugs in the code.
 
 Thank you for reading.
 
