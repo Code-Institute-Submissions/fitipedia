@@ -280,7 +280,7 @@ The project uses MongoDB Atlas as its database to store data. This project uses 
 
 ### Testing
 
-To read about the testing process, please see the separate [TESTING.md](testing.md) file.
+To read about the testing process, please see the separate [TESTING.md](TESTING.md) file.
 
 [Back to TOC](#table-of-contents)
 
