@@ -87,7 +87,7 @@
                                     <div class="modal-footer">
                                         <div class="row center-align">
                                             <div class="col s12 m6">
-                                                <a href="{{ url_for('home_page') }}" class="btn grey cancel">Cancel</a>
+                                                <a href="{{ url_for('profile', username=session['user']) }}" class="btn grey cancel">Cancel</a>
                                             </div>
                                             <div class="col s12 m6">
                                                 <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn red delete-record">Delete</a>
