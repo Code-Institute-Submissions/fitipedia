@@ -204,6 +204,7 @@ dictionary
 
 ##### For registered users
 
+* A responsive, fixed navbar that enables users to view their profile, add a new entry to the dictionary or log out
 * A section on the homepage that shows the last 5 entries of the user logged in, sorted by date from most recent
     * The user can edit or delete entries in this section instead of having to navigate to the dictionary page
     * Entries that are hidden due to having a low score still appear in this section, as they are unique to the user and cannot be seen by anybody else
@@ -212,28 +213,54 @@ dictionary
     * If a user has made fewer than 5 entries, the section is shortened to reflect the number of user entries
     * If the user has not yet made any entries, text will appear informing the user that they haven't yet made any contributions, with a call to action button below inviting the user to add their first
     * If the user hsa made entries, the text will state how many contributions the user has made. The number changes depending on the user adding further entries or deleting entries. The text on the button below also changes to 'Add Another'
-
+* A dictionary in full where the user can view terms created by themselves and others
+    * The user will see edit and delete buttons below their entries, and upvote and downvote buttons below those of other users
+* Responsive forms for users to add new entries and edit existing entries
+    * Each form has minlength and pattern attributes so that users must input genuine text
+    * A JavaScript function exists to prevent the user typing consecutive spaces so that a string of whitespace cannot be submitted
+* An automatic redirect to the respective form if users attempt to add or change an entry to a word that already exists in the dictionary
+* A modal pop-up box that asks the user to confirm whether they wish to delete a term with a cancel button in case the user mistakenly selected this option
+* A profile page containing the user's username, total number of contributions and all entries contributed by the user in alphabetical order
+    * If the user has made 20 or more contributions, they will see the following text: "Congratulations! You have reached legend status!"
+    * If the user has made fewer than 20 contributions, the text will tell them how manw more they need to make to achieve legend status
+* A delete account function that enables the user to delete their account if they wish
+* A resonsive form for users to update their profile details with an automatic redirect back to it if the user submits inputted usernames or e-mail addresses that are already occupied by another user
 * An automatic redirect to the homepage if the user attempts to access a URL that is unique to another user, or that only an administrator can access, with a flash message indicating that the user is not authorised to perform such an action
 
 ##### For administrators (superusers)
 
-* 
+* A responsive, fixed navbar where administrators can perform any standard user actions and access a manage users page to see a list of existing users
+* The ability to edit or delete any entry in the dictionary, even if created by another user
+* The ability to see entries with a score of -5 (that are therefore hidden to other users) in the dictionary as normal
+* A list of existing users, sorted by username in alphabetical order, with each user's username, e-mail address and a button to delete their account
+    * An administrator should only delete another user's account in exceptional circumstances, such as in appropriate use of the site or a user's request to have their account deleted
+* A button to add a new user to the databse and a responsive form for the administrator to input the new user's data
+    * An administrator should only add a new user in exceptional circumstances, such as multiple failed attempts by a user to register an account and an inability to identify the cause of this problem
+    * It is recommended that a user registered in these circumstances changes their password immediately after first logging in
+    * Like with other forms, the administrator is redirected back to it if they submit a username or e-mail address already occupied by an existing user
+* A modal pop-up box that asks the administrator to confirm whether they wish to delete a user's account with a cancel button in case they mistakenly selected this option
 
 #### Features left to implement
 
-* Pagination
-* Limiting search results per page
-* Filtering by first letter (0-9 + A-Z), each letter shown as a clickable link that would then filter
-* Search suggestions based on user input (e.g. car --> cardio)
-* One upvote/downvote per user per term
-* Ability to view other user's profiles and their contribution history
-* Ability to private message other users
-* User points and tiered system based on engagement (number of entries made and upvotes received in their history)
-* Ability to reset password if user forgets
-* For security reasons, accounts created by admins for other users are forced to reset passwords when logging in for the first time
-* E-mail confirmation when creating accounts, including activation link
-* Automatic notifications and review requests for administrators if a term's score reaches -5
-* New users would have their first 5 posts reviewed and approved by an admin
+As the database expands, I would like to implement the following features:
+
+* Filtering dictionary terms by first letter (0-9 + A-Z)
+    * Each letter would be a clickable link that calls a backend function to limit the users query to data whose value string starts with that particular character (unfortunately there was not sufficient time remaining to implement this to an acceptable standard at this stage of the project)
+* Limiting users to just one upvote or downvote for each term
+* Pagination of search results, limiting the results to a certain number per page (e.g. 20) and the option for the user to navigate to a certain page number
+    * If the database is especially large, the user could have the option to choose between how many search results they would like to have per page (e.g. 20, 50, 100)
+* A dropdown of search suggestions based on the user's input (e.g. if the user inputted 'car' the word 'cardio' would be suggested)
+* If the site gains a large number of users, the ability for the administrator to filter results on the Manage Users page by the first letter of the user's username
+* The ability to publicly view other user's profiles and their contribution history
+    * Other users may wish to hide potentially sensitive data such as e-mail addresses from other users, so they could have the option to not allow this to be seen by others
+* A private messaging function that would enable users to communicate with each other on the app itself
+* A tiered user status system based on user engagement i.e. number of entries made
+    * Currently a user needs 20 entries to reach legend status, they could reach another milestone after 50 entries
+* A user points system based on the number of upvotes their entries have received to indicate reliability and trustworthiness
+* E-mail confirmation for new users when creating an account, including an activation link
+* A reset password function that enables a user to reset their password via e-mail in the event they forget their password
+* For security reasons, accounts created by admins for other users are forced to change their password when logging in for the first time
+* Administrators are notified if a term's score drops below -5 and are forced to review it, removing it from the dictionary if necessary
 
 [Back to TOC](#table-of-contents)
 
