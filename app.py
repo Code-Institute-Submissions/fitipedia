@@ -245,8 +245,6 @@ def add_definition():
                 today().strftime("%m/%d/%y %H:%M:%S"),
                 "contribution_value": 1,
                 "score": 0,
-                "first_letter": str(request.form.get("term_name").
-                                    capitalize().strip())[0]
             }
             mongo.db.terms.insert_one(new_term)
             flash("Term successfully created. You will now be redirected to"

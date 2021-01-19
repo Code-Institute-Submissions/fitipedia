@@ -1,4 +1,10 @@
 $(document).ready(function(){
+    window.scroll({
+        top: 2500, 
+        left: 0, 
+        behavior: 'smooth'
+    }); 
+
     var bttt = document.getElementById("returnToTop");
             
     window.onscroll = function() {
