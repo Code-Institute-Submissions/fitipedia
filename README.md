@@ -174,6 +174,18 @@ I used [Wireframe.cc](https://wireframe.cc) to design wireframes for desktop/lap
 
 #### Existing features
 
+##### For all users 
+
+* 
+
+##### For registered users
+
+* 
+
+##### For administrators (superusers)
+
+* 
+
 #### Features left to implement
 
 * Pagination
@@ -256,7 +268,8 @@ The project uses MongoDB Atlas as its database to store data. This project uses 
     * contribution_value (this number is always 1 so that each term created by a user adds 1 to their total number of entries made)
     * score (calculated by subtracting the number of downvotes from the number of upvotes. An upvote adds 1 to the score, a downvote takes
     1 off the score)
-2. Users: records of the users that have registered on the website. It consists of the following keys:
+
+1. Users: records of the users that have registered on the website. It consists of the following keys:
     * _id (ObjectId)
     * username
     * password (which is hashed into a random string of letters and numbers for added security)
@@ -267,32 +280,67 @@ The project uses MongoDB Atlas as its database to store data. This project uses 
 
 ### Testing
 
+To read about the testing process, please see the separate [TESTING.md](testing.md) file.
+
 [Back to TOC](#table-of-contents)
 
 ### Deployment
 
+To deploy the app to Heroku using Gitpod:
+
+1. Install Flask via the Gitpod terminal with the command:
+pip3 install flask
+1. Import Flask in the app.py file:
+from flask import Flask
+1. Install the Heroku toolbelt via the terminal with the command:
+npm install -g heroku
+1. Once installed, log in with your heroku login details using the command:
+heroku login -i
+1. Redirect the list of dependencies used in the app to the requirements.txt file with the command:
+pip3 freeze --local > requirements.txt
+1. Create the Procfile with the command:
+echo web: python app.py > Procfile
+1. Log in to your Heroku account and select the app to be deployed. Click the 'Deploy' tab and select 'GitHub' as the deployment method.
+1. Connect the GitHub account that has created this app's repository and search for the repository's name. Click 'Connect' once this is found.
+1. Go to the Settings tab, scroll down and click on the 'Reveal Config Vars' button. Add the environment key-value pairs from the env.py file, 
+ensuring to remove quotation marks when pasting them into Heroku.
+1. After all Config Vars have been added, go back to the Gitpod terminal and add the requirements.txt and Procfiles:
+git add requirements.txt Procfile
+1. Commit these files and push the changes to Github.
+1. The app is now ready to be deployed to Heroku. Go back to the Deploy tab, scroll down to the 'Automatic deploy' section and click 'Enable 
+automatic deploys'. This updates the app on the Heroku platform each time changes are pushed to Github.
+1. In the 'Manual deploy' section below, select the branch of the repository to be deployed. Once selected, click 'Deploy branch'.
+1. The deployment may take a few minutes. Once complete, the message: "Your app was successfully deployed" will appear. Click on the 'View' 
+button below the message to view the deployed app in a new browser tab and ensure everything is working as it should.
+
 [Back to TOC](#table-of-contents)
 
-### Credits
+### Credits/Acknowledgements
+
+#### Content
+
+The website uses a number of components from Materialize CSS, including the navbar, card panels, buttons and colour classes. Much of the
+Python views are based on material learned in the Data Centric Development module by the Code Institute, in particular the 
+[Task Manager](https://github.com/Code-Institute-Solutions/TaskManagerAuth) mini-project delivered by
+[Tim Nelson](https://github.com/TravelTimN).
+
+Some ideas within views are based on recommendations by [Stack Overflow](https://stackoverflow.com/). I'd most like to highlight the solution
+[to check the validity of an ObjectId](https://stackoverflow.com/questions/28774526/how-to-check-that-mongo-objectid-is-valid-in-python),
+which helped with rendering a custom 404 page when an invalid ID was passed.
+
+The dictionary entries and definitions are from a book that I wrote on fitness last year called 'Gym and Weight Training Basics A-Z'. This is
+an e-book that gives a comprehensive breakdown of jargon in the fitness industry and provides the raw data for this project. The book can be
+purchased and downloaded [here](https://gum.co/mzDyj).
+
+#### Special thanks
+
+I would like to give special thanks to my mentor [Precious Ijege](https://ng.linkedin.com/in/precious-ijege-908a00168) for highlighting
+flaws with the app, giving clear, actionable advice on how to rectify them and his tireless support to help improve the project and make it
+realise its full potential. Thanks also to the Code Institute's Tutors and [Slack](https://slack.com) channel who dealt with my queries at
+short notice and helped me fix some mistifying bugs in the code.
+
+Thank you for reading.
+
+I hope you enjoy using Fitipedia.
 
 [Back to TOC](#table-of-contents)
-
-
-404 error, change return argument from username=username to username=session["user"]
-
-bugfix upvoting/downvoting - redirect rather than render template
-
-first term in list showing up in confirmation box rather than target term. Fixed by giving each modal div a unique id of id="{{ term._id }}" and setting href accordingly - href="#{{ term._id }}"
-
-{% if session.user and session.user|lower != term.created_by|lower or session.user|lower == "admin"|lower %}
-prevents users voting on their own content unless they are an admin.
-
-CRUD colour code: C - green, R - teal, U - blue, D - red
-
-Uncompliant lines were all if statements containing the or operator that meant the app would not run if the line was broken due to a syntax error.
-
-`if session["user"] == term_creator or session["user"] == is_superuser:`
-
-`if request.form.get("term_name").capitalize().strip() == current_term:`
-
-Credit self in Gumroad
