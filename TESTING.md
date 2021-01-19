@@ -421,18 +421,19 @@ Here is a list of bugs I encountered during the testing phase followed by the so
 
 #### Bugs still to be fixed
 
-search scroll too far due to fixed navbar on mobile devices or users not logged in - hides behind fixed navbar at top of page
+A couple of minor issues remain which do not affect site performance or security. These are:
 
-JS console error, does not affect performance
+* When clicking on the search call to action button, the page scrolls too far so that the search bar disappears from the top of the page. This happens on mobile devices and when users are not logged in. This happened after I made the navbar fixed - the search bar remains at the top of the viewport, but it is actually hidden behind the navbar.
+    * This is not an issue on tablet and desktop devices when the user is logged in, as the search form is pushed down by the welcome heading to the user. I wrapped these two elements in a div with the id of search, and set the href of the search button to #search. This makes no difference when the user is logged out, however, as the starting position of the outer div is the same as that of the form.
+
+* The console throws the following JavaScript error when on any page other than the Contact page.
 
 ![JavaScript console error](/libraries/testing/js_console_error.png)
 
+I was unable to find a reliable solution to this issue. Strangely, when on the Contact page that actually renders the map, no such error appears. As this has no impact on site performance or security, I have not resolved the error at this stage, but will aim to have the console free of errors when producing future versions of the application. I am reluctant to remove the Contact page as I feel this is potentially useful to the user and makes the app appear more professional.
+
+* There are other minor improvements to be made to the site that time unfortunately did not allow to be made. For examples of these, see the Features left to implement section in the [README](README.md#features-left-to-implement) file.
+
 [Back to TOC](#table-of-contents)
-
-404 error, change return argument from username=username to username=session["user"]
-
-bugfix upvoting/downvoting - redirect rather than render template
-
-
 
 [Back to README.md](README.md)
