@@ -413,18 +413,21 @@ button below the message to view the deployed app in a new browser tab and ensur
 1. Check the directory printed in step 3 to make sure the project folder exists there.
 
 1. To run the app locally, you will need to install all the dependencies included in the [requirements.txt](requirements.txt) file. Type the command `pip3 install -r requirements.txt` and press enter.
-    * You may need to add the filepath before the requirements.txt file if the repository was not cloned into your desktop. For example, if it were in your Documents folder, the command would be `pip3 install -r Users/MyName/Documents/requirements.txt`
+    * You may need to add the filepath before the requirements.txt file if the repository was not cloned into your desktop. For example, if it were in your Documents folder, the command would be `pip3 install -r /Users/MyName/Documents/requirements.txt`
 
 1. Create the `env.py` file with the command `touch (..filepath../)env.py` and add the following content:
-        ```
-            import os
-            os.environ.setdefault("IP", "0.0.0.0")
-            os.environ.setdefault("PORT", "5000")
-            os.environ.setdefault("SECRET_KEY", "[secret_key]")
-            os.environ.setdefault("MONGO_URI", "mongodb+srv://<username>:<password>@<cluster_name>.ckdkb.mongodb.net/<database_name>?retryWrites=true&w=majority")
-            os.environ.setdefault("MONGO_DBNAME", "[database_name]")
-        ```
+        
+    ```
+    import os
+    os.environ.setdefault("IP", "0.0.0.0")
+    os.environ.setdefault("PORT", "5000")
+    os.environ.setdefault("SECRET_KEY", "[secret_key]")
+    os.environ.setdefault("MONGO_URI", "mongodb+srv://<username>:<password>@<cluster_name>.ckdkb.mongodb.net/<database_name>?retryWrites=true&w=majority")
+    os.environ.setdefault("MONGO_DBNAME", "[database_name]")
+    ```
+    
     You may also need to add:
+
         ```
         os.environ["MONGO_URI"] = "mongodb+srv://<username>:<password>@<cluster_name>.ckdkb.mongodb.net/<database_name>?retryWrites=true&w=majority"
         ```
