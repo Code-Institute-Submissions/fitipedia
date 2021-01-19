@@ -249,7 +249,7 @@ Here is a list of bugs I encountered during the testing phase followed by the so
     ```
 
 * **Bug**: After adding modal functionality to ask the user to confirm a delete action, the confirmation box would show the first term in any sorted list, regardless of the one clicked on. If I confirmed deletion, the first term would also be deleted and the term intended for deletion would remain in the database.
-* **Fix**: The modal functionality was part of a Jinja for loop that was iterating through each term. Therefore the id of the modal <div> element was not unique. Each entry had the same id, so the first object found sharing that id was passed to the front end. I fixed this by giving each modal div the id of the ObjectId of its respective term using `id="{{ term._id }}"` and setting the href of the corresponding anchor tag accordingly. See the example below:
+* **Fix**: The modal functionality was part of a Jinja for loop that was iterating through each term. Therefore the id of the modal div element was not unique. Each entry had the same id, so the first object found sharing that id was passed to the front end. I fixed this by giving each modal div the id of the ObjectId of its respective term using `id="{{ term._id }}"` and setting the href of the corresponding anchor tag accordingly. See the example below:
 
     ```
     {% for term in terms %}
@@ -279,41 +279,49 @@ Here is a list of bugs I encountered during the testing phase followed by the so
 * **Fix**: I added if conditions using Jinja that users could only vote on terms created by others unless they were an administrator.
 
     ```
-    {% if session.user and session.user|lower != term.created_by|lower or session.user|lower == "admin"|lower %}
-        <div class="col s3 m2 xl1">
-            <a href="{{ url_for('upvote', term_id=term._id) }}" class="btn upvote green" onclick="confirmUpvote()" data-position="top">
-                <i class="fas fa-thumbs-up tooltipped" data-tooltip="UPVOTE"></i>
-            </a>
-            <div class="upvote-container center-align"></div>
-        </div>
-        <div class="col s3 m2 xl1">
-            <a href="{{ url_for('downvote', term_id=term._id) }}" class="btn downvote red" onclick="confirmDownvote()" data-position="top">
-                <i class="fas fa-thumbs-down tooltipped" data-tooltip="DOWNVOTE"></i>
-            </a>
-            <div class="downvote-container center-align"></div>
-        </div>
-    {% endif %}
+    {% for term in terms %}
+        ...
+        {% if session.user and session.user|lower != term.created_by|lower or session.user|lower == "admin"|lower %}
+            <div class="col s3 m2 xl1">
+                <a href="{{ url_for('upvote', term_id=term._id) }}" class="btn upvote green" onclick="confirmUpvote()" data-position="top">
+                    <i class="fas fa-thumbs-up tooltipped" data-tooltip="UPVOTE"></i>
+                </a>
+                <div class="upvote-container center-align"></div>
+            </div>
+            <div class="col s3 m2 xl1">
+                <a href="{{ url_for('downvote', term_id=term._id) }}" class="btn downvote red" onclick="confirmDownvote()" data-position="top">
+                    <i class="fas fa-thumbs-down tooltipped" data-tooltip="DOWNVOTE"></i>
+                </a>
+                <div class="downvote-container center-align"></div>
+            </div>
+        {% endif %}
+        ...
+    {% endfor %}
     ```
 
 * **Bug**: Users were able to edit and delete content created by others.
 * **Bug**: I added if conditions using Jinja that users could only edit and delete their own entries, with the exception of administrators who can access any user's entries.
 
     ```
-    {% if session.user|lower == "admin" or session.user|lower == term.created_by|lower %}
-        <div class="row">
-            <div class="col s6">
-                <a href="#{{ term._id }}" class="btn-small delete right red modal-trigger">
-                    <span>Delete term</span><i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE TERM"></i>
-                </a>
-                ...
+    {% for term in terms %}
+        ...
+        {% if session.user|lower == "admin" or session.user|lower == term.created_by|lower %}
+            <div class="row">
+                <div class="col s6">
+                    <a href="#{{ term._id }}" class="btn-small delete right red modal-trigger">
+                        <span>Delete term</span><i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE TERM"></i>
+                    </a>
+                    ...
+                </div>
+                <div class="col s6">
+                    <a href="{{ url_for('edit_term', term_id=term._id) }}" class="btn-small edit blue">
+                        <span>Edit details</span><i class="fas fa-pen-square tooltipped" data-tooltip="EDIT DETAILS"></i>
+                    </a>
+                </div>
             </div>
-            <div class="col s6">
-                <a href="{{ url_for('edit_term', term_id=term._id) }}" class="btn-small edit blue">
-                    <span>Edit details</span><i class="fas fa-pen-square tooltipped" data-tooltip="EDIT DETAILS"></i>
-                </a>
-            </div>
-        </div>
-    {% endif %}
+        {% endif %}
+        ...
+    {% endfor %}
     ```
 
 * **Bug**: Users were unable to sign up using an existing username or e-mail address, but could change these to existing values when submitting the form to update their profile.
@@ -432,7 +440,7 @@ A couple of minor issues remain which do not affect site performance or security
 
 I was unable to find a reliable solution to this issue. Strangely, when on the Contact page that actually renders the map, no such error appears. As this has no impact on site performance or security, I have not resolved the error at this stage, but will aim to have the console free of errors when producing future versions of the application. I am reluctant to remove the Contact page as I feel this is potentially useful to the user and makes the app appear more professional.
 
-* There are other minor improvements to be made to the site that time unfortunately did not allow to be made. For examples of these, see the Features left to implement section in the [README](README.md#features-left-to-implement) file.
+* There are other minor improvements to be made to the site that time unfortunately did not allow to be made. For examples of these, see the [Features left to implement](README.md#features-left-to-implement) section in the README file.
 
 [Back to TOC](#table-of-contents)
 
