@@ -39,7 +39,7 @@ The deployed website is available [here](https://fitipedia.herokuapp.com)
 * [Data Structure](#data-structure)
 * [Testing](#testing)
 * [Deployment](#deployment)
-* [Credits](#credits)
+* [Credits and Acknowledgements](#credits-and-acknowledgements)
 
 ### UX
 
@@ -443,7 +443,7 @@ button below the message to view the deployed app in a new browser tab and ensur
 
 [Back to TOC](#table-of-contents)
 
-### Credits/Acknowledgements
+### Credits and Acknowledgements
 
 #### Content
 
