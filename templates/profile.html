@@ -12,6 +12,7 @@
                 <h5 class="center-align">My Account</h5>
             </div>
         </div>
+        <!-- displays username and calculates number of user entries -->
         <div class="row center-align">
             <div class="col s12">
                 <p>Username&#58; <span>{{ username }}</span></p>
@@ -22,6 +23,7 @@
                     {% endif %}
                 {% endfor %}
                 <p>Total contributions&#58; {{ total|sum }}</p>
+                <!-- update details button -->
                 <a href="{{ url_for('update_profile', username=username) }}" class="btn-large edit blue">Update Details</a>
             </div>
         </div>
@@ -31,6 +33,7 @@
                     <h2 class="contributions-heading center-align">My contributions</h2>
                 </div>
             </div>
+            <!-- calculates user entries and distance from next milestone -->
             <div class="row center-align">
                 <div class="col s12">
                     {% set total = [] %}
@@ -53,6 +56,7 @@
                     </p>
                 </div>
             </div>
+            <!-- add term button -->
             <div class="row center-align add-entry">
                 <div class="col-s12">
                     <a href="{{ url_for('add_definition') }}" class="btn-large add green">
@@ -64,6 +68,7 @@
                     </a>
                 </div>
             </div>
+            <!-- list of each term created by user -->
             {% for term in terms %}
                 {% if term.created_by|lower == session.user|lower %}
                     <div class="term-wrapper card-panel">
@@ -75,11 +80,13 @@
                                 <span>{{ term.term_definition }}</span>
                             </div>
                         </div>
+                        <!-- edit and delete buttons -->
                         <div class="row">
                             <div class="col s6">
                                 <a href="#{{ term._id }}" class="btn-small delete right red modal-trigger">
                                     <span>Delete term</span><i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE TERM"></i>
                                 </a>
+                                <!-- modal pop up for user to confirm term deletion -->
                                 <div id="{{ term._id }}" class="modal">
                                     <div class="modal-content center-align">
                                         <p>Are you sure you want to delete the term {{ term.term_name }}&#63;</p>
@@ -106,6 +113,7 @@
                 {% endif %}
             {% endfor %}
         </div>
+        <!-- delete account section -->
         <div class="row">
             <div class="col s12">
                 <h2 class="center-align">Delete Account</h2>
@@ -116,10 +124,13 @@
                 <h4>Delete the account for {{ username }}</h4>
             </div>
         </div>
+        <!-- warning notice that deleted accounts cannot be restored -->
         <div class="row center-align">
             <div class="col s12">
                 <p class="warning"><i class="fas fa-exclamation-triangle"></i> Warning&#33; This action cannot be undone&#33; You should only take this action if you are certain you want to delete your account.</p>
+                <!-- delete account modal trigger -->
                 <a class="btn-large delete red modal-trigger" href="#modal_account">Delete Account</a>
+                <!-- modal pop up for user to confirm account deletion -->
                 <div id="modal_account" class="modal">
                     <div class="modal-content">
                         <p>Are you sure you want to delete your account&#63;</p>

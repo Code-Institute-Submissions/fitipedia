@@ -2,9 +2,12 @@
 
 {% block content %}
     <div class="jumbotron center-align">
+        <!-- callout section -->
         <section class="callout">
             <div class="site-info">
+                <!-- button to display site information -->
                 <h3 class="site-info-heading"><a href="#modal_home" class="modal-trigger">Before you start, Click Here</a></h3>
+                <!-- introductory message containing site information -->
                 <div id="modal_home" class="modal">
                     <div class="modal-header">
                         <a href="{{ url_for('home_page') }}" class="right close"><i class="fas fa-times"></i></a>
@@ -27,6 +30,7 @@
                     <h1 class="jumbotron-header">The complete A&#8211;Z of fitness</h1>
                 </div>
             </div>
+            <!-- search call to action button -->
             <div class="row btn-wrapper">
                 <div class="col s12">
                     <a href="#search" class="btn-large search-btn">Search dictionary</a>
@@ -40,6 +44,7 @@
         {% endif %}
         <div class="row">
             <div class="col s12">
+                <!-- search form -->
                 <form id="search_bar" method="POST" action="{{ url_for('search') }}">
                     <div class="row">
                         <div class="input-field col s12 m7 l8">
@@ -57,6 +62,7 @@
         </div>
     </div>
     <div class="container">
+        <!-- highest scoring terms appear here -->
         {% if popular_terms|length >= 3 %}
             <div class="row">
                 <div class="col s12">
@@ -87,6 +93,7 @@
             </div>
         {% endif %}
     </div>
+    <!-- users 5 most recent contributions if they are logged in -->
     {% if session.user %}
         <div class="container contributions-container">
             <div class="row">
@@ -107,6 +114,7 @@
                                 <br>
                                 <span>Last updated&#58; {{ term.created_on }}</span>
                             </div>
+                            <!-- edit and delete buttons -->
                             <div class="col s12 l2">
                                 <a href="{{ url_for('edit_term', term_id=term._id) }}" class="btn-small blue">
                                     <i class="fas fa-edit tooltipped" data-tooltip="EDIT TERM"></i>
@@ -114,6 +122,7 @@
                                 <a href="#{{ term._id }}" class="btn-small red modal-trigger">
                                     <i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE TERM"></i>
                                 </a>
+                                <!-- modal pop-up box for user to confirm term deletion -->
                                 <div id="{{ term._id }}" class="modal">
                                     <div class="modal-content center-align">
                                         <p>Are you sure you want to delete the term {{ term.term_name }}&#63;</p>
@@ -134,6 +143,7 @@
                     </div>
                 {% endif %}
             {% endfor %}
+            <!-- calculates total number of entries made by a user -->
             <div class="row center-align">
                 <div class="col s12">
                     {% set total = [] %}
@@ -150,7 +160,7 @@
                         {% endif %}
                     </p>
                 </div>
-            </div>            
+            </div>
             <div class="row center-align add-entry">
                 <div class="col-s12">
                     <a href="{{ url_for('add_definition') }}" class="btn-large add green">

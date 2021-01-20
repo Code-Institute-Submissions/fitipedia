@@ -15,6 +15,7 @@
                 <p class="introductory-para">
                     Each term in the dictionary has a score based on the number of upvotes and downvotes it has received. The total score is calculated by subtracting the number of downvotes from the number of upvotes. A term must have a score of 5 and over to qualify as a popular term. To maintain the highest possible standards, an entry is hidden from the dictionary and is subject to review by an admin if its score drops below -5.
                 </p>
+                <!-- users who are not logged in will see this paragraph -->
                 {% if not session.user %}
                     <p>In order to contribute to our dictionary and vote on users' entries, you will need to <a class="register-link" href="{{ url_for ('register') }}">create an account</a>.</p>
                     <p>Existing user&#63; <a class="login-link" href="{{ url_for ('login') }}">Log in</a>.</p>
@@ -41,6 +42,7 @@
                 </div>
             {% endif %}
         {% else %}
+            <!-- add term button that only appears for logged in users -->
             {% if session.user %}
                 <div class="row center-align add-entry">
                     <div class="col-s12">
@@ -51,6 +53,7 @@
             {% for term in terms %}
                 {% if term.score < -5 and session.user|lower != "admin"|lower %}
                 {% else %}
+                    <!-- card panel for each term -->
                     <div class="term-wrapper card-panel">
                         <div class="row">
                             <div class="col s12 m3 l3">
@@ -65,8 +68,10 @@
                         </div>
                         <div class="row">
                             <div class="col s6 m8 xl10">
+                                <!-- term's score -->
                                 <span>Score&#58; {% if term.score >= 20 %}<span class="superscore">{{ term.score }}</span>{% elif term.score < 0 %}<span class="minus-score">{{ term.score }}</span>{% else%}<span class="score">{{ term.score }}</span>{% endif %}</span>
                             </div>
+                            <!-- upvote and downvote buttons -->
                             {% if session.user and session.user|lower != term.created_by|lower or session.user|lower == "admin"|lower %}
                                 <div class="col s3 m2 xl1">
                                     <a href="{{ url_for('upvote', term_id=term._id) }}" class="btn upvote green" onclick="confirmUpvote()" data-position="top">
@@ -82,26 +87,28 @@
                                 </div>
                             {% endif %}
                         </div>
+                        <!-- delete and edit term buttons -->
                         {% if session.user|lower == "admin" or session.user|lower == term.created_by|lower %}
                             <div class="row">
                                 <div class="col s6">
                                     <a href="#{{ term._id }}" class="btn-small delete right red modal-trigger">
                                         <span>Delete term</span><i class="fas fa-trash-alt tooltipped" data-tooltip="DELETE TERM"></i>
                                     </a>
+                                    <!-- modal pop-up for user to confirm term deletion -->
                                     <div id="{{ term._id }}" class="modal">
                                         <div class="modal-content center-align">
                                             <p>Are you sure you want to delete this term {{ term.term_name }}&#63;</p>
                                         </div>
                                         <div class="modal-footer">
-                                        <div class="row center-align">
-                                            <div class="col s12 m6">
-                                                <a href="{{ url_for('view_dictionary') }}" class="btn grey cancel">Cancel</a>
-                                            </div>
-                                            <div class="col s12 m6">
-                                                <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn red delete-record">Delete</a>
+                                            <div class="row center-align">
+                                                <div class="col s12 m6">
+                                                    <a href="{{ url_for('view_dictionary') }}" class="btn grey cancel">Cancel</a>
+                                                </div>
+                                                <div class="col s12 m6">
+                                                    <a href="{{ url_for('delete_term', term_id=term._id) }}" class="btn red delete-record">Delete</a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                                 <div class="col s6">
@@ -115,6 +122,7 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
+        <!-- add term button that only appears for logged in users -->
         {% if session.user %}
             <div class="row center-align add-entry">
                 <div class="col-s12">
