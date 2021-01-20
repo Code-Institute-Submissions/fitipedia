@@ -124,7 +124,7 @@ The application proved itself highly compatible with all browsers and performanc
 * As a registered user, I don't like someone else's definition of a term, do not find it helpful or can see a user abusing the app
     * I locate the relevant entry and click on the red thumbs down button to downvote the term
     * I receive a red flash message that the term has been downvoted, and the score has decreased by one on the page
-* As a registered user, I want to delete one of my entries as I'm not happy with it or don't think it's relevant
+* As a registered user, I want to delete one of my entries as I'm not happy with it or don't think it's relevant anymore
     * I click the My Profile tab and find the term within my history of contributions (N.B. if it's a very recent one, I can find it on the
     homepage under my last 5 entries)
     * I click the Delete Term button and confirm the deletion by clicking Delete again
