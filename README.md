@@ -146,7 +146,7 @@ dictionary
 * A responsive footer containing Fitipedia's logo, contact information and social media links
 * A contact page displaying Fitipedia's contact details and a Google Maps widget using the Google Maps API to show the user the company's physical location
 * A return to top button consisting of a Font Awesome icon of a finger pointing upwards that appears when the user scrolls down
-    * When the user clicks this button, a scroll behaviour style rule implemented using CSS makes the page scroll smoothly back to the top (N.B. this does not happen on Safari, see the [Browser Compatibility](TESTING.md#browser-compatibility) section of the TESTING.md file for more information.
+    * When the user clicks this button, a scroll behaviour style rule implemented using CSS makes the page scroll smoothly back to the top (N.B. this does not happen on Safari, see the [Browser Compatibility](TESTING.md#browser-compatibility) section of the TESTING.md file for more information).
 * A 404 page that is rendered if the user enters an invalid URL
 * An automatic redirect to the login page if the user attempts to access a URL that only logged in users can access, with a flash message indicating that they must log in first
 
