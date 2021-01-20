@@ -58,7 +58,7 @@ depending on which CRUD function it represents:
 * **Update (U)** all buttons that edit and update data on the website are **<span style="color:aqua">blue</span>**
 * **Delete (D)** all buttons that remove data from the website are **<span style="color:red">red</span>**
 
-The exception is the gold 'Search Dictionary' button on the home page, which serves as the app's main call to action button.
+The exception is the gold 'Search Dictionary' button on the home page, which serves as the homepage's main call to action button.
 
 The upvote and downvote buttons and the icons that they display also make their purpose clear to the user, as the colour green is
 associated with approval, while red is associated with disapproval. Each term's score is shown in larger text so that the user is left in 
@@ -86,10 +86,10 @@ The navbar is fixed because content on certain pages, particularly the dictionar
 * As a user, I want to read a list of many different fitness terminologies.
 * As a user and fitness enthusiast, I want to follow the dictionary's work and potentially get in touch with them.
 * As a user, I want to see some examples of words in the dictionary.
-* As a user who is knowledgeable about fitness or wants to thank other users for their content, I want to register for an account
-* As a returning user, I want to sign in and create some entries, edit one of my existing entries or upvote/downvote another user's entry
-* As a user, I mistakenly enter an invalid URL
-* As a user, I enter a URL that only registered and logged in users can access
+* As a user who is knowledgeable about fitness or wants to thank other users for their content, I want to register for an account and engage with others.
+* As a returning user, I want to sign in and create some entries, edit one of my existing entries or upvote/downvote another user's entry.
+* As a user, I mistakenly enter an invalid URL.
+* As a user, I enter a URL that only registered and logged in users can access.
 
 ##### Registered Users
 
@@ -312,7 +312,7 @@ To read about the testing process, please see the separate [TESTING.md](TESTING.
     * There may be a blank line at the end of the Procfile. Delete this line as it can cause Heroku problems in locating the file.
 
 1. Log into your Heroku account and select 'Create a new app' from the dashboard. Make sure the app's name is all in lowercase and has no spaces (use dashes ('-') to link words instead). Select 'United States' or 'Europe', depending on the region in which you are based.
-    * **You may have created the app in Heroku before starting the deployment, in which case you can skip this step and go straight to the step below.**
+    * **You may have created the app in Heroku before starting the deployment, in which case you can skip this step and go straight to step 8.**
 
 1. From your Heroku dashboard, select the app to be deployed. Click the 'Deploy' tab and select 'GitHub' as the deployment method.
 
@@ -347,7 +347,7 @@ automatic deploys'. This updates the app on the Heroku platform whenever changes
 1. The deployment may take a few minutes. Once complete, the message: "Your app was successfully deployed" will appear. Click on the 'View' 
 button below the message to view the deployed app in a new browser tab and ensure everything is working as it should.
 
-1. For the app to function properly, you will need to install certain dependencies via Gitpod. The exact dependencies can vary according to the nature of the app. To install them, use the command: ```pip3 install [name of dependency]```. For more information on dependencies, see the [Technologies Used](#technologies-used) section.
+1. To make use of the app's full functionality, you will need to install certain dependencies via Gitpod. The exact dependencies can vary according to the nature of the app. To install them, use the command: ```pip3 install [name of dependency]```. For more information on dependencies, see the [Technologies Used](#technologies-used) section.
 
 #### To run the app locally
 
@@ -388,7 +388,7 @@ button below the message to view the deployed app in a new browser tab and ensur
             app.run(host=os.environ.get("IP"),
             port=os.environ.get("PORT"), debug=False)
         ```
-    * The Terminal should read "running on http://127.0.0.1:5000". Paste this URL into the browser to acccess the app.
+    * The Terminal should read "running on http://127.0.0.1:5000". Copy and paste this URL into the browser to acccess the app.
 
 [Back to TOC](#table-of-contents)
 

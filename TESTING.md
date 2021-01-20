@@ -38,9 +38,9 @@ The code was passed through the [Jigsaw](https://jigsaw.w3.org/) validator. No e
 
 #### HTML
 
-The code was passed through the [W3C](https://validator.w3.org/) validator. A number of unavoidable errors were thrown relating to Jinja templating characters, but there were no errors in the HTML itself.
+The code was passed through the [W3C](https://validator.w3.org/) validator. The validator threw a number of unavoidable errors relating to Jinja templating characters, but there were no errors in the HTML itself.
 
-The errors mostly relate to bad values with curly brackets inside href attributes denoting a url_for Flask function, and missing HTML start tags on files extending from the base template. As this does not affect the app's functionality, and changing them would actually make performance impossible, no action was taken on these errors.
+The errors mostly concern bad values of curly brackets inside href attributes denoting a url_for Flask function, and missing HTML start tags on files extending from the base template. As this does not affect the app's functionality, and changing them would actually make performance impossible, no action was taken on these errors.
 
 ![W3C Validation](/libraries/code_validation/html_validation_w3c.png)
 
@@ -93,7 +93,7 @@ The application proved itself highly compatible with all browsers and performanc
 * As a user, I want to see some examples of words in the dictionary.
     * I scroll slightly down the home page and see the list of most popular entries, sorted by score from highest to lowest
     * If these look intriguing, I have the opportunity to view the full dictionary by clicking on the button below
-* As a user who is knowledgeable about fitness or wants to thank other users for their content, I want to register for an account
+* As a user who is knowledgeable about fitness or wants to thank other users for their content, I want to register for an account and engage with others
     * I click on the Register tab in the navbar, fill out my details and my account is created in seconds
 * As a returning user, I want to sign in and create some entries, edit one of my existing entries or upvote/downvote another user's entry
     * I click on theLogin tab in the navbar, enter my username and password and am logged in where I can now make use of the site's full
@@ -143,6 +143,7 @@ The application proved itself highly compatible with all browsers and performanc
     * I head over to my profile page, scroll down to the Delete Account section and click the button to delete my account
     * In the confirmation box, I confirm the deletion by clicking on Delete again
     * I am redirected to the homepage, no longer logged in
+    * I make sure that my account has been deleted by entering the username and password I was using, and an alert flashes telling me the login credentials are invalid
 * As a registered user, I have accidentally clicked on Delete Account and wish to cancel this
     * In the confirmation box, I click on Cancel and am taken back to the my profile page
 
@@ -434,6 +435,8 @@ Here is a list of bugs I encountered during the testing phase followed by the so
     }
     ```
 
+Many views in this project entail multiple layers of code to handle a range of different scenarios. The above examples are mostly single blocks of code within a longer view, as copying the entire view to this file would cause it to become unwieldy. Please see the [app.py](app.py) file to see the views in full.
+
 #### Bugs still to be fixed
 
 A few of minor issues remain which do not affect site performance or security. These are:
@@ -447,7 +450,7 @@ A few of minor issues remain which do not affect site performance or security. T
 
 ![JavaScript console error](/libraries/testing/js_console_error.png)
 
-I was unable to find a reliable solution to this issue. Strangely, when on the Contact page that actually renders the map, no such error appears. As this has no impact on site performance or security, I have not resolved the error at this stage, but will aim to have the console free of errors when producing future versions of the application. I am reluctant to remove the Contact page as I feel this is potentially useful to the user and makes the app appear more professional.
+I was unable to find a reliable solution to this issue. Strangely, when on the Contact page that actually renders the map, no such error appears. As this has no impact on site performance or security, I have not resolved the error at this stage, but will aim to achieve an error-free console in future versions of the application. I am reluctant to remove the Contact page as this is potentially useful to the user and makes the app appear more professional.
 
 * There are other minor improvements to be made to the site that time unfortunately did not allow to be made, most notably limiting upvoting and downvoting to once per user per entry (which will be top priority for future versions of the app). For more examples, see the [Features left to implement](README.md#features-left-to-implement) section in the README file.
 
