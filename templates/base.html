@@ -72,17 +72,16 @@
                 <li><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
             {% endif %}
         </ul>
-        </ul>
     </header>
 
     <!-- displays flash messages -->
     <section id="flashed_messages" class="center-align">
         {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        {% for message in messages %}
-        <h5 class="flash-message center-align">{{ message }}</h5>
-        {% endfor %}
-        {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    <h5 class="flash-message center-align">{{ message }}</h5>
+                {% endfor %}
+            {% endif %}
         {% endwith %}
     </section>
 
@@ -150,8 +149,9 @@
         </div>
         <div class="copyright-info center-align">
             <div class="container">
-                <span class="copyright">&#169; Budget Helper <span id="copyrightYear"></span> &#124; <a
-                        href="{{ url_for('contact') }}">Contact Us</a></span>
+                <span class="copyright">
+                    &#169; Budget Helper <span id="copyrightYear"></span> &#124; <a href="{{ url_for('contact') }}">Contact Us</a>
+                </span>
             </div>
         </div>
     </footer>

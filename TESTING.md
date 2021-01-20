@@ -393,6 +393,13 @@ Here is a list of bugs I encountered during the testing phase followed by the so
                 "update_profile.html", username=username)
     ```
 
+* **Bug**: When users submitted an updated profile form that kept either the same username and e-mail address, the update was successful but the user was directed to the custom 404 page.
+* **Fix**: I fixed this issue by changing the `username=username` argument in the return statement to `username=session["user"]`.
+
+    ```
+    return redirect(url_for("profile", username=session["user"]))
+    ```
+
 * **Bug**: Users could submit a string of white spaces as a term's name and definition, and have this appear in the dictionary.
 * **Fix**: With the help of jQuery, I used the following JavaScript code to prevent the inputting of successive whitespace in textarea and input fields:
 
