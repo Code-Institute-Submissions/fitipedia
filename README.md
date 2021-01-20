@@ -209,6 +209,7 @@ As the database expands, I would like to implement the following features:
 * A reset password function that enables a user to reset their password via e-mail in the event they forget their password
 * For security reasons, accounts created by admins for other users are forced to change their password when logging in for the first time
 * Administrators are notified if a term's score drops below -5 and are forced to review it, removing it from the dictionary if necessary
+* A more personalised and interesting custom 404 page
 
 [Back to TOC](#table-of-contents)
 
