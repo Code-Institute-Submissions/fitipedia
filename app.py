@@ -85,7 +85,7 @@ def register():
 
             # prevents multiple users sharing one username
             if existing_user:
-                flash("User already exists")
+                flash("User already exists!")
                 return redirect(url_for("register"))
 
             # prevents multiple accounts being linked to the same e-mail
@@ -160,7 +160,7 @@ This function signs the user out of the application.
 @app.route("/logout")
 def logout():
     # removes the user from session cookie
-    flash("You have been logged out")
+    flash("You have been logged out.")
     session.pop("user")
     return redirect(url_for("home_page"))
 
@@ -189,13 +189,13 @@ def profile(username):
                                        username=username, terms=terms)
         # the user is redirected if attempting to access another user's profile
         else:
-            flash("You do not have permission to view other users' profiles")
+            flash("You do not have permission to view other users' profiles.")
             return redirect(url_for("home_page"))
 
     # the page is only available to users in session. If the user is not
     # logged in, they are redirected to the login page
     else:
-        flash("Please log in to view your profile")
+        flash("Please log in to view your profile.")
         return redirect(url_for("login"))
 
 
@@ -248,7 +248,7 @@ def add_definition():
             }
             mongo.db.terms.insert_one(new_term)
             flash("Term successfully created. You will now be redirected to"
-                  "the dictionary page where you can see your contribution!")
+                  " the dictionary page where you can see your contribution!")
             return redirect(url_for("view_dictionary"))
         terms = mongo.db.terms.find()
         users = mongo.db.users.find()
@@ -312,7 +312,7 @@ def edit_term(term_id):
                         mongo.db.terms.update(
                             {"_id": ObjectId(term_id)}, updated_term)
                         flash(
-                             "Dictionary information successfully updated")
+                             "Dictionary information successfully updated!")
                         return redirect(url_for("view_dictionary"))
                     term = mongo.db.terms.find_one({"_id": ObjectId(term_id)})
                     flash("This term already exists in the dictionary."
@@ -326,7 +326,7 @@ def edit_term(term_id):
                    session["user"] == is_superuser):
                     mongo.db.terms.update(
                         {"_id": ObjectId(term_id)}, updated_term)
-                    flash("Dictionary information successfully updated")
+                    flash("Dictionary information successfully updated!")
                     return redirect(url_for("view_dictionary"))
                 # prevents users who are not administrators changing other
                 # users' entries
@@ -334,7 +334,7 @@ def edit_term(term_id):
                     flash("You cannot edit terms created by other users.")
                     return redirect(url_for("view_dictionary"))
 
-                flash("Dictionary information successfully updated")
+                flash("Dictionary information successfully updated!")
                 return redirect(url_for("view_dictionary"))
         # renders a custom 404 page if the ObjectId passed is not a valid
         # BSON type
@@ -377,12 +377,12 @@ def delete_term(term_id):
                 if (session["user"] == term_creator or
                    session["user"] == is_superuser):
                     mongo.db.terms.remove({"_id": ObjectId(term_id)})
-                    flash("Term deleted from dictionary")
+                    flash("Term deleted from dictionary.")
                     return redirect(url_for("view_dictionary"))
                 # prevents users who are not administrators from deleting
                 # other users' entries
                 else:
-                    flash("You cannot delete terms created by other users")
+                    flash("You cannot delete terms created by other users.")
                     return redirect(url_for("view_dictionary"))
         # renders a custom 404 page if the ObjectId passed is not a valid
         # BSON type
@@ -421,7 +421,7 @@ def upvote(term_id):
             return render_template("404.html"), 404
     # prevents users who are not logged in from upvoting entries
     else:
-        flash("You must log in to perform this action")
+        flash("You must log in to perform this action.")
         return redirect(url_for("login"))
 
 
@@ -451,7 +451,7 @@ def downvote(term_id):
             return render_template("404.html"), 404
     # prevents users who are not logged in from downvoting entries
     else:
-        flash("You must log in to perform this action")
+        flash("You must log in to perform this action.")
         return redirect(url_for("login"))
 
 
@@ -497,7 +497,7 @@ def update_profile(username):
                                 {"username": username}, updated_account)
                             session["user"] = request.form.get(
                                 "username").lower()
-                            flash("Your profile was successfully updated")
+                            flash("Your profile was successfully updated!")
                             return redirect(url_for(
                                 "profile", username=username))
 
@@ -514,7 +514,7 @@ def update_profile(username):
                     mongo.db.users.update(
                         {"username": username}, updated_account)
                     session["user"] = request.form.get("username").lower()
-                    flash("Your profile was successfully updated")
+                    flash("Your profile was successfully updated!")
                     return redirect(url_for("profile", username=username))
 
                 # prevents the user from using a username already owned by
@@ -533,7 +533,7 @@ def update_profile(username):
                         mongo.db.users.update(
                             {"username": username}, updated_account)
                         session["user"] = request.form.get("username").lower()
-                        flash("Your profile was successfully updated")
+                        flash("Your profile was successfully updated!")
                         return redirect(url_for(
                             "profile", username=session["user"]))
 
@@ -547,13 +547,13 @@ def update_profile(username):
             # information in the session cookie
             mongo.db.users.update({"username": username}, updated_account)
             session["user"] = request.form.get("username").lower()
-            flash("Your profile was successfully updated")
+            flash("Your profile was successfully updated!")
             return redirect(url_for("profile", username=session["user"]))
 
         return render_template("update_profile.html", username=username)
     # prevents users who are not logged in from updating profiles
     else:
-        flash("Please log in to update your profile")
+        flash("Please log in to update your profile.")
         return redirect(url_for("login"))
 
 
@@ -578,7 +578,7 @@ def delete_account(username):
             session.pop("user")
             mongo.db.users.remove({"username": username})
             flash("Your account was deleted."
-                  "You will now be redirected to the home page.")
+                  " You will now be redirected to the home page.")
             return redirect(url_for(
                             "home_page", username=username, users=users))
         # prevents users from deleting somebody else's account if somebody
@@ -613,11 +613,11 @@ def manage_users():
             return render_template("manage_users.html", users=users)
         # prevents non-superusers from accessing the page
         else:
-            flash("You are not authorised to view this page")
+            flash("You are not authorised to view this page.")
             return redirect(url_for("home_page"))
     # prevents users who are not logged in from accessing the page
     else:
-        flash("You are not authorised to view this page")
+        flash("You are not authorised to view this page.")
         return redirect(url_for("home_page"))
 
 
@@ -650,7 +650,7 @@ def add_new_user():
 
                 # prevents an account being added with username already in use
                 if existing_user:
-                    flash("User already exists")
+                    flash("User already exists!")
                     return redirect(url_for("add_new_user"))
 
                 # prevents an account being added with an e-mail already in use
@@ -741,4 +741,4 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
-            port=int(os.environ.get("PORT")), debug=False)
+            port=int(os.environ.get("PORT")), debug=True)

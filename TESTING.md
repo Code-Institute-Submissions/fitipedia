@@ -419,7 +419,7 @@ Here is a list of bugs I encountered during the testing phase followed by the so
     ```
 
 * **Bug**: When resetting the search form, the entire page would refresh and return to the top of the screen, which is quite annoying user experience.
-* **Fix**: I used the form.reset() method in JavaScript:
+* **Fix**: I used the `form.reset()` method in JavaScript:
 
     ```
     <form id="search_bar" method="POST" action="{{ url_for('search') }}">
@@ -436,7 +436,9 @@ Here is a list of bugs I encountered during the testing phase followed by the so
 
 #### Bugs still to be fixed
 
-A couple of minor issues remain which do not affect site performance or security. These are:
+A few of minor issues remain which do not affect site performance or security. These are:
+
+* A user can change the name of a term to that of an existing term and successfully add it to the dictionary if they enter it all in lower case, even though the edit_term function uses the `.capitalize()` method. I applied a fix using the `.lower()` method instead that successfully prevented this happening. However, this had the unwanted side effect of rendering an empty dictionary page when the user updated the name of a term to one not yet in the dictionary. Taking into account the trade-offs and time constraints, I decided that the latter scenario had a greater negative effect on the site's UX. A user realising this possibility is far less likely than a user updating an entry on the website. In future versions of the app, fixing this bug will be a top priority. 
 
 * When clicking on the search call to action button, the page scrolls too far so that the search bar disappears from the top of the page. This happens on mobile devices and when users are not logged in. This happened after I made the navbar fixed - the search bar remains at the top of the viewport, but it is actually hidden behind the navbar.
     * This is not an issue on tablet and desktop devices when the user is logged in, as the search form is pushed down by the welcome heading to the user. I wrapped these two elements in a div with the id of search, and set the href of the search button to #search. This makes no difference when the user is logged out, however, as the starting position of the outer div is the same as that of the form.
@@ -447,7 +449,7 @@ A couple of minor issues remain which do not affect site performance or security
 
 I was unable to find a reliable solution to this issue. Strangely, when on the Contact page that actually renders the map, no such error appears. As this has no impact on site performance or security, I have not resolved the error at this stage, but will aim to have the console free of errors when producing future versions of the application. I am reluctant to remove the Contact page as I feel this is potentially useful to the user and makes the app appear more professional.
 
-* There are other minor improvements to be made to the site that time unfortunately did not allow to be made. For examples of these, see the [Features left to implement](README.md#features-left-to-implement) section in the README file.
+* There are other minor improvements to be made to the site that time unfortunately did not allow to be made, most notably limiting upvoting and downvoting to once per user per entry (which will be top priority for future versions of the app). For more examples, see the [Features left to implement](README.md#features-left-to-implement) section in the README file.
 
 [Back to TOC](#table-of-contents)
 
